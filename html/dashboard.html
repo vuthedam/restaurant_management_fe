@@ -1,0 +1,716 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Appetite Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#eeeeee",
+              "on-tertiary-container": "#2e3231",
+              "surface-dim": "#dadada",
+              "surface-variant": "#e2e2e2",
+              "on-primary-container": "#5f1900",
+              "primary-fixed-dim": "#ffb59d",
+              surface: "#f9f9f9",
+              "surface-container-low": "#f4f3f3",
+              "on-tertiary-fixed-variant": "#444846",
+              "on-secondary-container": "#606376",
+              "inverse-primary": "#ffb59d",
+              "on-background": "#1a1c1c",
+              error: "#ba1a1a",
+              primary: "#ab3500",
+              "on-primary-fixed": "#390c00",
+              "inverse-on-surface": "#f1f1f1",
+              "on-tertiary-fixed": "#181c1b",
+              "on-primary-fixed-variant": "#832600",
+              outline: "#8d7168",
+              "inverse-surface": "#2f3131",
+              "outline-variant": "#e1bfb5",
+              "primary-container": "#ff6b35",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-high": "#e8e8e8",
+              "surface-bright": "#f9f9f9",
+              tertiary: "#5b5f5d",
+              "on-surface": "#1a1c1c",
+              "on-secondary": "#ffffff",
+              "surface-container-highest": "#e2e2e2",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed-dim": "#c2c5db",
+              "on-error-container": "#93000a",
+              background: "#f9f9f9",
+              "error-container": "#ffdad6",
+              "on-secondary-fixed": "#171b2b",
+              "tertiary-fixed": "#e0e3e0",
+              "on-primary": "#ffffff",
+              "on-surface-variant": "#594139",
+              "tertiary-container": "#969a98",
+              "on-error": "#ffffff",
+              secondary: "#5a5d70",
+              "tertiary-fixed-dim": "#c4c7c5",
+              "primary-fixed": "#ffdbd0",
+              "secondary-fixed": "#dee1f8",
+              "on-secondary-fixed-variant": "#424658",
+              "secondary-container": "#dee1f8",
+              "surface-tint": "#ab3500",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              unit: "4px",
+              lg: "24px",
+              md: "16px",
+              sm: "8px",
+              margin: "24px",
+              xs: "4px",
+              gutter: "16px",
+              xl: "40px",
+            },
+            fontFamily: {
+              "body-lg": ["Inter"],
+              "display-lg": ["Montserrat"],
+              "body-md": ["Inter"],
+              "data-tabular": ["Inter"],
+              "display-md": ["Montserrat"],
+              "label-sm": ["Inter"],
+            },
+            fontSize: {
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "display-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "data-tabular": [
+                "14px",
+                { lineHeight: "20px", fontWeight: "600" },
+              ],
+              "display-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "label-sm": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .order-row:hover {
+        background-color: #f4f3f3;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+    <aside
+      class="hidden lg:flex flex-col fixed left-0 top-0 h-full z-40 bg-inverse-surface dark:bg-on-background border-r border-outline-variant w-64 shadow-sm"
+    >
+      <div class="px-md py-xl">
+        <h1 class="font-display-md font-bold text-primary-fixed">
+          Admin Portal
+        </h1>
+        <p class="text-surface-variant text-label-sm mt-xs">Main Branch HQ</p>
+      </div>
+      <nav class="flex-1 flex flex-col gap-xs px-sm">
+        <a
+          class="bg-primary-container/10 text-primary border-l-4 border-primary font-bold px-md py-sm flex items-center gap-sm scale-[0.98] active:scale-95 transition-transform duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="dashboard"
+            >dashboard</span
+          >
+          <span>Dashboard</span>
+        </a>
+        <a
+          class="text-surface-variant dark:text-secondary-fixed-dim px-md py-sm flex items-center gap-sm hover:bg-surface-container-high dark:hover:bg-on-tertiary-container transition-all scale-[0.98] active:scale-95 transition-transform duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="receipt_long"
+            >receipt_long</span
+          >
+          <span>Live Orders</span>
+        </a>
+        <a
+          class="text-surface-variant dark:text-secondary-fixed-dim px-md py-sm flex items-center gap-sm hover:bg-surface-container-high dark:hover:bg-on-tertiary-container transition-all scale-[0.98] active:scale-95 transition-transform duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="table_restaurant"
+            >table_restaurant</span
+          >
+          <span>Table Map</span>
+        </a>
+        <a
+          class="text-surface-variant dark:text-secondary-fixed-dim px-md py-sm flex items-center gap-sm hover:bg-surface-container-high dark:hover:bg-on-tertiary-container transition-all scale-[0.98] active:scale-95 transition-transform duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="restaurant_menu"
+            >restaurant_menu</span
+          >
+          <span>Menu Manager</span>
+        </a>
+        <a
+          class="text-surface-variant dark:text-secondary-fixed-dim px-md py-sm flex items-center gap-sm hover:bg-surface-container-high dark:hover:bg-on-tertiary-container transition-all scale-[0.98] active:scale-95 transition-transform duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="inventory_2"
+            >inventory_2</span
+          >
+          <span>Inventory</span>
+        </a>
+        <a
+          class="text-surface-variant dark:text-secondary-fixed-dim px-md py-sm flex items-center gap-sm hover:bg-surface-container-high dark:hover:bg-on-tertiary-container transition-all scale-[0.98] active:scale-95 transition-transform duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="monitoring"
+            >monitoring</span
+          >
+          <span>Analytics</span>
+        </a>
+        <a
+          class="text-surface-variant dark:text-secondary-fixed-dim px-md py-sm flex items-center gap-sm hover:bg-surface-container-high dark:hover:bg-on-tertiary-container transition-all scale-[0.98] active:scale-95 transition-transform duration-200"
+          href="#"
+        >
+          <span class="material-symbols-outlined" data-icon="settings"
+            >settings</span
+          >
+          <span>Settings</span>
+        </a>
+      </nav>
+      <div class="p-md mt-auto border-t border-surface-variant/20">
+        <div class="flex items-center gap-sm mb-md">
+          <img
+            alt="Manager Profile"
+            class="w-10 h-10 rounded-full border-2 border-primary-container"
+            data-alt="A professional headshot of a restaurant manager in a sleek, modern corporate office environment. He is wearing a tailored grey suit and smiling confidently. The lighting is soft and professional, using high-key studio lighting with warm secondary tones. The background is a blurred high-end restaurant dining area with modern Appetite Orange accents."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQuZHIwItBWDJ7prq_qD11YVqPzIWW6m3VPF1S_vesoklYlhiLKffyivbMehvRyX35pVaflSl0UIdu5u9IlcP8WeUSqDFMmvf4U3cPM4Ni-hrZ-i9FOWPwz3jw-g4tx5azxHuWNRZKTFS7EQPCfTxUnGceUEx4L6zZb_fvYHvmSVMwfBOSjRQCDsvTXBoYNrDf1lyHgsjXLL5XYmA1l2SUPTNU7XAXigLMcSAcBQBVHh6H-lvWyj0-4sICpWbB13XBNKLdK0Gk9kw"
+          />
+          <div>
+            <p class="text-surface-bright font-bold text-label-sm">
+              Marcus Chen
+            </p>
+            <p class="text-surface-variant text-[10px]">General Manager</p>
+          </div>
+        </div>
+        <div class="bg-primary/20 p-xs rounded text-center">
+          <p class="text-primary-fixed-dim text-label-sm font-bold">
+            System Status: Online
+          </p>
+        </div>
+      </div>
+    </aside>
+    <main class="lg:ml-64 min-h-screen">
+      <header
+        class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-on-tertiary-fixed-variant sticky top-0 z-30"
+      >
+        <div
+          class="flex justify-between items-center w-full px-margin py-md max-w-7xl mx-auto"
+        >
+          <div class="flex flex-col">
+            <h2
+              class="text-display-md font-bold text-primary dark:text-primary-fixed-dim"
+            >
+              Dashboard Overview
+            </h2>
+            <p class="text-on-surface-variant text-label-sm">
+              Tuesday, October 24th, 2024
+            </p>
+          </div>
+          <div class="flex items-center gap-md">
+            <div class="relative hidden sm:block">
+              <span
+                class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-secondary"
+                data-icon="search"
+                >search</span
+              >
+              <input
+                class="bg-surface-container-low border-outline-variant rounded-lg pl-xl pr-md py-sm focus:ring-primary focus:border-primary"
+                placeholder="Search orders..."
+                type="text"
+              />
+            </div>
+            <button
+              class="bg-primary text-on-primary px-lg py-sm rounded-lg font-bold flex items-center gap-sm scale-95 active:scale-90 transition-transform"
+            >
+              <span class="material-symbols-outlined" data-icon="add">add</span>
+              New Reservation
+            </button>
+          </div>
+        </div>
+      </header>
+      <section class="p-margin max-w-7xl mx-auto space-y-lg">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          <div
+            class="bg-surface-container-lowest border border-outline-variant p-md rounded-xl flex items-center gap-md"
+          >
+            <div
+              class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary"
+            >
+              <span class="material-symbols-outlined" data-icon="payments"
+                >payments</span
+              >
+            </div>
+            <div>
+              <p class="text-secondary text-label-sm">Today's Revenue</p>
+              <h3 class="text-display-md font-bold">$12,482.50</h3>
+              <p class="text-success text-xs flex items-center text-[#2e7d32]">
+                <span
+                  class="material-symbols-outlined text-[14px]"
+                  data-icon="trending_up"
+                  >trending_up</span
+                >
+                +12% from yesterday
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-surface-container-lowest border border-outline-variant p-md rounded-xl flex items-center gap-md"
+          >
+            <div
+              class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center text-secondary"
+            >
+              <span class="material-symbols-outlined" data-icon="shopping_bag"
+                >shopping_bag</span
+              >
+            </div>
+            <div>
+              <p class="text-secondary text-label-sm">Total Orders</p>
+              <h3 class="text-display-md font-bold">142</h3>
+              <p class="text-error text-xs flex items-center">
+                <span
+                  class="material-symbols-outlined text-[14px]"
+                  data-icon="trending_down"
+                  >trending_down</span
+                >
+                -3% vs last week
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-surface-container-lowest border border-outline-variant p-md rounded-xl flex items-center gap-md"
+          >
+            <div
+              class="w-12 h-12 bg-tertiary/10 rounded-full flex items-center justify-center text-tertiary"
+            >
+              <span class="material-symbols-outlined" data-icon="group"
+                >group</span
+              >
+            </div>
+            <div>
+              <p class="text-secondary text-label-sm">Occupancy Rate</p>
+              <h3 class="text-display-md font-bold">84%</h3>
+              <div
+                class="w-32 h-2 bg-surface-container rounded-full mt-xs overflow-hidden"
+              >
+                <div class="bg-primary-container h-full w-[84%]"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+          <div
+            class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-md overflow-hidden relative"
+          >
+            <div class="flex justify-between items-center mb-lg">
+              <div>
+                <h3 class="text-body-lg font-bold">Weekly Sales Trends</h3>
+                <p class="text-on-surface-variant text-label-sm">
+                  Revenue performance over the last 7 days
+                </p>
+              </div>
+              <select
+                class="bg-surface-container-low border-none rounded-lg text-label-sm font-bold"
+              >
+                <option>Last 7 Days</option>
+                <option>Last 30 Days</option>
+              </select>
+            </div>
+            <div class="h-64 flex items-end gap-md pb-md">
+              <div
+                class="flex-1 flex flex-col items-center gap-sm h-full justify-end"
+              >
+                <div
+                  class="w-full bg-surface-container-high rounded-t-lg transition-all"
+                  style="height: 60%"
+                ></div>
+                <span class="text-[10px] font-bold text-secondary">MON</span>
+              </div>
+              <div
+                class="flex-1 flex flex-col items-center gap-sm h-full justify-end"
+              >
+                <div
+                  class="w-full bg-surface-container-high rounded-t-lg transition-all"
+                  style="height: 45%"
+                ></div>
+                <span class="text-[10px] font-bold text-secondary">TUE</span>
+              </div>
+              <div
+                class="flex-1 flex flex-col items-center gap-sm h-full justify-end"
+              >
+                <div
+                  class="w-full bg-primary-container rounded-t-lg transition-all"
+                  style="height: 85%"
+                ></div>
+                <span class="text-[10px] font-bold text-primary">WED</span>
+              </div>
+              <div
+                class="flex-1 flex flex-col items-center gap-sm h-full justify-end"
+              >
+                <div
+                  class="w-full bg-surface-container-high rounded-t-lg transition-all"
+                  style="height: 70%"
+                ></div>
+                <span class="text-[10px] font-bold text-secondary">THU</span>
+              </div>
+              <div
+                class="flex-1 flex flex-col items-center gap-sm h-full justify-end"
+              >
+                <div
+                  class="w-full bg-surface-container-high rounded-t-lg transition-all"
+                  style="height: 95%"
+                ></div>
+                <span class="text-[10px] font-bold text-secondary">FRI</span>
+              </div>
+              <div
+                class="flex-1 flex flex-col items-center gap-sm h-full justify-end"
+              >
+                <div
+                  class="w-full bg-surface-container-high rounded-t-lg transition-all"
+                  style="height: 100%"
+                ></div>
+                <span class="text-[10px] font-bold text-secondary">SAT</span>
+              </div>
+              <div
+                class="flex-1 flex flex-col items-center gap-sm h-full justify-end"
+              >
+                <div
+                  class="w-full bg-surface-container-high rounded-t-lg transition-all"
+                  style="height: 55%"
+                ></div>
+                <span class="text-[10px] font-bold text-secondary">SUN</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md"
+          >
+            <h3 class="text-body-lg font-bold mb-md">Top Menu Items</h3>
+            <div class="space-y-md">
+              <div class="flex items-center gap-md">
+                <img
+                  class="w-12 h-12 rounded-lg object-cover"
+                  data-alt="A macro close-up of a vibrant healthy salad bowl featuring fresh greens, cherry tomatoes, and grilled avocado. The lighting is bright and natural, accentuating the fresh textures and vibrant colors. The style is clean, appetizing, and high-end, fitting for a modern restaurant management UI with a light color palette."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKUdffkOrucbRNTsHpvsLmGhf45SPY1QV_A8zRMw4FxWp_4b5oRfHgTCmjuFKKsk8wN2K3tFiiqyxlScBKlcSmfjfOYvx_xeauPKpd3k3XAKkqALZvFoL1Yro-wU5nmGVgZeyEeEewn8czQsF2IVRnBn_0FhwtcxQVg4h8l25U54A1WJVIMh3f517Bvjyo2EAiVKXm8KppjkE-mZAbFXI-HUpgvAuDvUrIYctPVIHYqbtSXSGafqDpLYjpoUdkOkyCVC7j8vlb1mU"
+                />
+                <div class="flex-1">
+                  <p class="font-bold text-body-md">Avocado Power Bowl</p>
+                  <p class="text-label-sm text-secondary">84 sold today</p>
+                </div>
+                <div class="text-primary font-bold text-data-tabular">
+                  $1,428
+                </div>
+              </div>
+              <div class="flex items-center gap-md">
+                <img
+                  class="w-12 h-12 rounded-lg object-cover"
+                  data-alt="A gourmet wood-fired pizza with bubbling mozzarella and fresh basil leaves on a rustic stone plate. The photography uses a warm, shallow depth of field, highlighting the artisanal texture of the crust. The scene is bright and professional, conveying a sense of quality and deliciousness."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWYtJSMPQYZvkdeS5VwZXbMaHX1f35vfeD42cb5lRzmFGsNfz4AW5O7hoKc2_Jy7NyU3oFlQnLqdy5hhFGqNWKLBlGibjLT7cLZM3Oi8JotixD3THwB7l8kxyDo1giyfSpzondehOQl0eReDZw3B3Z13S2VRIAHSMxGauzhD3ujiZJVs778sTi8tQgvmS5APxuiINf0yBVLUFyw2AYuYlNE4yyvhVcTnYLhFEREHt_lzFtXyR1gaRvpAmk2qRseju__XYRktKjR_U"
+                />
+                <div class="flex-1">
+                  <p class="font-bold text-body-md">Truffle Marguerita</p>
+                  <p class="text-label-sm text-secondary">65 sold today</p>
+                </div>
+                <div class="text-primary font-bold text-data-tabular">
+                  $1,170
+                </div>
+              </div>
+              <div class="flex items-center gap-md">
+                <img
+                  class="w-12 h-12 rounded-lg object-cover"
+                  data-alt="A stack of tender, slow-cooked pork ribs glazed with a rich, dark barbecue sauce, served with golden crispy fries. The lighting is dramatic but bright, emphasizing the succulent glaze. The overall aesthetic is professional and high-quality, set against a clean white table."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5mDf6UfVO3DzMvzl64ovV0EMp6OgjN8g6Xg_qxD8-3oIevQ_Ts6KjjQyCcDKConCmSQnJFVpYsEvMW1q9yzNAaRWbK6ZrjkRJ7GTkx5vhuw2GNQZd1CQPilyrdekIBnN-bk6R-gioQlYCLE0CQFW6_Ol9LfvKg1pIs9fTcNU2T53jG8ZpfGmUrxpcjfcfNkCm14lVCu5SXIwtJchQ7qz41n8e0yIAjTxcHP-L89m3eRuAqNLmDgUWm6egWsgYN0wa4zfObdZVPWM"
+                />
+                <div class="flex-1">
+                  <p class="font-bold text-body-md">Signature BBQ Ribs</p>
+                  <p class="text-label-sm text-secondary">42 sold today</p>
+                </div>
+                <div class="text-primary font-bold text-data-tabular">$924</div>
+              </div>
+            </div>
+            <button
+              class="w-full mt-xl border border-outline text-on-surface font-bold py-sm rounded-lg hover:bg-surface-container transition-colors"
+            >
+              View Full Menu Report
+            </button>
+          </div>
+        </div>
+        <div
+          class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden"
+        >
+          <div
+            class="p-md border-b border-outline-variant flex justify-between items-center"
+          >
+            <h3 class="text-body-lg font-bold">Recent Orders</h3>
+            <div class="flex gap-sm">
+              <span
+                class="px-sm py-xs bg-surface-container text-label-sm rounded-full font-bold"
+                >Filter: All</span
+              >
+              <span
+                class="material-symbols-outlined cursor-pointer text-secondary"
+                data-icon="tune"
+                >tune</span
+              >
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="bg-surface-container-low text-label-sm text-secondary uppercase tracking-wider"
+                >
+                  <th class="px-md py-sm">Order ID</th>
+                  <th class="px-md py-sm">Customer</th>
+                  <th class="px-md py-sm">Items</th>
+                  <th class="px-md py-sm">Total</th>
+                  <th class="px-md py-sm">Status</th>
+                  <th class="px-md py-sm">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant">
+                <tr class="order-row transition-colors">
+                  <td class="px-md py-md font-data-tabular">#APT-4829</td>
+                  <td class="px-md py-md">
+                    <div class="flex items-center gap-sm">
+                      <div
+                        class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-xs"
+                      >
+                        JS
+                      </div>
+                      <span>Jane Smith</span>
+                    </div>
+                  </td>
+                  <td class="px-md py-md text-secondary">3 items</td>
+                  <td class="px-md py-md font-bold">$54.20</td>
+                  <td class="px-md py-md">
+                    <span
+                      class="px-sm py-xs rounded bg-primary-container text-on-primary-container text-label-sm font-bold"
+                      >Preparing</span
+                    >
+                  </td>
+                  <td class="px-md py-md">
+                    <button
+                      class="text-primary font-bold text-label-sm hover:underline"
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+                <tr class="order-row transition-colors">
+                  <td class="px-md py-md font-data-tabular">#APT-4830</td>
+                  <td class="px-md py-md">
+                    <div class="flex items-center gap-sm">
+                      <div
+                        class="w-8 h-8 rounded-full bg-secondary-fixed text-secondary flex items-center justify-center font-bold text-xs"
+                      >
+                        MK
+                      </div>
+                      <span>Mike K.</span>
+                    </div>
+                  </td>
+                  <td class="px-md py-md text-secondary">1 item</td>
+                  <td class="px-md py-md font-bold">$18.50</td>
+                  <td class="px-md py-md">
+                    <span
+                      class="px-sm py-xs rounded bg-surface-variant text-on-surface-variant text-label-sm font-bold"
+                      >Pending</span
+                    >
+                  </td>
+                  <td class="px-md py-md">
+                    <button
+                      class="text-primary font-bold text-label-sm hover:underline"
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+                <tr class="order-row transition-colors">
+                  <td class="px-md py-md font-data-tabular">#APT-4825</td>
+                  <td class="px-md py-md">
+                    <div class="flex items-center gap-sm">
+                      <div
+                        class="w-8 h-8 rounded-full bg-tertiary-fixed text-tertiary flex items-center justify-center font-bold text-xs"
+                      >
+                        RL
+                      </div>
+                      <span>Robert Lee</span>
+                    </div>
+                  </td>
+                  <td class="px-md py-md text-secondary">5 items</td>
+                  <td class="px-md py-md font-bold">$112.00</td>
+                  <td class="px-md py-md">
+                    <span
+                      class="px-sm py-xs rounded bg-[#e8f5e9] text-[#2e7d32] text-label-sm font-bold"
+                      >Completed</span
+                    >
+                  </td>
+                  <td class="px-md py-md">
+                    <button
+                      class="text-primary font-bold text-label-sm hover:underline"
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+                <tr class="order-row transition-colors">
+                  <td class="px-md py-md font-data-tabular">#APT-4824</td>
+                  <td class="px-md py-md">
+                    <div class="flex items-center gap-sm">
+                      <div
+                        class="w-8 h-8 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold text-xs"
+                      >
+                        AW
+                      </div>
+                      <span>Alice Wong</span>
+                    </div>
+                  </td>
+                  <td class="px-md py-md text-secondary">2 items</td>
+                  <td class="px-md py-md font-bold">$42.15</td>
+                  <td class="px-md py-md">
+                    <span
+                      class="px-sm py-xs rounded bg-[#e8f5e9] text-[#2e7d32] text-label-sm font-bold"
+                      >Completed</span
+                    >
+                  </td>
+                  <td class="px-md py-md">
+                    <button
+                      class="text-primary font-bold text-label-sm hover:underline"
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="p-md bg-surface-container-low text-center">
+            <a
+              class="text-primary font-bold text-label-sm hover:underline flex items-center justify-center gap-sm"
+              href="#"
+            >
+              View All Orders
+              <span
+                class="material-symbols-outlined text-sm"
+                data-icon="arrow_forward"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </div>
+      </section>
+      <footer
+        class="w-full py-xl px-margin flex flex-col md:flex-row justify-between items-center border-t border-outline-variant bg-surface-container-lowest mt-xl"
+      >
+        <div class="mb-md md:mb-0">
+          <span class="text-body-lg font-bold text-primary">Appetite</span>
+          <p class="font-label-sm text-label-sm text-on-surface-variant mt-xs">
+            © 2024 Appetite Restaurant Management System.
+          </p>
+        </div>
+        <div class="flex gap-lg">
+          <a
+            class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+            href="#"
+            >Privacy Policy</a
+          >
+          <a
+            class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+            href="#"
+            >Terms of Service</a
+          >
+          <a
+            class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+            href="#"
+            >Support</a
+          >
+          <a
+            class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+            href="#"
+            >Careers</a
+          >
+        </div>
+      </footer>
+    </main>
+    <div
+      class="lg:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant px-md py-sm flex justify-around items-center z-50"
+    >
+      <a class="flex flex-col items-center text-primary font-bold" href="#">
+        <span class="material-symbols-outlined" data-icon="dashboard"
+          >dashboard</span
+        >
+        <span class="text-[10px]">Home</span>
+      </a>
+      <a class="flex flex-col items-center text-secondary" href="#">
+        <span class="material-symbols-outlined" data-icon="receipt_long"
+          >receipt_long</span
+        >
+        <span class="text-[10px]">Orders</span>
+      </a>
+      <a class="flex flex-col items-center text-secondary" href="#">
+        <span class="material-symbols-outlined" data-icon="table_restaurant"
+          >table_restaurant</span
+        >
+        <span class="text-[10px]">Tables</span>
+      </a>
+      <a class="flex flex-col items-center text-secondary" href="#">
+        <span class="material-symbols-outlined" data-icon="monitoring"
+          >monitoring</span
+        >
+        <span class="text-[10px]">Stats</span>
+      </a>
+    </div>
+  </body>
+</html>

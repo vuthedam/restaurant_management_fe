@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface-bright: #f9f9f9;
+  --color-outline: #8d7168;
+  --color-surface-container-high: #e8e8e8;
+  --color-on-error: #ffffff;
+  --color-tertiary-fixed-dim: #c4c7c5;
+  --color-surface-tint: #ab3500;
+  --color-on-surface-variant: #594139;
+  --color-on-error-container: #93000a;
+  --color-background: #f9f9f9;
+  --color-on-primary-fixed-variant: #832600;
+  --color-on-primary-fixed: #390c00;
+  --color-secondary-fixed-dim: #c2c5db;
+  --color-inverse-surface: #2f3131;
+  --color-on-tertiary-fixed-variant: #444846;
+  --color-on-tertiary-fixed: #181c1b;
+  --color-surface-container-low: #f4f3f3;
+  --color-tertiary: #5b5f5d;
+  --color-inverse-primary: #ffb59d;
+  --color-surface-dim: #dadada;
+  --color-primary-fixed-dim: #ffb59d;
+  --color-surface: #f9f9f9;
+  --color-secondary-container: #dee1f8;
+  --color-on-tertiary: #ffffff;
+  --color-surface-container: #eeeeee;
+  --color-primary-container: #ff6b35;
+  --color-tertiary-container: #969a98;
+  --color-primary-fixed: #ffdbd0;
+  --color-inverse-on-surface: #f1f1f1;
+  --color-on-surface: #1a1c1c;
+  --color-secondary-fixed: #dee1f8;
+  --color-on-primary-container: #5f1900;
+  --color-on-secondary: #ffffff;
+  --color-error: #ba1a1a;
+  --color-surface-variant: #e2e2e2;
+  --color-on-background: #1a1c1c;
+  --color-primary: #ab3500;
+  --color-on-primary: #ffffff;
+  --color-tertiary-fixed: #e0e3e0;
+  --color-outline-variant: #e1bfb5;
+  --color-on-tertiary-container: #2e3231;
+  --color-on-secondary-fixed: #171b2b;
+  --color-on-secondary-fixed-variant: #424658;
+  --color-on-secondary-container: #606376;
+  --color-secondary: #5a5d70;
+  --color-surface-container-lowest: #ffffff;
+  --color-error-container: #ffdad6;
+
+  --font-family-display: "Montserrat", sans-serif;
+  --font-family-body: "Inter", sans-serif;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-margin: 24px;
+  --spacing-gutter: 16px;
+}
+
+.auth-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(171, 53, 0, 0.9) 0%,
+    rgba(95, 25, 0, 0.8) 100%
+  );
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+  vertical-align: middle;
+}

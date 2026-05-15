@@ -1,0 +1,496 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#eeeeee",
+              "on-tertiary-container": "#2e3231",
+              "surface-dim": "#dadada",
+              "surface-variant": "#e2e2e2",
+              "on-primary-container": "#5f1900",
+              "primary-fixed-dim": "#ffb59d",
+              surface: "#f9f9f9",
+              "surface-container-low": "#f4f3f3",
+              "on-tertiary-fixed-variant": "#444846",
+              "on-secondary-container": "#606376",
+              "inverse-primary": "#ffb59d",
+              "on-background": "#1a1c1c",
+              error: "#ba1a1a",
+              primary: "#ab3500",
+              "on-primary-fixed": "#390c00",
+              "inverse-on-surface": "#f1f1f1",
+              "on-tertiary-fixed": "#181c1b",
+              "on-primary-fixed-variant": "#832600",
+              outline: "#8d7168",
+              "inverse-surface": "#2f3131",
+              "outline-variant": "#e1bfb5",
+              "primary-container": "#ff6b35",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-high": "#e8e8e8",
+              "surface-bright": "#f9f9f9",
+              tertiary: "#5b5f5d",
+              "on-surface": "#1a1c1c",
+              "on-secondary": "#ffffff",
+              "surface-container-highest": "#e2e2e2",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed-dim": "#c2c5db",
+              "on-error-container": "#93000a",
+              background: "#f9f9f9",
+              "error-container": "#ffdad6",
+              "on-secondary-fixed": "#171b2b",
+              "tertiary-fixed": "#e0e3e0",
+              "on-primary": "#ffffff",
+              "on-surface-variant": "#594139",
+              "tertiary-container": "#969a98",
+              "on-error": "#ffffff",
+              secondary: "#5a5d70",
+              "tertiary-fixed-dim": "#c4c7c5",
+              "primary-fixed": "#ffdbd0",
+              "secondary-fixed": "#dee1f8",
+              "on-secondary-fixed-variant": "#424658",
+              "secondary-container": "#dee1f8",
+              "surface-tint": "#ab3500",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              unit: "4px",
+              lg: "24px",
+              md: "16px",
+              sm: "8px",
+              margin: "24px",
+              xs: "4px",
+              gutter: "16px",
+              xl: "40px",
+            },
+            fontFamily: {
+              "body-lg": ["Inter"],
+              "display-lg": ["Montserrat"],
+              "body-md": ["Inter"],
+              "data-tabular": ["Inter"],
+              "display-md": ["Montserrat"],
+              "label-sm": ["Inter"],
+            },
+            fontSize: {
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "display-lg": [
+                "32px",
+                {
+                  lineHeight: "40px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "data-tabular": [
+                "14px",
+                { lineHeight: "20px", fontWeight: "600" },
+              ],
+              "display-md": [
+                "24px",
+                {
+                  lineHeight: "32px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "label-sm": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        vertical-align: middle;
+      }
+      .order-ticket-mask {
+        mask-image:
+          radial-gradient(circle at 10px 100%, transparent 10px, white 10px),
+          radial-gradient(
+            circle at calc(100% - 10px) 100%,
+            transparent 10px,
+            white 10px
+          );
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body-md">
+    <!-- Top Navigation Bar -->
+    <header
+      class="bg-surface border-b border-outline-variant fixed top-0 left-0 right-0 z-50"
+    >
+      <nav
+        class="flex justify-between items-center w-full px-margin py-md max-w-7xl mx-auto"
+      >
+        <div class="text-display-md font-bold text-primary">Appetite</div>
+        <!-- Desktop Links -->
+        <div class="hidden md:flex items-center gap-xl">
+          <a
+            class="font-body-md text-primary border-b-2 border-primary pb-1 transition-colors hover:text-primary-container"
+            href="#menu"
+            >Menu</a
+          >
+          <a
+            class="font-body-md text-secondary transition-colors hover:text-primary-container"
+            href="#"
+            >Book Table</a
+          >
+          <a
+            class="font-body-md text-secondary transition-colors hover:text-primary-container"
+            href="#"
+            >Orders</a
+          >
+          <a
+            class="font-body-md text-secondary transition-colors hover:text-primary-container"
+            href="#"
+            >Contact</a
+          >
+        </div>
+        <div class="flex items-center gap-md">
+          <button
+            class="scale-95 active:scale-90 transition-transform bg-primary text-on-primary px-lg py-sm rounded-lg font-label-sm uppercase tracking-wider"
+          >
+            Order Now
+          </button>
+          <button class="md:hidden text-primary">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main class="pt-[72px]">
+      <!-- Hero Section -->
+      <section class="relative h-[819px] flex items-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+          <img
+            class="w-full h-full object-cover brightness-[0.7]"
+            data-alt="A top-down cinematic view of a gourmet dining table filled with vibrant, high-quality mediterranean dishes. The scene is bathed in warm, golden afternoon sunlight, creating soft shadows and highlighting the rich textures of roasted vegetables, fresh herbs, and artisanal bread. The aesthetic is modern and sophisticated with Appetite Orange accents in the table decor. Professional food photography style with shallow depth of field."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj_4cSJq7FtSPouxiTU4sKYQfo76QV0KN53hlnqsaQg_L3SNb2xiVN5jazSbvu7-nPbRyiUcVyYH5qxg8C-iMa7yeUJwc-ZvelyZULDD8wdmfIb0MbNt6NG6_pcjjLPpwOzlF2QwpkNV--rJaxtHDhsSHM4rJIT_xYKFjsKtHp0TppHpKa-_EOAHtpkhNv1yHkkqyiEWMHBvkOgyYweUEI6K3fAHMDV_fRF-3STBI8xOZNMxhsi7nLC9ehTikgxJoTucSxojtnAXo"
+          />
+        </div>
+        <div
+          class="relative z-10 w-full px-margin max-w-7xl mx-auto text-white"
+        >
+          <div class="max-w-2xl">
+            <h1 class="font-display-lg text-5xl md:text-7xl mb-md">
+              Flavor in every bite.
+            </h1>
+            <p class="font-body-lg text-lg md:text-xl mb-xl opacity-90">
+              Experience the high-energy fusion of modern hospitality and
+              culinary excellence at Appetite. Crafting moments that linger long
+              after the meal.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-md">
+              <button
+                class="bg-primary-container text-on-primary-container font-bold px-xl py-md rounded-lg scale-100 active:scale-95 transition-transform"
+              >
+                Book a Table
+              </button>
+              <button
+                class="bg-white/10 backdrop-blur-md border border-white/30 text-white font-bold px-xl py-md rounded-lg scale-100 active:scale-95 transition-transform"
+              >
+                Explore Menu
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Categories Bento Grid -->
+      <section class="py-xl px-margin max-w-7xl mx-auto" id="menu">
+        <div
+          class="flex flex-col md:flex-row justify-between items-end mb-xl gap-md"
+        >
+          <div>
+            <span class="text-primary font-label-sm uppercase tracking-widest"
+              >Our Selection</span
+            >
+            <h2 class="font-display-lg text-4xl mt-xs">Curated Menu</h2>
+          </div>
+          <div class="flex gap-sm">
+            <button
+              class="px-md py-sm bg-primary text-on-primary rounded-full font-label-sm"
+            >
+              All
+            </button>
+            <button
+              class="px-md py-sm bg-surface-container text-on-surface-variant rounded-full font-label-sm hover:bg-primary/10 transition-colors"
+            >
+              Appetizers
+            </button>
+            <button
+              class="px-md py-sm bg-surface-container text-on-surface-variant rounded-full font-label-sm hover:bg-primary/10 transition-colors"
+            >
+              Main Course
+            </button>
+            <button
+              class="px-md py-sm bg-surface-container text-on-surface-variant rounded-full font-label-sm hover:bg-primary/10 transition-colors"
+            >
+              Drinks
+            </button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+          <!-- Large Featured Item -->
+          <div
+            class="md:col-span-8 group relative overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-lg"
+          >
+            <div class="aspect-[16/9] overflow-hidden">
+              <img
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                data-alt="A professional close-up of a premium grilled steak platter, featuring perfectly seared meat, roasted fingerling potatoes, and vibrant green asparagus. The lighting is high-contrast and dramatic, emphasizing the textures of the food. Warm Appetite Orange hues are reflected in the ambient lighting of the modern restaurant setting. This is a high-end gourmet presentation."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnqPI5athFMKR-eVYdstY73lMgrhLq9z7OCyGm2L7e0o-od4MjfdUE588sbadp6bnfKQzAGLu619RZ1TKNBKX8C4UqO6TSlU_jogY14k3a4lXzjf0RghEDAuBBmElMX5x083AVEj5Z9QE7iN3j2CZ3lZSU9orau3feND2IdW6oOJWo2gQQlhCvgQBKZpxLH7sGMFe5FNVOHXvE3WxmisHMn6ReQNM3x4mPUngK0zRNHNeJ-dRVeLRuDXFTS-wQtPy5t9w0Bj2TdHs"
+              />
+            </div>
+            <div class="p-lg border-t-4 border-primary">
+              <div class="flex justify-between items-start mb-sm">
+                <h3 class="font-display-md text-2xl">Aged Ribeye Platter</h3>
+                <span class="text-primary font-data-tabular">$42.00</span>
+              </div>
+              <p class="text-on-surface-variant font-body-md mb-md">
+                30-day dry-aged beef served with rosemary-infused butter, garlic
+                confit, and seasonal root vegetables.
+              </p>
+              <button
+                class="flex items-center gap-xs text-primary font-bold hover:gap-sm transition-all"
+              >
+                Add to Order
+                <span class="material-symbols-outlined">chevron_right</span>
+              </button>
+            </div>
+          </div>
+          <!-- Secondary Item -->
+          <div
+            class="md:col-span-4 group flex flex-col rounded-xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-lg"
+          >
+            <div class="aspect-square overflow-hidden">
+              <img
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                data-alt="A fresh, vibrant mediterranean salad bowl filled with bright greens, cherry tomatoes, olives, and crumbly feta cheese. The lighting is bright and airy, reflecting a healthy and clean light-mode UI aesthetic. The bowl sits on a white marble countertop, creating a sophisticated and appetizing visual for a restaurant menu."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCulo_lqlP8FO2JtoixHbLCF4OBpuntg5DVQBnjq81vLhZHygnkTYO8trHG50llUecpaZpnJ6nv7495I75e_9C6aXrk0_EasXFQhBjO9_C8DxOqk7rhl7zbfx7JLARQBErIYK0BTnC4nIN8O0ZfPG2GghyhcNjljWVakSkHeKoJBi9ISAj78hA-q4sLew3ik_lmm77fVD7d0yMx4JYO9oCVAVWkYM_GKLSoTQXbXG_LUORjr5dLTn3d2RHpELLH3IJ-36n01Gk9RAQ"
+              />
+            </div>
+            <div class="p-md grow">
+              <h3 class="font-display-md text-xl mb-xs">Harvest Green Bowl</h3>
+              <p class="text-on-surface-variant text-body-md mb-md">
+                Organic kale, roasted chickpeas, quinoa, and lemon-tahini
+                dressing.
+              </p>
+              <span class="text-primary font-data-tabular">$18.50</span>
+            </div>
+          </div>
+          <!-- Triple Grid Items -->
+          <div
+            class="md:col-span-4 group flex flex-col rounded-xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-lg"
+          >
+            <div class="h-48 overflow-hidden">
+              <img
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                data-alt="A decadent dessert plate featuring warm chocolate molten cake with a melting center, served alongside a scoop of vanilla bean gelato. The scene is intimate and moody with warm, selective lighting highlighting the drizzled chocolate. The plate sits on a dark charcoal surface, consistent with the corporate modern brand identity."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnvBDPjuYyBvPn6quqRwj9ilpqA6ImvDYxVsgmp4u-LPVddSdh1GXdvy23B9Op9Xo77Jdx6vWAb70wNHUP5tnEEmjEto8nzkk0hG-SiH_MiITGCkjNBSIRShgxVFORfeV8yaCpx8O5-xDufrRk6b_m9VTxj33uzYL8oDNzRuheEbcJFQ6tfG8kFOruh6_VkMp7Xoa8ZBSKFadce0dC3_KmfY6VT4VSmZQbkyu61wPLsU5ATqE1I_Ya2FEke9354JOJxzwXLscLYc8"
+              />
+            </div>
+            <div class="p-md">
+              <h3 class="font-display-md text-xl mb-xs">Lava Cake</h3>
+              <p class="text-on-surface-variant text-body-md mb-sm">
+                70% dark cocoa with Madagascar vanilla bean gelato.
+              </p>
+              <span class="text-primary font-data-tabular">$12.00</span>
+            </div>
+          </div>
+          <div
+            class="md:col-span-4 group flex flex-col rounded-xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-lg"
+          >
+            <div class="h-48 overflow-hidden">
+              <img
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                data-alt="Professional artisanal cocktail presentation with fresh citrus garnishes and clear ice cubes. The lighting is crisp and modern, emphasizing the vibrant orange liquid in a crystal glass. The background is a sophisticated, blurred-out bar setting, following the Appetite brand's high-energy hospitality theme."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuByLhBm97FWjILm7ePaC-WqJH4WO_Nq3yYc721QUODaLAThpWcT8SlwmEoS4DjkzIifd3VvrrB40Df9MpWjzxjD2-Y7N1u5f6Iwzg11Y1McpCi7DfuPtLF6hwbizT184Up-PxNHKDm8Z8jNqDIu46VnFVUxoY5BP9HNL4pHKpffcwaH9jeWVmB_kCXzdJ9pAFwcmz8HeyCdPlK8ZHBwl1R2X_aa1YwiYqOtFshXjn_Af08E3czjmbBUnof2JPEnj9CpwMDUcLIckUc"
+              />
+            </div>
+            <div class="p-md">
+              <h3 class="font-display-md text-xl mb-xs">
+                Aperol Spritz Modern
+              </h3>
+              <p class="text-on-surface-variant text-body-md mb-sm">
+                Prosecco, soda water, and our house-made orange bitters.
+              </p>
+              <span class="text-primary font-data-tabular">$14.00</span>
+            </div>
+          </div>
+          <div
+            class="md:col-span-4 group flex flex-col rounded-xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-lg"
+          >
+            <div class="h-48 overflow-hidden">
+              <img
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                data-alt="A beautifully plated appetizer of seared scallops on a bed of pea purée, garnished with edible flowers. The aesthetic is clean and minimal, using the white ceramic plate to highlight the delicate textures and colors. High-key lighting creates a professional, culinary-focused feel."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5u6XWL4i2O0KxE8Nw37LpCx_WVNvGJXN5ZPE06VZNsxJfXr1AI9tjB9MOYvw1Wyl5AtRIzON8ezIAc0ibQNwOWn9F-ArMZEeiUsfvy4lCJygJH8tj77jnrDs9sFbWjf-O9V6ZRbILAMKghIjZXcPZ2lk8kxUubUYrs2Ldeaf7kcb6JgYtcMEyrAI3iJ6HWG_6aokhhiJFaBLzok3m3jhZciHolrRsN1Hi9GXqSsJpzKiFZ8UH3-jZ-HzYdl9vuqf5wO3brkR23s0"
+              />
+            </div>
+            <div class="p-md">
+              <h3 class="font-display-md text-xl mb-xs">Seared Scallops</h3>
+              <p class="text-on-surface-variant text-body-md mb-sm">
+                Pacific scallops with pea purée and crispy pancetta.
+              </p>
+              <span class="text-primary font-data-tabular">$22.00</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Specials Reservation Banner -->
+      <section class="bg-inverse-surface py-xl px-margin">
+        <div
+          class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-xl"
+        >
+          <div class="w-full md:w-1/2">
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                class="w-full h-[400px] object-cover"
+                data-alt="A lively interior shot of Appetite restaurant during evening service. The space is filled with people dining at warm wood tables, with soft ambient lighting and an open kitchen visible in the background. The mood is welcoming and energetic, perfectly capturing the corporate modern hospitality environment described in the style guide."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAecJ8VM8l2ku8CmMOoXm1x4a0S6TuCANLZtlo435uQniogDNe7EsenrshhMzMKJEEBZ581hKeKbpjs_hp6ZiI4fSdD9--EIMcfkAsW9XnKLAMNDkTLC6XFLm0cLYuyq9FbgpYjWKClBGDEBWr_-Dh63BLiG1BVvAwV0obrvcztGvf_UevBtPV86MyYVycdP4DqA7QL9sDCt3WmXDp9JWK5-RFOzxMM9Y4svPlGNl60F4UZaUpggVWp24MY6yAtwDL0zEZOSBv_bqE"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+              ></div>
+              <div class="absolute bottom-lg left-lg">
+                <span
+                  class="bg-primary text-on-primary px-md py-xs rounded-full font-label-sm mb-sm inline-block"
+                  >LIVE KITCHEN</span
+                >
+                <p class="text-white font-display-md">
+                  Join us for the Weekend Brunch series.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="w-full md:w-1/2 text-white">
+            <h2 class="font-display-lg text-4xl mb-md">
+              Reserve your table today.
+            </h2>
+            <p class="font-body-lg opacity-80 mb-xl">
+              Planning a special event or a casual dinner? Our team is dedicated
+              to providing an unforgettable dining experience tailored to your
+              needs.
+            </p>
+            <form class="space-y-md">
+              <div class="grid grid-cols-2 gap-md">
+                <div class="flex flex-col gap-xs">
+                  <label class="font-label-sm opacity-60">DATE</label>
+                  <input
+                    class="bg-white/10 border-white/20 rounded-lg p-sm focus:border-primary outline-none text-white"
+                    type="date"
+                  />
+                </div>
+                <div class="flex flex-col gap-xs">
+                  <label class="font-label-sm opacity-60">GUESTS</label>
+                  <select
+                    class="bg-white/10 border-white/20 rounded-lg p-sm focus:border-primary outline-none text-white appearance-none"
+                  >
+                    <option>2 People</option>
+                    <option>4 People</option>
+                    <option>6+ People</option>
+                  </select>
+                </div>
+              </div>
+              <button
+                class="w-full bg-primary text-on-primary font-bold py-md rounded-lg hover:bg-primary-container transition-colors shadow-lg shadow-primary/20 active:scale-[0.98]"
+              >
+                Confirm Booking
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer
+      class="w-full py-xl px-margin flex flex-col md:flex-row justify-between items-center bg-surface-container-lowest border-t border-outline-variant"
+    >
+      <div
+        class="flex flex-col items-center md:items-start gap-sm mb-lg md:mb-0"
+      >
+        <span class="text-body-lg font-bold text-primary">Appetite</span>
+        <p class="font-label-sm text-on-surface-variant">
+          © 2024 Appetite Restaurant Management System.
+        </p>
+      </div>
+      <div class="flex gap-xl mb-lg md:mb-0">
+        <a
+          class="font-label-sm text-on-surface-variant hover:text-primary transition-colors"
+          href="#"
+          >Privacy Policy</a
+        >
+        <a
+          class="font-label-sm text-on-surface-variant hover:text-primary transition-colors"
+          href="#"
+          >Terms of Service</a
+        >
+        <a
+          class="font-label-sm text-on-surface-variant hover:text-primary transition-colors"
+          href="#"
+          >Support</a
+        >
+        <a
+          class="font-label-sm text-on-surface-variant hover:text-primary transition-colors"
+          href="#"
+          >Careers</a
+        >
+      </div>
+      <div class="flex gap-md">
+        <button
+          class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all"
+        >
+          <span class="material-symbols-outlined">public</span>
+        </button>
+        <button
+          class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-primary hover:text-on-primary transition-all"
+        >
+          <span class="material-symbols-outlined">mail</span>
+        </button>
+      </div>
+    </footer>
+    <!-- Mobile FAB -->
+    <button
+      class="fixed bottom-lg right-lg md:hidden bg-primary-container text-on-primary-container w-14 h-14 rounded-full shadow-lg flex items-center justify-center z-40 active:scale-90 transition-transform"
+    >
+      <span class="material-symbols-outlined">restaurant</span>
+    </button>
+  </body>
+</html>
