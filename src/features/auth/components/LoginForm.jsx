@@ -1,10 +1,88 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import SocialButton from "../../../components/common/SocialButton";
+import { login } from "../services/authApi";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  // HANDLE INPUT
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // clear error khi user nhập lại
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  // VALIDATE
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    }
+
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    if (!formData.password.trim()) {
+      newErrors.password = "Password is required";
+    }
+
+    if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    return newErrors;
+  };
+
+  // SUBMIT
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const { data } = await login(formData);
+      localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/admin/dashboard");
+    } catch (error) {
+      setErrors({
+        server: error.response?.data?.message || "Login failed. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-      <form className="space-y-5">
+      <form className="space-y-5" onSubmit={handleSubmit}>
+        {/* EMAIL */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-on-surface">
             Email Address
@@ -12,11 +90,19 @@ const LoginForm = () => {
 
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             placeholder="manager@restaurant.com"
             className="w-full rounded-2xl border border-outline-variant/60 bg-surface-container-low px-4 py-3.5 text-on-surface outline-none transition placeholder:text-on-surface-variant/50 focus:border-primary focus:ring-2 focus:ring-primary/20"
           />
+
+          {errors.email && (
+            <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+          )}
         </div>
 
+        {/* PASSWORD */}
         <div>
           <div className="mb-2 flex justify-between">
             <label className="text-sm font-semibold text-on-surface">
@@ -33,16 +119,32 @@ const LoginForm = () => {
 
           <input
             type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             placeholder="••••••••"
             className="w-full rounded-2xl border border-outline-variant/60 bg-surface-container-low px-4 py-3.5 text-on-surface outline-none transition placeholder:text-on-surface-variant/50 focus:border-primary focus:ring-2 focus:ring-primary/20"
           />
+
+          {errors.password && (
+            <p className="mt-1 text-sm text-red-500">{errors.password}</p>
+          )}
         </div>
 
+        {/* SERVER ERROR */}
+        {errors.server && (
+          <div className="rounded-xl bg-red-100 px-4 py-3 text-sm text-red-600">
+            {errors.server}
+          </div>
+        )}
+
+        {/* SUBMIT */}
         <button
           type="submit"
-          className="w-full rounded-2xl bg-primary py-3.5 text-base font-semibold text-on-primary shadow-md shadow-primary/25 transition hover:bg-primary-container hover:shadow-lg hover:shadow-primary/30"
+          disabled={loading}
+          className="w-full rounded-2xl bg-primary py-3.5 text-base font-semibold text-on-primary shadow-md shadow-primary/25 transition hover:bg-primary-container hover:shadow-lg hover:shadow-primary/30 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
 
@@ -54,7 +156,7 @@ const LoginForm = () => {
         </span>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-10">
+      <div className="mb-10 grid grid-cols-2 gap-4">
         <SocialButton title="Google" />
         <SocialButton title="SSO" />
       </div>
@@ -62,7 +164,10 @@ const LoginForm = () => {
       <div className="text-center">
         <p className="text-sm text-on-surface-variant">
           New to the platform?{" "}
-          <Link to="/register" className="font-bold text-primary hover:underline">
+          <Link
+            to="/register"
+            className="font-bold text-primary hover:underline"
+          >
             Create a new account
           </Link>
         </p>

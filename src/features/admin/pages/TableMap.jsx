@@ -1,10 +1,10 @@
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 
-// import FloorHeader from "../components/tablemap/FloorHeader";
-// import TableLegend from "../components/tablemap/TableLegend";
-// import QuickSummary from "../components/tablemap/QuickSummary";
-// import TableGrid from "../components/tablemap/TableGrid";
+import FloorHeader from "../components/tablemap/FloorHeader";
+import TableLegend from "../components/tablemap/TableLegend";
+import QuickSummary from "../components/tablemap/QuickSummary";
+import TableGrid from "../components/tablemap/TableGrid";
 
 const TableMap = () => {
   return (

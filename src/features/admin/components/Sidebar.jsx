@@ -1,4 +1,11 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
+const navClass = ({ isActive }) =>
+  `px-4 py-3 rounded font-semibold ${
+    isActive
+      ? "bg-orange-100 text-orange-600"
+      : "hover:bg-gray-100 text-gray-700"
+  }`;
 
 export default function Sidebar() {
   return (
@@ -9,37 +16,11 @@ export default function Sidebar() {
       </div>
 
       <nav className="flex-1 flex flex-col px-4 gap-2">
-        <Link
-          to="/admin/dashboard"
-          className="bg-orange-100 text-orange-600 px-4 py-3 rounded font-semibold"
-        >
-          Dashboard
-        </Link>
-
-        <Link
-          to="/admin/orders"
-          className="px-4 py-3 hover:bg-gray-100 rounded"
-        >
-          Live Orders
-        </Link>
-
-        <Link
-          to="/admin/tables"
-          className="px-4 py-3 hover:bg-gray-100 rounded"
-        >
-          Table Map
-        </Link>
-
-        <Link to="/admin/menu" className="px-4 py-3 hover:bg-gray-100 rounded">
-          Menu Manager
-        </Link>
-
-        <Link
-          to="/admin/reservations"
-          className="px-4 py-3 hover:bg-gray-100 rounded"
-        >
-          Reservations
-        </Link>
+        <NavLink to="/admin/dashboard" className={navClass}>Dashboard</NavLink>
+        <NavLink to="/admin/orders" className={navClass}>Live Orders</NavLink>
+        <NavLink to="/admin/tables" className={navClass}>Table Map</NavLink>
+        <NavLink to="/admin/menu" className={navClass}>Menu Manager</NavLink>
+        <NavLink to="/admin/reservations" className={navClass}>Reservations</NavLink>
       </nav>
     </aside>
   );
