@@ -8,20 +8,24 @@ import Orders from "../features/admin/pages/Orders";
 import Tables from "../features/admin/pages/TableMap";
 import Menu from "../features/admin/pages/Menu";
 import Reservations from "../features/admin/pages/Reservations";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/orders" element={<Orders />} />
-        <Route path="/admin/tables" element={<Tables />} />
-        <Route path="/admin/menu" element={<Menu />} />
-        <Route path="/admin/reservations" element={<Reservations />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/booking" element={<BookingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/admin/tables" element={<Tables />} />
+          <Route path="/admin/menu" element={<Menu />} />
+          <Route path="/admin/reservations" element={<Reservations />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
