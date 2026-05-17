@@ -1,4 +1,4 @@
-import { footerLinks } from "../data/landingData";
+import { footerLinks } from "../../data/landingData";
 
 const linkClass =
   "font-body text-xs font-bold uppercase tracking-wider text-on-surface-variant transition-colors hover:text-primary";
@@ -20,7 +20,9 @@ const LandingFooter = ({ variant = "full" }) => {
             : "mb-lg flex flex-col items-center gap-sm md:mb-0 md:items-start"
         }
       >
-        <span className="font-body text-lg font-bold text-primary">Appetite</span>
+        <span className="font-body text-lg font-bold text-primary">
+          Appetite
+        </span>
         <p
           className={`font-body text-xs font-bold uppercase tracking-wider text-on-surface-variant ${simple ? "mt-xs" : ""}`}
         >

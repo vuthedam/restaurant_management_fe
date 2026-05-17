@@ -1,6 +1,6 @@
 import MenuCategoryFilters from "./MenuCategoryFilters";
 import MenuBentoItem from "./MenuBentoItem";
-import { menuItems, menuSectionIntro } from "../data/landingData";
+import { menuItems, menuSectionIntro } from "../../data/landingData";
 
 const MenuSection = () => {
   const { kicker, title } = menuSectionIntro;

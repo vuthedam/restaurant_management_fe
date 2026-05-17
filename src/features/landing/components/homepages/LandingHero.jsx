@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { heroContent } from "../data/landingData";
+import { heroContent } from "../../data/landingData";
 
 const LandingHero = () => {
   const { imageSrc, imageAlt, title, subtitle } = heroContent;

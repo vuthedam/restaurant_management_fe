@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { navLinks } from "../data/landingData";
+import { navLinks } from "../../data/landingData";
 
 function linkTarget(item) {
   if (!item.to) return null;
@@ -30,10 +30,7 @@ function NavItem({ item, isActive, onNavigate }) {
 /**
  * Header dùng chung cho Home / Booking: activeLabel khớp `label` trong navLinks.
  */
-const SiteHeader = ({
-  activeLabel,
-  showStaffLoginMobile = true,
-}) => {
+const SiteHeader = ({ activeLabel, showStaffLoginMobile = true }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (

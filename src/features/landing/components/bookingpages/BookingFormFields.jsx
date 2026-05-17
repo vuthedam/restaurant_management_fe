@@ -1,5 +1,5 @@
 import BookingAreaCard from "./BookingAreaCard";
-import { bookingAreas, bookingTimeOptions } from "../data/bookingData";
+import { bookingAreas, bookingTimeOptions } from "../../data/bookingData";
 
 const inputClass =
   "w-full rounded-lg border border-outline-variant outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary";

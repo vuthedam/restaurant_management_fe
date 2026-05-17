@@ -1,9 +1,9 @@
-import SiteHeader from "../components/SiteHeader";
-import LandingHero from "../components/LandingHero";
-import MenuSection from "../components/MenuSection";
-import ReservationBanner from "../components/ReservationBanner";
-import LandingFooter from "../components/LandingFooter";
-import MobileOrderFab from "../components/MobileOrderFab";
+import SiteHeader from "../components/homepages/SiteHeader";
+import LandingHero from "../components/homepages/LandingHero";
+import MenuSection from "../components/homepages/MenuSection";
+import ReservationBanner from "../components/homepages/ReservationBanner";
+import LandingFooter from "../components/homepages/LandingFooter";
+import MobileOrderFab from "../components/homepages/MobileOrderFab";
 
 const HomePage = () => {
   return (

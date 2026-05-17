@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { menuFilters } from "../data/landingData";
+import { menuFilters } from "../../data/landingData";
 
 const MenuCategoryFilters = () => {
   const [active, setActive] = useState(menuFilters[0]);

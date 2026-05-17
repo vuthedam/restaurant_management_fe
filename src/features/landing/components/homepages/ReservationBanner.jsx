@@ -1,14 +1,8 @@
-import { reservationContent } from "../data/landingData";
+import { reservationContent } from "../../data/landingData";
 
 const ReservationBanner = () => {
-  const {
-    imageSrc,
-    imageAlt,
-    badge,
-    imageCaption,
-    title,
-    description,
-  } = reservationContent;
+  const { imageSrc, imageAlt, badge, imageCaption, title, description } =
+    reservationContent;
 
   return (
     <section className="bg-inverse-surface px-margin py-xl">

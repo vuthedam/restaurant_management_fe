@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useState } from "react";
-import SiteHeader from "../components/SiteHeader";
-import BookingFormFields from "../components/BookingFormFields";
-import BookingSummaryAside from "../components/BookingSummaryAside";
-import LandingFooter from "../components/LandingFooter";
+import SiteHeader from "../components/homepages/SiteHeader";
+import BookingFormFields from "../components/bookingpages/BookingFormFields";
+import BookingSummaryAside from "../components/bookingpages/BookingSummaryAside";
+import LandingFooter from "../components/homepages/LandingFooter";
 import { bookingAreas } from "../data/bookingData";
 import { formatDateLabel, todayIsoDate } from "../utils/bookingDate";
 
