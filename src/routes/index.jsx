@@ -9,10 +9,12 @@ import Tables from "../features/admin/pages/TableMap";
 import Menu from "../features/admin/pages/Menu";
 import Reservations from "../features/admin/pages/Reservations";
 import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "../contexts/AuthContext";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
+      <AuthProvider>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/booking" element={<BookingPage />} />
@@ -27,6 +29,7 @@ const AppRoutes = () => {
           <Route path="/admin/reservations" element={<Reservations />} />
         </Route>
       </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

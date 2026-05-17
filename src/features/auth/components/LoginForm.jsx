@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SocialButton from "../../../components/common/SocialButton";
-import { login } from "../services/authApi";
+import { useAuth } from "../../../contexts/AuthContext";
+import { getAuthErrorMessage, login } from "../services/authApi";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const { login: saveAuth } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -66,13 +68,22 @@ const LoginForm = () => {
 
     try {
       setLoading(true);
-      const { data } = await login(formData);
-      localStorage.setItem("token", data.accessToken);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      const result = await login(formData);
+      const payload = result?.data;
+
+      if (!payload?.accessToken) {
+        setErrors({ server: "Phản hồi đăng nhập không hợp lệ. Thử lại sau." });
+        return;
+      }
+
+      saveAuth({
+        accessToken: payload.accessToken,
+        user: payload.user,
+      });
       navigate("/admin/dashboard");
     } catch (error) {
       setErrors({
-        server: error.response?.data?.message || "Login failed. Please try again.",
+        server: getAuthErrorMessage(error, "Đăng nhập thất bại. Vui lòng thử lại."),
       });
     } finally {
       setLoading(false);

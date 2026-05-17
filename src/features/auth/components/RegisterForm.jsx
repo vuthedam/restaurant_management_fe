@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SocialButton from "../../../components/common/SocialButton";
-import { register } from "../services/authApi";
+import { getAuthErrorMessage, register } from "../services/authApi";
 
 const INPUT_CLASS =
   "w-full rounded-2xl border border-outline-variant/60 bg-surface-container-low px-4 py-3.5 text-on-surface outline-none transition placeholder:text-on-surface-variant/50 focus:border-primary focus:ring-2 focus:ring-primary/20";
@@ -91,9 +91,8 @@ const RegisterForm = () => {
       await register(formData);
       navigate("/login");
     } catch (error) {
-      console.error("Register error:", error?.response?.status, error?.response?.data);
       setErrors({
-        server: error?.response?.data?.message || "Registration failed. Please try again.",
+        server: getAuthErrorMessage(error, "Đăng ký thất bại. Vui lòng thử lại."),
       });
     } finally {
       setLoading(false);

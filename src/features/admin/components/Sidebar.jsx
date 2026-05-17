@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { LogOut } from "lucide-react";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useAuth } from "../../../contexts/AuthContext";
+import { getAvatarUrl, getRoleLabel } from "../../../utils/authStorage";
 
 const navClass = ({ isActive }) =>
   `px-4 py-3 rounded-xl font-semibold transition ${
@@ -11,45 +11,19 @@ const navClass = ({ isActive }) =>
   }`;
 
 export default function Sidebar() {
-  const [user, setUser] = useState(null);
+  const { user, logout } = useAuth();
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const token = localStorage.getItem("accessToken");
-
-        const res = await axios.get(
-          "https://restaurant-management-biap.onrender.com/api/users/me",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-
-        setUser(res.data.data);
-      } catch (error) {
-        console.error("Lỗi lấy user:", error);
-      }
-    };
-
-    fetchProfile();
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    window.location.href = "/login";
-  };
+  const displayName = user?.fullName || "User";
+  const displayRole = getRoleLabel(user?.role);
+  const avatarSrc = getAvatarUrl(user);
 
   return (
     <aside className="hidden lg:flex flex-col fixed left-0 top-0 h-full w-64 bg-white border-r shadow-sm">
-      {/* Header */}
       <div className="px-6 py-8">
         <h1 className="text-2xl font-bold text-orange-600">Admin Portal</h1>
         <p className="text-sm text-gray-500">Main Branch HQ</p>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 flex flex-col px-4 gap-2">
         <NavLink to="/admin/dashboard" className={navClass}>
           Dashboard
@@ -68,26 +42,21 @@ export default function Sidebar() {
         </NavLink>
       </nav>
 
-      {/* Footer user profile */}
       <div className="p-4 border-t bg-gray-50">
         <div className="flex items-center gap-3 mb-3">
           <img
-            src={user?.avatar || "https://i.pravatar.cc/100?img=12"}
-            alt="avatar"
-            className="w-11 h-11 rounded-full object-cover border"
+            src={avatarSrc}
+            alt={displayName}
+            className="w-11 h-11 rounded-full object-cover border bg-orange-100"
           />
-          <div className="flex-1">
-            <p className="font-semibold text-gray-800">
-              {user?.fullName || "Loading..."}
-            </p>
-            <p className="text-sm text-gray-500">
-              {user?.role || "Administrator"}
-            </p>
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-gray-800 truncate">{displayName}</p>
+            <p className="text-sm text-gray-500">{displayRole}</p>
           </div>
         </div>
 
         <button
-          onClick={handleLogout}
+          onClick={logout}
           className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-orange-500 text-white hover:bg-orange-600 transition"
         >
           <LogOut size={18} />
