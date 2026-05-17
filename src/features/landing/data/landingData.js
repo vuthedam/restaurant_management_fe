@@ -86,8 +86,7 @@ export const reservationContent = {
 export const navLinks = [
   { label: "Menu", to: "/", hash: "menu" },
   { label: "Book Table", to: "/booking" },
-  { label: "Orders", href: "#" },
-  { label: "Contact", href: "#" },
+  { label: "Contact", to: "/contact" },
 ];
 
 export const footerLinks = [
