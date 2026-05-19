@@ -8,9 +8,9 @@ import Dashboard from "../features/admin/pages/Dashboard";
 import Orders from "../features/admin/pages/Orders";
 import Tables from "../features/admin/pages/TableMap";
 import Menu from "../features/admin/pages/Menu";
-import Reservations from "../features/admin/pages/Reservations";
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthProvider } from "../contexts/AuthContext";
+import Reservation from "../features/admin/pages/Reservation";
 
 const AppRoutes = () => {
   return (
@@ -20,6 +20,7 @@ const AppRoutes = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/contact" element={<ContactPage />} />
+
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
@@ -28,7 +29,7 @@ const AppRoutes = () => {
             <Route path="/admin/orders" element={<Orders />} />
             <Route path="/admin/tables" element={<Tables />} />
             <Route path="/admin/menu" element={<Menu />} />
-            <Route path="/admin/reservations" element={<Reservations />} />
+            <Route path="/admin/reservations" element={<Reservation />} />
           </Route>
         </Routes>
       </AuthProvider>
