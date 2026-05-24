@@ -7,15 +7,13 @@ const LoginHeader = () => {
             restaurant
           </span>
         </div>
-
         <h1 className="text-2xl font-bold text-primary">Appetite</h1>
       </div>
 
       <div className="mb-10">
-        <h2 className="text-4xl font-bold mb-2">Welcome back</h2>
-
+        <h2 className="text-4xl font-bold mb-2">Chào mừng trở lại</h2>
         <p className="text-on-surface-variant">
-          Please enter your credentials to access the admin portal.
+          Nhập thông tin đăng nhập để truy cập cổng quản trị.
         </p>
       </div>
     </>

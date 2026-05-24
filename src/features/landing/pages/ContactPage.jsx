@@ -1,3 +1,13 @@
+/**
+ * PAGE CONTAINER: ContactPage.jsx
+ * TUYẾN ĐƯỜNG (ROUTE): /contact (Trang liên hệ)
+ * ĐỊA CHỈ FILE: table-order-ap/src/features/landing/pages/ContactPage.jsx
+ *
+ * MÔ TẢ:
+ * Trang liên hệ của nhà hàng. Cung cấp thông tin địa chỉ, email, số điện thoại,
+ * bản đồ chỉ đường, các câu hỏi thường gặp (FAQ) và form gửi tin nhắn phản hồi trực tuyến.
+ */
+
 import SiteHeader from "../components/homepages/SiteHeader";
 import ContactHero from "../components/contact/ContactHero";
 import ContactInfo from "../components/contact/ContactInfo";
@@ -9,7 +19,7 @@ import LandingFooter from "../components/homepages/LandingFooter";
 const ContactPage = () => {
   return (
     <div className="min-h-dvh bg-background font-body text-on-surface">
-      <SiteHeader activeLabel="Contact" />
+      <SiteHeader activeLabel="Liên hệ" />
       <main className="pt-[72px]">
         <ContactHero />
 

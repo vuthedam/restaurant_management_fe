@@ -18,8 +18,8 @@ export function formatDateLabel(iso) {
   if (!iso) return "—";
   const selected = new Date(`${iso}T12:00:00`);
   const today = new Date();
-  if (isSameCalendarDay(selected, today)) return "Today";
-  return selected.toLocaleDateString("en", {
+  if (isSameCalendarDay(selected, today)) return "Hôm nay";
+  return selected.toLocaleDateString("vi-VN", {
     weekday: "short",
     month: "short",
     day: "numeric",

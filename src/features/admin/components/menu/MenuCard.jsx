@@ -1,6 +1,6 @@
 import { Pencil, Trash2 } from "lucide-react";
 
-export default function MenuCard({ item }) {
+export default function MenuCard({ item, readOnly = false }) {
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition">
       <div className="relative h-52">
@@ -11,7 +11,7 @@ export default function MenuCard({ item }) {
         />
 
         <div className="absolute top-3 right-3 bg-orange-500 text-white px-3 py-1 rounded-lg text-sm font-bold">
-          ${item.price}
+          {item.priceLabel ?? item.price}
         </div>
       </div>
 
@@ -23,20 +23,22 @@ export default function MenuCard({ item }) {
             <p className="text-gray-500 text-sm">{item.category}</p>
           </div>
 
-          <div className="flex gap-2">
-            <button className="p-2 hover:bg-gray-100 rounded-lg">
-              <Pencil size={18} />
-            </button>
+          {!readOnly ? (
+            <div className="flex gap-2">
+              <button type="button" className="p-2 hover:bg-gray-100 rounded-lg">
+                <Pencil size={18} />
+              </button>
 
-            <button className="p-2 hover:bg-red-100 text-red-500 rounded-lg">
-              <Trash2 size={18} />
-            </button>
-          </div>
+              <button type="button" className="p-2 hover:bg-red-100 text-red-500 rounded-lg">
+                <Trash2 size={18} />
+              </button>
+            </div>
+          ) : null}
         </div>
 
         <div className="flex justify-between items-center border-t pt-3">
           <span className="text-sm text-gray-500">
-            {item.inStock ? "In Stock" : "Out Stock"}
+            {item.inStock ? "Còn hàng" : "Hết hàng"}
           </span>
 
           <span className="bg-orange-100 text-orange-600 text-xs px-3 py-1 rounded-lg">

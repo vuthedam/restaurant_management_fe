@@ -26,7 +26,7 @@ const LandingFooter = ({ variant = "full" }) => {
         <p
           className={`font-body text-xs font-bold uppercase tracking-wider text-on-surface-variant ${simple ? "mt-xs" : ""}`}
         >
-          © 2024 Appetite Restaurant Management System.
+          © 2024 Hệ thống quản lý nhà hàng Appetite.
         </p>
       </div>
 

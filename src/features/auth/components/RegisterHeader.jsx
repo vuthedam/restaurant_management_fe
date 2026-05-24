@@ -11,9 +11,9 @@ const RegisterHeader = () => {
       </div>
 
       <div className="mb-10">
-        <h2 className="text-4xl font-bold mb-2">Create account</h2>
+        <h2 className="text-4xl font-bold mb-2">Tạo tài khoản</h2>
         <p className="text-on-surface-variant">
-          Set up your admin account to get started.
+          Thiết lập tài khoản quản trị để bắt đầu sử dụng hệ thống.
         </p>
       </div>
     </>

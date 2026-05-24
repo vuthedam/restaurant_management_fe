@@ -35,7 +35,7 @@ const MenuBentoItem = ({
             type="button"
             className="flex items-center gap-xs font-bold text-primary transition-all hover:gap-sm"
           >
-            Add to Order
+            Thêm vào đơn
             <span className="material-symbols-outlined">chevron_right</span>
           </button>
         </div>

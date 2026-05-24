@@ -17,7 +17,7 @@ function BookingFormFields({ formId, onSubmit, values, onFieldChange }) {
             htmlFor="booking-full-name"
             className="block font-body text-xs font-bold uppercase tracking-wider text-on-surface-variant"
           >
-            Full name
+            Họ và tên
           </label>
           <div className="relative">
             <span className="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">
@@ -28,7 +28,7 @@ function BookingFormFields({ formId, onSubmit, values, onFieldChange }) {
               type="text"
               value={fullName}
               onChange={(e) => onFieldChange("fullName", e.target.value)}
-              placeholder="John Doe"
+              placeholder="Nguyễn Văn A"
               className={iconInputClass}
             />
           </div>
@@ -39,7 +39,7 @@ function BookingFormFields({ formId, onSubmit, values, onFieldChange }) {
             htmlFor="booking-phone"
             className="block font-body text-xs font-bold uppercase tracking-wider text-on-surface-variant"
           >
-            Phone number
+            Số điện thoại
           </label>
           <div className="relative">
             <span className="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">
@@ -50,7 +50,7 @@ function BookingFormFields({ formId, onSubmit, values, onFieldChange }) {
               type="tel"
               value={phone}
               onChange={(e) => onFieldChange("phone", e.target.value)}
-              placeholder="+1 (555) 000-0000"
+              placeholder="0901 234 567"
               className={iconInputClass}
             />
           </div>
@@ -63,7 +63,7 @@ function BookingFormFields({ formId, onSubmit, values, onFieldChange }) {
             htmlFor="booking-date"
             className="block font-body text-xs font-bold uppercase tracking-wider text-on-surface-variant"
           >
-            Date
+            Ngày
           </label>
           <input
             id="booking-date"
@@ -79,7 +79,7 @@ function BookingFormFields({ formId, onSubmit, values, onFieldChange }) {
             htmlFor="booking-time"
             className="block font-body text-xs font-bold uppercase tracking-wider text-on-surface-variant"
           >
-            Time
+            Giờ
           </label>
           <select
             id="booking-time"
@@ -100,7 +100,7 @@ function BookingFormFields({ formId, onSubmit, values, onFieldChange }) {
             htmlFor="booking-guests"
             className="block font-body text-xs font-bold uppercase tracking-wider text-on-surface-variant"
           >
-            Guests
+            Số khách
           </label>
           <input
             id="booking-guests"
@@ -119,7 +119,7 @@ function BookingFormFields({ formId, onSubmit, values, onFieldChange }) {
 
       <div className="space-y-md">
         <h3 className="font-display text-2xl font-semibold text-on-surface">
-          Select Table Area
+          Chọn khu vực
         </h3>
         <div className="grid grid-cols-1 gap-md md:grid-cols-3">
           {bookingAreas.map((a) => (
@@ -129,7 +129,7 @@ function BookingFormFields({ formId, onSubmit, values, onFieldChange }) {
               title={a.title}
               subtitle={a.subtitle}
               imageSrc={a.imageSrc}
-              imageAlt={`${a.title} dining area`}
+              imageAlt={`Khu vực ${a.title}`}
               checked={area === a.id}
               onSelect={(id) => onFieldChange("area", id)}
             />

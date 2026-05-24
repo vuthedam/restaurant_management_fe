@@ -1,52 +1,37 @@
 import ReservationRow from "./ReservationRow";
 
-const ReservationTable = () => {
-  const reservations = [
-    {
-      name: "Julianne Smith",
-      guests: 4,
-      table: "T-14",
-      time: "18:30",
-      status: "Waiting",
-    },
-    {
-      name: "Robert Kenedy",
-      guests: 2,
-      table: "T-08",
-      time: "19:00",
-      status: "Confirmed",
-    },
-    {
-      name: "Mia Lowenstein",
-      guests: 6,
-      table: "L-02",
-      time: "18:00",
-      status: "Checked-In",
-    },
-  ];
+const ReservationTable = ({ rows = [], onAdvance, onCancel, onNoShow, busyId }) => {
+  if (!rows.length) {
+    return (
+      <div className="flex-1 flex items-center justify-center p-12 text-gray-500">
+        Chưa có đặt bàn nào.
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-x-auto flex-1">
       <table className="w-full text-left min-w-[800px]">
         <thead className="bg-gray-100">
           <tr>
-            <th className="px-4 py-3">Guest Name</th>
-
-            <th className="px-4 py-3">Party Size</th>
-
-            <th className="px-4 py-3">Assigned Table</th>
-
-            <th className="px-4 py-3">Booking Time</th>
-
-            <th className="px-4 py-3">Status</th>
-
-            <th className="px-4 py-3 text-right">Actions</th>
+            <th className="px-4 py-3">Tên khách</th>
+            <th className="px-4 py-3">Số khách</th>
+            <th className="px-4 py-3">Bàn</th>
+            <th className="px-4 py-3">Giờ đặt</th>
+            <th className="px-4 py-3">Trạng thái</th>
+            <th className="px-4 py-3 text-right">Thao tác</th>
           </tr>
         </thead>
-
         <tbody>
-          {reservations.map((item, index) => (
-            <ReservationRow key={index} {...item} />
+          {rows.map((item) => (
+            <ReservationRow
+              key={item.id}
+              {...item}
+              onAdvance={onAdvance}
+              onCancel={onCancel}
+              onNoShow={onNoShow}
+              busy={busyId === item.id}
+            />
           ))}
         </tbody>
       </table>

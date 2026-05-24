@@ -6,7 +6,7 @@ const AuthBanner = () => {
       <div className="absolute inset-0">
         <img
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1bY4T52EfM-7cmjoP7uuNmZar7s0EBd1nuD1SrwIezfHzL4C3y-A1qcGPZptGoYyqSTeGo2UvtcE-GaO2VlIvIc9CY1dc1V27KJO00uxDgQ51JIul5nhHr2d-tFc1vf1chIg5P7yZCv_nVwpJzovp7R2ZRFM3_IsU0a5LPwOCHv6EQAj0486aZaWsUWEHbaYm1DqXPlVJ2-5p51o4R0KiSMZTc9Sajo_sb3moDam44vmpk-4_namFgmooV-JnBPQcykRAUxLKDCk"
-          alt=""
+          alt="Nhà hàng Appetite"
           className="h-full w-full object-cover opacity-25"
         />
       </div>
@@ -30,23 +30,23 @@ const AuthBanner = () => {
 
         <div className="flex min-h-0 flex-1 flex-col justify-center py-4">
           <h1 className="max-w-[22ch] font-display text-4xl font-bold leading-[1.08] tracking-tight text-white xl:text-[2.75rem] xl:leading-[1.06]">
-            Manage your culinary excellence.
+            Quản lý ẩm thực chuyên nghiệp.
           </h1>
           <p className="mt-5 max-w-md text-base leading-relaxed text-white/88 xl:text-lg">
-            The centralized platform for restaurant operations.
+            Nền tảng tập trung cho vận hành nhà hàng hiện đại.
           </p>
         </div>
 
         <div className="grid shrink-0 grid-cols-2 gap-4 xl:gap-5">
           <FeatureCard
             icon="analytics"
-            title="Real-time Insights"
-            desc="Monitor live performance."
+            title="Thống kê thời gian thực"
+            desc="Theo dõi hiệu suất trực tiếp."
           />
           <FeatureCard
             icon="security"
-            title="Enterprise Security"
-            desc="Encrypted business protection."
+            title="Bảo mật doanh nghiệp"
+            desc="Mã hóa và bảo vệ dữ liệu."
           />
         </div>
       </div>

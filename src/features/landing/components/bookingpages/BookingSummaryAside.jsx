@@ -1,9 +1,9 @@
-const BookingSummaryAside = ({ formId, dateLabel, time, guests, areaLabel }) => {
+const BookingSummaryAside = ({ formId, dateLabel, time, guests, areaLabel, submitting }) => {
   return (
     <aside className="lg:w-1/3">
       <div className="sticky top-24 rounded-xl border border-outline-variant bg-surface-container-lowest p-lg shadow-sm lg:top-28">
         <h3 className="mb-lg font-display text-2xl font-semibold text-on-surface">
-          Reservation Summary
+          Tóm tắt đặt bàn
         </h3>
 
         <div className="mb-lg space-y-md border-b border-outline-variant pb-lg">
@@ -13,7 +13,7 @@ const BookingSummaryAside = ({ formId, dateLabel, time, guests, areaLabel }) => 
             </div>
             <div>
               <p className="font-body text-xs font-bold uppercase tracking-wider text-secondary">
-                Date &amp; time
+                Ngày &amp; giờ
               </p>
               <p className="font-bold text-on-surface">
                 {dateLabel}
@@ -28,10 +28,10 @@ const BookingSummaryAside = ({ formId, dateLabel, time, guests, areaLabel }) => 
             </div>
             <div>
               <p className="font-body text-xs font-bold uppercase tracking-wider text-secondary">
-                Guests
+                Số khách
               </p>
               <p className="font-bold text-on-surface">
-                {guests} {guests === 1 ? "Person" : "People"}
+                {guests} {guests === 1 ? "người" : "người"}
               </p>
             </div>
           </div>
@@ -42,7 +42,7 @@ const BookingSummaryAside = ({ formId, dateLabel, time, guests, areaLabel }) => 
             </div>
             <div>
               <p className="font-body text-xs font-bold uppercase tracking-wider text-secondary">
-                Area
+                Khu vực
               </p>
               <p className="font-bold text-on-surface">{areaLabel}</p>
             </div>
@@ -58,7 +58,7 @@ const BookingSummaryAside = ({ formId, dateLabel, time, guests, areaLabel }) => 
               info
             </span>
             <p className="font-body text-xs font-bold uppercase italic leading-snug tracking-wider text-on-surface-variant">
-              Tables are held for 15 minutes past reservation time.
+              Bàn được giữ trong 15 phút sau giờ đặt.
             </p>
           </div>
         </div>
@@ -66,13 +66,14 @@ const BookingSummaryAside = ({ formId, dateLabel, time, guests, areaLabel }) => 
         <button
           type="submit"
           form={formId}
-          className="w-full scale-100 rounded-lg bg-primary py-md font-body text-lg font-bold text-on-primary shadow-md transition-all hover:brightness-110 active:scale-[0.98]"
+          disabled={submitting}
+          className="w-full scale-100 rounded-lg bg-primary py-md font-body text-lg font-bold text-on-primary shadow-md transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-60 cursor-pointer"
         >
-          Confirm Booking
+          {submitting ? "Đang gửi..." : "Xác nhận đặt bàn"}
         </button>
 
         <p className="mt-md text-center font-body text-xs font-bold uppercase tracking-wider text-secondary">
-          By clicking, you agree to our Terms of Service.
+          Bằng việc xác nhận, bạn đồng ý với Điều khoản dịch vụ.
         </p>
       </div>
     </aside>

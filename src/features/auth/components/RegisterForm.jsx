@@ -41,35 +41,35 @@ const RegisterForm = () => {
 
     // FULL NAME
     if (!formData.fullName.trim()) {
-      newErrors.fullName = "Full name is required";
+      newErrors.fullName = "Vui lòng nhập họ tên";
     }
 
     // EMAIL
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = "Vui lòng nhập email";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Invalid email format";
+      newErrors.email = "Email không hợp lệ";
     }
 
     // PASSWORD
     if (!formData.password.trim()) {
-      newErrors.password = "Password is required";
+      newErrors.password = "Vui lòng nhập mật khẩu";
     } else if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+      newErrors.password = "Mật khẩu tối thiểu 8 ký tự";
     } else if (!/\d/.test(formData.password)) {
-      newErrors.password = "Password must contain at least one number";
+      newErrors.password = "Mật khẩu phải có ít nhất một chữ số";
     }
 
     // CONFIRM PASSWORD
     if (!formData.confirmPassword.trim()) {
-      newErrors.confirmPassword = "Confirm password is required";
+      newErrors.confirmPassword = "Vui lòng xác nhận mật khẩu";
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
+      newErrors.confirmPassword = "Mật khẩu xác nhận không khớp";
     }
 
     // TERMS
     if (!formData.terms) {
-      newErrors.terms = "You must accept Terms & Privacy Policy";
+      newErrors.terms = "Bạn cần đồng ý Điều khoản & Chính sách bảo mật";
     }
 
     return newErrors;
@@ -105,7 +105,7 @@ const RegisterForm = () => {
         {/* FULL NAME */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-on-surface">
-            Full Name
+            Họ và tên
           </label>
 
           <input
@@ -113,7 +113,7 @@ const RegisterForm = () => {
             name="fullName"
             value={formData.fullName}
             onChange={handleChange}
-            placeholder="John Doe"
+            placeholder="Nguyễn Văn A"
             className={INPUT_CLASS}
           />
 
@@ -125,7 +125,7 @@ const RegisterForm = () => {
         {/* EMAIL */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-on-surface">
-            Email Address
+            Địa chỉ email
           </label>
 
           <input
@@ -133,7 +133,7 @@ const RegisterForm = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="manager@restaurant.com"
+            placeholder="quanly@nhahang.com"
             className={INPUT_CLASS}
           />
 
@@ -145,7 +145,7 @@ const RegisterForm = () => {
         {/* PASSWORD */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-on-surface">
-            Password
+            Mật khẩu
           </label>
 
           <input
@@ -158,7 +158,7 @@ const RegisterForm = () => {
           />
 
           <p className="mt-1.5 text-xs text-on-surface-variant/70">
-            Minimum 8 characters with at least one number.
+            Tối thiểu 8 ký tự, có ít nhất một chữ số.
           </p>
 
           {errors.password && (
@@ -169,7 +169,7 @@ const RegisterForm = () => {
         {/* CONFIRM PASSWORD */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-on-surface">
-            Confirm Password
+            Xác nhận mật khẩu
           </label>
 
           <input
@@ -204,19 +204,19 @@ const RegisterForm = () => {
               htmlFor="terms"
               className="cursor-pointer text-sm text-on-surface-variant"
             >
-              I agree to the{" "}
+              Tôi đồng ý với{" "}
               <a
                 href="#"
                 className="font-semibold text-primary hover:underline"
               >
-                Terms of Service
+                Điều khoản dịch vụ
               </a>{" "}
-              and{" "}
+              và{" "}
               <a
                 href="#"
                 className="font-semibold text-primary hover:underline"
               >
-                Privacy Policy
+                Chính sách bảo mật
               </a>
             </label>
           </div>
@@ -239,7 +239,7 @@ const RegisterForm = () => {
           disabled={loading}
           className="w-full rounded-2xl bg-primary py-3.5 text-base font-semibold text-on-primary shadow-md shadow-primary/25 transition hover:bg-primary-container hover:shadow-lg hover:shadow-primary/30 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? "Creating account..." : "Create Account"}
+          {loading ? "Đang tạo tài khoản..." : "Tạo tài khoản"}
         </button>
       </form>
 
@@ -247,7 +247,7 @@ const RegisterForm = () => {
         <div className="border-t border-outline-variant/40" />
 
         <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white px-4 text-xs font-medium uppercase tracking-wide text-on-surface-variant/70">
-          or continue with
+          hoặc tiếp tục với
         </span>
       </div>
 
@@ -258,9 +258,9 @@ const RegisterForm = () => {
 
       <div className="text-center">
         <p className="text-sm text-on-surface-variant">
-          Already have an account?{" "}
+          Đã có tài khoản?{" "}
           <Link to="/login" className="font-bold text-primary hover:underline">
-            Sign in
+            Đăng nhập
           </Link>
         </p>
       </div>

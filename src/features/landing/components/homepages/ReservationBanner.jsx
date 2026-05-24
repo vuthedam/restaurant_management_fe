@@ -37,7 +37,7 @@ const ReservationBanner = () => {
             <div className="grid grid-cols-2 gap-md">
               <div className="flex flex-col gap-xs">
                 <label className="font-body text-xs font-bold uppercase tracking-wider opacity-60">
-                  Date
+                  Ngày
                 </label>
                 <input
                   type="date"
@@ -46,12 +46,12 @@ const ReservationBanner = () => {
               </div>
               <div className="flex flex-col gap-xs">
                 <label className="font-body text-xs font-bold uppercase tracking-wider opacity-60">
-                  Guests
+                  Số khách
                 </label>
                 <select className="appearance-none rounded-lg border border-white/20 bg-white/10 p-sm text-white outline-none focus:border-primary">
-                  <option>2 People</option>
-                  <option>4 People</option>
-                  <option>6+ People</option>
+                  <option>2 người</option>
+                  <option>4 người</option>
+                  <option>6+ người</option>
                 </select>
               </div>
             </div>
@@ -59,7 +59,7 @@ const ReservationBanner = () => {
               type="submit"
               className="w-full rounded-lg bg-primary py-md font-bold text-on-primary shadow-lg shadow-primary/20 transition-colors hover:bg-primary-container active:scale-[0.98]"
             >
-              Confirm Booking
+              Xác nhận đặt bàn
             </button>
           </form>
         </div>

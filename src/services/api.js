@@ -24,6 +24,11 @@ api.interceptors.response.use(
         window.location.href = "/login";
       }
     }
+    if (error.response?.status === 403) {
+      const message =
+        error.response?.data?.message || "Bạn không có quyền thực hiện thao tác này.";
+      error.forbiddenMessage = message;
+    }
     return Promise.reject(error);
   }
 );

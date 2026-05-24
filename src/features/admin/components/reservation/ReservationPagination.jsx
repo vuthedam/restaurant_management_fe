@@ -1,12 +1,44 @@
-const ReservationPagination = () => {
+const ReservationPagination = ({
+  page = 1,
+  pageCount = 1,
+  shown = 0,
+  total = 0,
+  onPageChange,
+}) => {
   return (
-    <div className="p-4 border-t flex items-center justify-between">
-      <p className="text-sm text-gray-500">Showing 5 of 42 reservations</p>
-
+    <div className="p-4 border-t flex flex-wrap items-center justify-between gap-3">
+      <p className="text-sm text-gray-500">
+        Trang {page}/{pageCount} — hiển thị {shown} / {total} đặt bàn
+      </p>
       <div className="flex gap-2">
-        <button className="w-8 h-8 border rounded-lg">1</button>
-
-        <button className="w-8 h-8 border rounded-lg">2</button>
+        <button
+          type="button"
+          disabled={page <= 1}
+          onClick={() => onPageChange?.(page - 1)}
+          className="px-3 py-1 border rounded-lg text-sm disabled:opacity-40"
+        >
+          Trước
+        </button>
+        {Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
+          <button
+            key={n}
+            type="button"
+            onClick={() => onPageChange?.(n)}
+            className={`w-8 h-8 border rounded-lg text-sm font-semibold ${
+              n === page ? "bg-orange-100 text-orange-600" : ""
+            }`}
+          >
+            {n}
+          </button>
+        ))}
+        <button
+          type="button"
+          disabled={page >= pageCount}
+          onClick={() => onPageChange?.(page + 1)}
+          className="px-3 py-1 border rounded-lg text-sm disabled:opacity-40"
+        >
+          Sau
+        </button>
       </div>
     </div>
   );

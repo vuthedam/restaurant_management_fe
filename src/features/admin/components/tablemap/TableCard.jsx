@@ -29,22 +29,30 @@ const statusConfig = {
     icon: "event_available",
   },
 
-  active: {
-    border: "border-primary",
-    text: "text-primary",
-    bg: "bg-primary/5",
-    icon: "restaurant",
+  waiting_payment: {
+    border: "border-purple-500",
+    text: "text-purple-600",
+    bg: "bg-purple-50",
+    icon: "payments",
+  },
+
+  inactive: {
+    border: "border-gray-300",
+    text: "text-gray-400",
+    bg: "bg-gray-100",
+    icon: "block",
   },
 };
 
-const TableCard = ({ table }) => {
-  const config = statusConfig[table.status];
+const TableCard = ({ table, isSelected, onClick }) => {
+  const config = statusConfig[table.status] || statusConfig.inactive;
 
   return (
     <div
+      onClick={onClick}
       className={clsx(
         "relative rounded-xl p-4 border-2 flex flex-col items-center justify-center cursor-pointer transition hover:shadow-lg",
-        config.border,
+        isSelected ? "ring-4 ring-orange-500 border-orange-600 scale-105 shadow-md z-10" : config.border,
         config.bg,
       )}
     >

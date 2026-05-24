@@ -55,10 +55,10 @@ const SiteHeader = ({ activeLabel, showStaffLoginMobile = true }) => {
 
         <div className="flex items-center gap-md">
           <Link
-            to="/login"
+            to="/order?table=demo-table-01"
             className="rounded-lg bg-primary px-lg py-sm font-body text-xs font-bold uppercase tracking-wider text-on-primary transition-transform hover:opacity-95 active:scale-95"
           >
-            Order Now
+            Đặt món
           </Link>
           <button
             type="button"
@@ -94,7 +94,7 @@ const SiteHeader = ({ activeLabel, showStaffLoginMobile = true }) => {
                 className="font-body text-base font-semibold text-primary"
                 onClick={() => setMobileOpen(false)}
               >
-                Staff login
+                Đăng nhập nhân viên
               </Link>
             ) : null}
           </div>

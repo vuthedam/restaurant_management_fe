@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SocialButton from "../../../components/common/SocialButton";
 import { useAuth } from "../../../contexts/AuthContext";
+import { canAccessPanel } from "../../../config/adminPermissions";
 import { getAuthErrorMessage, login } from "../services/authApi";
 
 const LoginForm = () => {
@@ -37,19 +38,19 @@ const LoginForm = () => {
     const newErrors = {};
 
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = "Vui lòng nhập email";
     }
 
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Invalid email format";
+      newErrors.email = "Email không hợp lệ";
     }
 
     if (!formData.password.trim()) {
-      newErrors.password = "Password is required";
+      newErrors.password = "Vui lòng nhập mật khẩu";
     }
 
     if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+      newErrors.password = "Mật khẩu tối thiểu 6 ký tự";
     }
 
     return newErrors;
@@ -76,6 +77,13 @@ const LoginForm = () => {
         return;
       }
 
+      if (!canAccessPanel(payload.user?.role)) {
+        setErrors({
+          server: "Tài khoản không có quyền truy cập cổng quản lý nhà hàng.",
+        });
+        return;
+      }
+
       saveAuth({
         accessToken: payload.accessToken,
         user: payload.user,
@@ -96,7 +104,7 @@ const LoginForm = () => {
         {/* EMAIL */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-on-surface">
-            Email Address
+            Địa chỉ email
           </label>
 
           <input
@@ -104,7 +112,7 @@ const LoginForm = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="manager@restaurant.com"
+            placeholder="quanly@nhahang.com"
             className="w-full rounded-2xl border border-outline-variant/60 bg-surface-container-low px-4 py-3.5 text-on-surface outline-none transition placeholder:text-on-surface-variant/50 focus:border-primary focus:ring-2 focus:ring-primary/20"
           />
 
@@ -117,14 +125,14 @@ const LoginForm = () => {
         <div>
           <div className="mb-2 flex justify-between">
             <label className="text-sm font-semibold text-on-surface">
-              Password
+              Mật khẩu
             </label>
 
             <button
               type="button"
               className="text-sm font-medium text-primary transition hover:text-primary-container"
             >
-              Forgot password?
+              Quên mật khẩu?
             </button>
           </div>
 
@@ -155,7 +163,7 @@ const LoginForm = () => {
           disabled={loading}
           className="w-full rounded-2xl bg-primary py-3.5 text-base font-semibold text-on-primary shadow-md shadow-primary/25 transition hover:bg-primary-container hover:shadow-lg hover:shadow-primary/30 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Đang đăng nhập..." : "Đăng nhập"}
         </button>
       </form>
 
@@ -163,7 +171,7 @@ const LoginForm = () => {
         <div className="border-t border-outline-variant/40" />
 
         <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white px-4 text-xs font-medium uppercase tracking-wide text-on-surface-variant/70">
-          or continue with
+          hoặc tiếp tục với
         </span>
       </div>
 
@@ -174,12 +182,12 @@ const LoginForm = () => {
 
       <div className="text-center">
         <p className="text-sm text-on-surface-variant">
-          New to the platform?{" "}
+          Chưa có tài khoản?{" "}
           <Link
             to="/register"
             className="font-bold text-primary hover:underline"
           >
-            Create a new account
+            Đăng ký ngay
           </Link>
         </p>
       </div>

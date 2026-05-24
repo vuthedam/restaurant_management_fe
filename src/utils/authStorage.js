@@ -89,16 +89,16 @@ export function clearInvalidToken() {
 }
 
 export function getAvatarUrl(user) {
-  const name = user?.fullName || "User";
+  const name = user?.fullName || "Người dùng";
   if (user?.avatar) return user.avatar;
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f97316&color=fff&size=128`;
 }
 
 export const ROLE_LABELS = {
-  admin: "Administrator",
-  staff: "Staff",
+  admin: "Quản trị viên",
+  staff: "Nhân viên",
 };
 
 export function getRoleLabel(role) {
-  return ROLE_LABELS[role] ?? role ?? "Staff";
+  return ROLE_LABELS[role] ?? role ?? "Nhân viên";
 }

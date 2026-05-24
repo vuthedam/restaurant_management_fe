@@ -1,65 +1,123 @@
-import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
+/**
+ * PAGE CONTAINER: Menu.jsx (Menu Management)
+ * TUYẾN ĐƯỜNG (ROUTE): /admin/menu
+ * ĐỊA CHỈ FILE: table-order-ap/src/features/admin/pages/Menu.jsx
+ *
+ * MÔ TẢ:
+ * Trang quản lý thực đơn dành cho Admin và Staff (quyền chỉnh sửa hạn chế).
+ * Hỗ trợ hiển thị danh sách món ăn phân theo danh mục, tìm kiếm và lọc.
+ * Cho phép Admin thêm mới món ăn, chỉnh sửa thông tin món ăn (tên, mô tả, giá,
+ * hình ảnh, trạng thái còn/hết hàng) thông qua MenuItemFormModal.
+ */
 
-import TopBar from "../components/menu/TopBar";
+import { useMemo, useState } from "react";
+import AdminLayout from "../../../layouts/AdminLayout";
 import CategoryTabs from "../components/menu/CategoryTabs";
 import CategorySection from "../components/menu/CategorySection";
-
-const starters = [
-  {
-    id: 1,
-    name: "Classic Bruschetta",
-    category: "Italian appetizers",
-    price: 12.5,
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDN2-oiBR5b5x9lbqhWkIW667QEXZlUUniV6k1YWleomDFLVl7aHWGmRj-xFmbNkDn2SsHAj1AaocxQrEEuD7TPPhv5xkqrXhZUlWzel5dL7UmP9RtcdXkj8CNNeA73fL6-NICK5gv-ZiU-zP5ii0-NskXF4npJnGkUO1OvYn9961YnDrRZd4O31DId-7fZLyU7m0KbjgtfsXdZGydal22r7hedhCWxu3Uuew-EOi30pgjf9J2WegJq9esC3IIspOx4Pl-JkyckdNA",
-    status: "Popular",
-    inStock: true,
-  },
-
-  {
-    id: 2,
-    name: "Zesty Quinoa Bowl",
-    category: "Healthy & Light",
-    price: 14,
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuApMjJUVXflBCTYeSbTOLigiG7MO-b682v8I-EqgYJx3iyXEo1dDZuSYISlQ6YuaonoXkx9X2P1JPIz7weCERybKfM3t29BDnR6oYtGJn8cGVn7m4SVw8hpBUN4QVZMAcLqZ6DNLMpOUgKhQMEjN9cKEO0S46LJMlaid6L9mbYbV3LguS6GKOIfFe2X4t2bMTrJTk0_bH3sJlKo4jHNai0WEnvkRLtoGjV8o0z2zYDDcAD7WONrIGrtsZ-cuNR4a4Es2SavGIxAzJU",
-    status: "Vegan",
-    inStock: true,
-  },
-];
-
-const mains = [
-  {
-    id: 3,
-    name: "Slow-Braised Short Rib",
-    category: "Signature Dish",
-    price: 32,
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDB2_Z6PHp2-xgwoBp9t37StrLqyrbOwAaqrJm6SuFO90XTUoMlcqvfErnTelH8hQRJWn1jn9TsmPO9SqxLlgcrRING8QQg-EKTWD3wj3iAnMbU5eryzCkvd3lYlWMp5bbuiKTjZ_lbmofInhmvvNPHjWtkJVawYqp4gMSsLNc5xKBcqkCDyObLiyYzNaz-xTkywF6GhYVj0qKm39K_qhgvzCVyMsrEPlgB-a-dNZM6CTmdevyKKfN_CGEHst8kjwE159Lt0ILYnH8",
-    status: "High Margin",
-    inStock: true,
-  },
-];
+import MenuItemFormModal from "../components/menu/MenuItemFormModal";
+import { PageError, PageLoading } from "../components/common/PageState";
+import useAdminList from "../hooks/useAdminList";
+import { mapMenuItemForCard } from "../utils/adminMappers";
+import { canManageMenu } from "../../../config/adminPermissions";
+import { useAuth } from "../../../contexts/AuthContext";
 
 export default function Menu() {
+  const { user } = useAuth();
+  const allowManage = canManageMenu(user?.role);
+  const { items: menuItems, loading: menuLoading, error: menuError, reload } =
+    useAdminList("/menu-items");
+  const { items: categories, loading: catLoading } = useAdminList("/categories");
+  const [activeTab, setActiveTab] = useState("all");
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const loading = menuLoading || catLoading;
+  const error = menuError;
+
+  const categoryMap = useMemo(() => {
+    const map = {};
+    categories.forEach((c) => {
+      map[String(c._id)] = c.name;
+    });
+    return map;
+  }, [categories]);
+
+  const mappedItems = useMemo(
+    () =>
+      menuItems.map((item) => {
+        const id = item.categoryId?._id ?? item.categoryId;
+        let categoryName = "—";
+        if (typeof item.categoryId === "object" && item.categoryId?.name) {
+          categoryName = item.categoryId.name;
+        } else if (id) {
+          categoryName = categoryMap[String(id)] || "—";
+        }
+        return mapMenuItemForCard(item, categoryName);
+      }),
+    [menuItems, categoryMap],
+  );
+
+  const filtered =
+    activeTab === "all"
+      ? mappedItems
+      : mappedItems.filter((item) => {
+          const cat = categories.find((c) => c._id === activeTab);
+          return item.category === cat?.name;
+        });
+
+  const grouped = useMemo(() => {
+    const groups = {};
+    filtered.forEach((item) => {
+      const key = item.category || "Khác";
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(item);
+    });
+    return groups;
+  }, [filtered]);
+
+  const tabs = useMemo(
+    () => [
+      { id: "all", label: "Tất cả" },
+      ...categories.map((c) => ({ id: c._id, label: c.name })),
+    ],
+    [categories],
+  );
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <Sidebar />
+    <AdminLayout
+      title="Quản lý thực đơn"
+      actionLabel={allowManage ? "Thêm món mới" : undefined}
+      onAction={allowManage ? () => setModalOpen(true) : undefined}
+    >
+      {allowManage ? (
+        <MenuItemFormModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          categories={categories}
+          onSuccess={reload}
+        />
+      ) : null}
 
-      <div className="flex-1 lg:ml-64">
-        <Header />
+      {loading ? <PageLoading /> : null}
+      {!loading && error ? <PageError message={error} onRetry={reload} /> : null}
 
-        <TopBar />
+      {!loading && !error ? (
+        <div className="space-y-8">
+          <CategoryTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
-        <div className="p-6 space-y-8">
-          <CategoryTabs />
-
-          <CategorySection title="Starters" items={starters} />
-
-          <CategorySection title="Main Course" items={mains} />
+          {Object.keys(grouped).length ? (
+            Object.entries(grouped).map(([title, items]) => (
+              <CategorySection
+                key={title}
+                title={title}
+                items={items}
+                readOnly={!allowManage}
+              />
+            ))
+          ) : (
+            <p className="text-center text-gray-500 py-12">Chưa có món trong thực đơn.</p>
+          )}
         </div>
-      </div>
-    </div>
+      ) : null}
+    </AdminLayout>
   );
 }

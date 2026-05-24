@@ -27,13 +27,13 @@ const LandingHero = () => {
               to="/booking"
               className="inline-flex justify-center rounded-lg bg-primary-container px-xl py-md font-bold text-on-primary-container transition-transform hover:opacity-95 active:scale-95"
             >
-              Book a Table
+              Đặt bàn
             </Link>
             <button
               type="button"
               className="rounded-lg border border-white/30 bg-white/10 px-xl py-md font-bold text-white backdrop-blur-md transition-transform hover:bg-white/15 active:scale-95"
             >
-              Explore Menu
+              Xem thực đơn
             </button>
           </div>
         </div>

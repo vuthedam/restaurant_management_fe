@@ -1,25 +1,25 @@
 const items = [
   {
-    name: "Avocado Power Bowl",
-    sold: "84 sold today",
-    price: "$1,428",
+    name: "Tô xanh Avocado",
+    sold: "84 phần hôm nay",
+    price: "1.428.000₫",
   },
   {
-    name: "Truffle Marguerita",
-    sold: "65 sold today",
-    price: "$1,170",
+    name: "Pizza Truffle",
+    sold: "65 phần hôm nay",
+    price: "1.170.000₫",
   },
   {
-    name: "Signature BBQ Ribs",
-    sold: "42 sold today",
-    price: "$924",
+    name: "Sườn BBQ đặc biệt",
+    sold: "42 phần hôm nay",
+    price: "924.000₫",
   },
 ];
 
 export default function TopMenuItems() {
   return (
     <div className="bg-white border rounded-xl p-6 shadow-sm">
-      <h3 className="text-lg font-bold mb-4">Top Menu Items</h3>
+      <h3 className="text-lg font-bold mb-4">Món bán chạy</h3>
 
       <div className="space-y-4">
         {items.map((item) => (
