@@ -1,10 +1,17 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useLocation } from "react-router-dom";
 import api from "../services/api";
 import {
   clearInvalidToken,
   clearSession,
   getInitialUser,
+  getRefreshToken,
   getToken,
   getUserFromToken,
   isTokenExpired,
@@ -23,9 +30,11 @@ export function AuthProvider({ children }) {
     if (!token) return;
 
     if (isTokenExpired(token)) {
-      clearSession();
-      setUser(null);
-      return;
+      if (!getRefreshToken()) {
+        clearSession();
+        setUser(null);
+        return;
+      }
     }
 
     const cached = getInitialUser();
@@ -59,6 +68,7 @@ export function AuthProvider({ children }) {
     const profile = normalizeUser(session.user);
     saveSession({
       token: session.accessToken || session.token,
+      refreshToken: session.refreshToken,
       user: profile,
     });
     setUser(profile);

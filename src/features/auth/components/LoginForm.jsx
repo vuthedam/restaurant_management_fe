@@ -86,12 +86,16 @@ const LoginForm = () => {
 
       saveAuth({
         accessToken: payload.accessToken,
+        refreshToken: payload.refreshToken,
         user: payload.user,
       });
       navigate("/admin/dashboard");
     } catch (error) {
       setErrors({
-        server: getAuthErrorMessage(error, "Đăng nhập thất bại. Vui lòng thử lại."),
+        server: getAuthErrorMessage(
+          error,
+          "Đăng nhập thất bại. Vui lòng thử lại.",
+        ),
       });
     } finally {
       setLoading(false);

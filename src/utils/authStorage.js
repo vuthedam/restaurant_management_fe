@@ -1,9 +1,16 @@
 const TOKEN_KEY = "token";
+const REFRESH_TOKEN_KEY = "refreshToken";
 const USER_KEY = "user";
 const LEGACY_TOKEN_KEY = "accessToken";
 
 export function getToken() {
-  return localStorage.getItem(TOKEN_KEY) || localStorage.getItem(LEGACY_TOKEN_KEY);
+  return (
+    localStorage.getItem(TOKEN_KEY) || localStorage.getItem(LEGACY_TOKEN_KEY)
+  );
+}
+
+export function getRefreshToken() {
+  return localStorage.getItem(REFRESH_TOKEN_KEY);
 }
 
 export function isTokenExpired(token) {
@@ -49,10 +56,7 @@ export function normalizeUser(user) {
   if (!user) return null;
 
   const fullName =
-    user.fullName ||
-    user.name ||
-    user.email?.split("@")[0] ||
-    "User";
+    user.fullName || user.name || user.email?.split("@")[0] || "User";
 
   return {
     ...user,
@@ -66,10 +70,13 @@ export function getInitialUser() {
   return normalizeUser(getStoredUser()) || normalizeUser(getUserFromToken());
 }
 
-export function saveSession({ token, user }) {
+export function saveSession({ token, refreshToken, user }) {
   if (token) {
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.removeItem(LEGACY_TOKEN_KEY);
+  }
+  if (refreshToken) {
+    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
   }
   if (user) {
     localStorage.setItem(USER_KEY, JSON.stringify(normalizeUser(user)));
@@ -78,6 +85,7 @@ export function saveSession({ token, user }) {
 
 export function clearSession() {
   localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
   localStorage.removeItem(LEGACY_TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
 }
