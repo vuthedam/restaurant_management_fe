@@ -52,9 +52,11 @@ const QuickSummary = ({ table, allTables = [], reloadTables }) => {
       if (table.status === "occupied" || table.status === "waiting_payment") {
         setLoadingSession(true);
         try {
-          const res = await api.get(`/table-sessions?tableId=${table._id}`);
+          const res = await api.get(
+            `/table-sessions?tableId=${table._id}&status=active`,
+          );
           const session = res.data?.data?.[0];
-          if (session && (session.status === "active" || session.status === "waiting_payment")) {
+          if (session?.status === "active") {
             setActiveSession(session);
             setGuestCountInput(session.guestCount || 1);
           } else {
@@ -113,9 +115,7 @@ const QuickSummary = ({ table, allTables = [], reloadTables }) => {
       tableId: table._id,
       customerName: walkInName.trim() || "Khách vãng lai",
       guestCount: Number(walkInGuests),
-      status: "active",
     });
-    await patchAdmin(`/tables/${table._id}`, { status: "occupied" });
     setSuccess("Đã mở bàn thành công!");
     reloadTables();
   });
@@ -152,9 +152,7 @@ const QuickSummary = ({ table, allTables = [], reloadTables }) => {
     if (!window.confirm("Hủy phiên dùng bàn? Mọi thông tin chưa thanh toán sẽ bị huỷ.")) return;
     await patchAdmin(`/table-sessions/${activeSession._id}`, {
       status: "cancelled",
-      endedAt: new Date().toISOString(),
     });
-    await patchAdmin(`/tables/${table._id}`, { status: "available" });
     setSuccess("Đã hủy bàn thành công!");
     reloadTables();
   });

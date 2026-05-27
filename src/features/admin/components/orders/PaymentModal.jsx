@@ -85,7 +85,7 @@ export default function PaymentModal({
     setLoading(true);
     setError(null);
     try {
-      await api.post(`/payments/${payment._id}/confirm`);
+      await api.post(`/payments/${payment._id}/confirm`, { confirmed: true });
       setStep("done");
     } catch (err) {
       setError(getApiError(err, "Không xác nhận được thanh toán."));
