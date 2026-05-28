@@ -8,16 +8,19 @@ export default function useAdminDashboard() {
   const [orders, setOrders] = useState([]);
   const [tables, setTables] = useState([]);
   const [payments, setPayments] = useState([]);
+  const [orderItems, setOrderItems] = useState([]);
 
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const [ordersResult, tablesResult, paymentsResult] = await Promise.allSettled([
-        fetchAdminList("/orders"),
-        fetchAdminList("/tables"),
-        fetchAdminList("/payments"),
-      ]);
+      const [ordersResult, tablesResult, paymentsResult, orderItemsResult] =
+        await Promise.allSettled([
+          fetchAdminList("/orders"),
+          fetchAdminList("/tables"),
+          fetchAdminList("/payments"),
+          fetchAdminList("/order-items"),
+        ]);
 
       const ordersData =
         ordersResult.status === "fulfilled" ? ordersResult.value : [];
@@ -25,18 +28,27 @@ export default function useAdminDashboard() {
         tablesResult.status === "fulfilled" ? tablesResult.value : [];
       const paymentsData =
         paymentsResult.status === "fulfilled" ? paymentsResult.value : [];
+      const orderItemsData =
+        orderItemsResult.status === "fulfilled" ? orderItemsResult.value : [];
 
       setOrders(Array.isArray(ordersData) ? ordersData : []);
       setTables(Array.isArray(tablesData) ? tablesData : []);
       setPayments(Array.isArray(paymentsData) ? paymentsData : []);
+      setOrderItems(Array.isArray(orderItemsData) ? orderItemsData : []);
 
       // Chỉ báo lỗi khi tất cả endpoint đều fail; nếu fail 1 phần vẫn render dashboard.
       if (
         ordersResult.status === "rejected" &&
         tablesResult.status === "rejected" &&
-        paymentsResult.status === "rejected"
+        paymentsResult.status === "rejected" &&
+        orderItemsResult.status === "rejected"
       ) {
-        throw ordersResult.reason || tablesResult.reason || paymentsResult.reason;
+        throw (
+          ordersResult.reason ||
+          tablesResult.reason ||
+          paymentsResult.reason ||
+          orderItemsResult.reason
+        );
       }
     } catch (err) {
       setError(
@@ -72,6 +84,58 @@ export default function useAdminDashboard() {
       status: ORDER_STATUS_LABELS[o.status] || o.status,
     }));
 
+  const now = new Date();
+  const dayLabels = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+  const weekRevenueByDay = Array.from({ length: 7 }).map((_, idx) => {
+    const day = new Date(now);
+    day.setHours(0, 0, 0, 0);
+    day.setDate(now.getDate() - (6 - idx));
+    const nextDay = new Date(day);
+    nextDay.setDate(day.getDate() + 1);
+
+    const value = payments
+      .filter((p) => p.status === "paid")
+      .filter((p) => {
+        const paidAt = p.paidAt || p.createdAt;
+        if (!paidAt) return false;
+        const time = new Date(paidAt).getTime();
+        return time >= day.getTime() && time < nextDay.getTime();
+      })
+      .reduce((sum, p) => sum + Number(p.amount || 0), 0);
+
+    return {
+      label: dayLabels[day.getDay()],
+      value,
+    };
+  });
+
+  const topMenuItems = Object.values(
+    orderItems
+      .filter((item) => item.status !== "cancelled")
+      .reduce((acc, item) => {
+        const key = String(item.menuItemId?._id || item.menuItemId || item.name || "");
+        if (!key) return acc;
+        if (!acc[key]) {
+          acc[key] = {
+            id: key,
+            name: item.name || item.menuItemId?.name || "Món chưa rõ",
+            quantity: 0,
+            revenue: 0,
+          };
+        }
+        acc[key].quantity += Number(item.quantity || 0);
+        acc[key].revenue += Number(item.subtotal || 0);
+        return acc;
+      }, {}),
+  )
+    .sort((a, b) => b.quantity - a.quantity || b.revenue - a.revenue)
+    .slice(0, 5)
+    .map((item) => ({
+      ...item,
+      sold: `${item.quantity} phần`,
+      price: formatCurrency(item.revenue),
+    }));
+
   return {
     loading,
     error,
@@ -84,5 +148,7 @@ export default function useAdminDashboard() {
         totalTables > 0 ? `${activeTables} / ${totalTables} bàn` : "Chưa có bàn",
     },
     recentOrders,
+    weekRevenueByDay,
+    topMenuItems,
   };
 }
