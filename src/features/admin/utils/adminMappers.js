@@ -5,7 +5,7 @@ import {
   ORDER_STATUS_LABELS,
   RESERVATION_STATUS_LABELS,
 } from "./adminLabels";
-import { getNextOrderStatus } from "./adminWorkflow";
+import { canAdvanceOrderStatus, getNextOrderStatus } from "./adminWorkflow";
 
 const ORDER_STATUS_UI = {
   pending: {
@@ -58,6 +58,11 @@ export function mapOrderToCard(order, { tableLookup = {}, orderItems = [] } = {}
   const ui = ORDER_STATUS_UI[order.status] || ORDER_STATUS_UI.pending;
   const statusLabel = ORDER_STATUS_LABELS[order.status] || order.status;
   const nextStatus = getNextOrderStatus(order.status);
+  const canAdvance = canAdvanceOrderStatus(
+    order.status,
+    nextStatus,
+    orderItems,
+  );
   const lineItems = orderItems.length
     ? orderItems.map((item) => ({
         id: item._id,
@@ -80,7 +85,11 @@ export function mapOrderToCard(order, { tableLookup = {}, orderItems = [] } = {}
     id: order._id,
     rawStatus: order.status,
     nextStatus,
-    disabled: !nextStatus,
+    disabled: !nextStatus || !canAdvance,
+    advanceHint:
+      nextStatus === "completed" && !canAdvance
+        ? "Cần phục vụ xong tất cả món trước khi hoàn tất đơn"
+        : null,
     table: resolveTableLabel(order, tableLookup),
     timeAgo: formatRelativeTime(order.createdAt),
     time: order.orderNumber || formatTime(order.createdAt),

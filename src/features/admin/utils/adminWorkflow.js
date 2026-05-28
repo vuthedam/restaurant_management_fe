@@ -15,6 +15,20 @@ export function getNextOrderStatus(status) {
   return ORDER_STATUS_NEXT[status] ?? null;
 }
 
+/** Chỉ cho phép Hoàn tất đơn khi mọi món (không hủy) đã phục vụ xong. */
+export function canAdvanceOrderStatus(orderStatus, nextStatus, orderItems = []) {
+  if (!nextStatus) return false;
+  if (nextStatus !== "completed") return true;
+
+  const activeItems = orderItems.filter((item) => item.status !== "cancelled");
+  if (!activeItems.length) return false;
+
+  return (
+    orderStatus === "served" &&
+    activeItems.every((item) => item.status === "served")
+  );
+}
+
 export function getNextReservationStatus(status) {
   return RESERVATION_STATUS_NEXT[status] ?? null;
 }

@@ -244,19 +244,28 @@ export default function OrderTable({
                           <button
                             type="button"
                             onClick={() => onAdvance(order)}
-                            disabled={updatingId === order.id}
-                            className={`w-full py-2 px-3 rounded-lg text-xs font-bold text-white transition flex items-center justify-center gap-1 cursor-pointer shadow-sm hover:shadow ${order.buttonColor} hover:brightness-95 disabled:opacity-50`}
+                            disabled={updatingId === order.id || order.disabled}
+                            title={order.advanceHint || ""}
+                            className={`w-full py-2 px-3 rounded-lg text-xs font-bold text-white transition flex items-center justify-center gap-1 shadow-sm hover:shadow ${order.buttonColor} hover:brightness-95 disabled:opacity-50 disabled:cursor-not-allowed ${
+                              order.disabled ? "" : "cursor-pointer"
+                            }`}
                           >
                             <span className="material-symbols-outlined text-sm font-bold">
                               check_circle
                             </span>
                             <span>{updatingId === order.id ? "Đang xử lý..." : order.action}</span>
                           </button>
-                        ) : (
+                        ) : null}
+                        {order.nextStatus && order.advanceHint ? (
+                          <p className="text-[10px] text-amber-700 leading-snug">
+                            {order.advanceHint}
+                          </p>
+                        ) : null}
+                        {!order.nextStatus ? (
                           <div className="w-full text-center py-2 bg-gray-100 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-wider">
                             {order.action}
                           </div>
-                        )}
+                        ) : null}
 
                         <button
                           type="button"

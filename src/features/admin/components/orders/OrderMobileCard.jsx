@@ -77,8 +77,11 @@ export default function OrderMobileCard({
             <button
               type="button"
               onClick={() => onAdvance(order)}
-              disabled={updatingId === order.id}
-              className={`flex-1 py-2 rounded-lg text-xs font-bold text-white transition flex items-center justify-center gap-0.5 cursor-pointer ${order.buttonColor} hover:brightness-95`}
+              disabled={updatingId === order.id || order.disabled}
+              title={order.advanceHint || ""}
+              className={`flex-1 py-2 rounded-lg text-xs font-bold text-white transition flex items-center justify-center gap-0.5 ${order.buttonColor} hover:brightness-95 disabled:opacity-50 disabled:cursor-not-allowed ${
+                order.disabled ? "" : "cursor-pointer"
+              }`}
             >
               <span className="material-symbols-outlined text-sm font-bold">check_circle</span>
               <span>{updatingId === order.id ? "..." : order.action}</span>

@@ -9,7 +9,7 @@
  * Cho phép cập nhật trạng thái đơn hàng, từng món, thêm/sửa/xóa món trong đơn đang hoạt động.
  */
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import AdminLayout from "../../../layouts/AdminLayout";
 import OrderTable from "../components/orders/OrderTable";
@@ -19,6 +19,7 @@ import { PageError, PageLoading } from "../components/common/PageState";
 import useAdminList from "../hooks/useAdminList";
 import { mapOrderToCard } from "../utils/adminMappers";
 import {
+  fetchAdminList,
   getApiError,
   patchAdmin,
   postAdmin,
@@ -29,15 +30,46 @@ export default function Orders() {
   const [searchParams, setSearchParams] = useSearchParams();
   const tableId = searchParams.get("tableId") || "";
 
-  const {
-    items: orders,
-    loading,
-    error,
-    reload,
-  } = useAdminList(tableId ? `/orders?tableId=${tableId}` : "/orders");
+  const ordersPath = tableId ? `/orders?tableId=${tableId}` : "/orders";
   const { items: tables } = useAdminList("/tables");
-  const { items: orderItems } = useAdminList("/order-items");
   const { items: menuItems } = useAdminList("/menu-items");
+
+  const [orders, setOrders] = useState([]);
+  const [orderItems, setOrderItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const loadOrdersData = useCallback(
+    async ({ silent = false } = {}) => {
+      if (!silent) {
+        setLoading(true);
+        setError(null);
+      }
+      try {
+        const [ordersData, itemsData] = await Promise.all([
+          fetchAdminList(ordersPath),
+          fetchAdminList("/order-items"),
+        ]);
+        setOrders(Array.isArray(ordersData) ? ordersData : []);
+        setOrderItems(Array.isArray(itemsData) ? itemsData : []);
+      } catch (err) {
+        if (!silent) {
+          setError(
+            getApiError(err, "Không tải được dữ liệu đơn hàng. Kiểm tra backend."),
+          );
+        }
+      } finally {
+        if (!silent) setLoading(false);
+      }
+    },
+    [ordersPath],
+  );
+
+  useEffect(() => {
+    loadOrdersData();
+  }, [loadOrdersData]);
+
+  const reload = () => loadOrdersData({ silent: false });
 
   const [updatingId, setUpdatingId] = useState(null);
   const [actionError, setActionError] = useState(null);
@@ -142,13 +174,52 @@ export default function Orders() {
     [menuItems],
   );
 
+  const applyOrdersSnapshot = useCallback(
+    (ordersData, itemsData) => {
+      const nextOrders = Array.isArray(ordersData) ? ordersData : [];
+      const nextItems = Array.isArray(itemsData) ? itemsData : [];
+      setOrders(nextOrders);
+      setOrderItems(nextItems);
+
+      setEditingOrder((prev) => {
+        if (!prev) return prev;
+        const order = nextOrders.find((o) => String(o._id) === String(prev.id));
+        if (!order) return prev;
+        const itemsForOrder = nextItems.filter(
+          (item) =>
+            String(item.orderId?._id ?? item.orderId) === String(prev.id),
+        );
+        return mapOrderToCard(order, { tableLookup, orderItems: itemsForOrder });
+      });
+    },
+    [tableLookup],
+  );
+
+  const syncAfterItemChange = useCallback(async () => {
+    try {
+      const [ordersData, itemsData] = await Promise.all([
+        fetchAdminList(ordersPath),
+        fetchAdminList("/order-items"),
+      ]);
+      applyOrdersSnapshot(ordersData, itemsData);
+    } catch {
+      // Giữ state hiện tại nếu đồng bộ nền thất bại.
+    }
+  }, [ordersPath, applyOrdersSnapshot]);
+
   const handleAdvance = async (order) => {
-    if (!order.nextStatus) return;
+    if (!order.nextStatus || order.disabled) return;
     setUpdatingId(order.id);
     setActionError(null);
     try {
-      await patchAdmin(`/orders/${order.id}`, { status: order.nextStatus });
-      await reload();
+      const updated = await patchAdmin(`/orders/${order.id}`, {
+        status: order.nextStatus,
+      });
+      setOrders((prev) =>
+        prev.map((o) =>
+          String(o._id) === String(order.id) ? { ...o, ...updated } : o,
+        ),
+      );
     } catch (err) {
       setActionError(getApiError(err, "Không cập nhật được trạng thái đơn."));
     } finally {
@@ -160,7 +231,7 @@ export default function Orders() {
     setActionError(null);
     try {
       await patchAdmin(`/order-items/${itemId}`, { status: nextStatus });
-      await reload();
+      await syncAfterItemChange();
     } catch (err) {
       setActionError(
         getApiError(err, "Không cập nhật được trạng thái món ăn."),
@@ -177,7 +248,7 @@ export default function Orders() {
     setActionError(null);
     try {
       await patchAdmin(`/order-items/${item._id}`, { quantity: nextQty });
-      await reload();
+      await syncAfterItemChange();
     } catch (err) {
       setActionError(getApiError(err, "Không cập nhật được số lượng."));
     }
@@ -188,7 +259,7 @@ export default function Orders() {
     setActionError(null);
     try {
       await deleteAdmin(`/order-items/${item._id}`);
-      await reload();
+      await syncAfterItemChange();
     } catch (err) {
       setActionError(getApiError(err, "Không xóa được món ăn."));
     }
@@ -227,7 +298,7 @@ export default function Orders() {
       }
       setSelectedAddMenuId("");
       setSelectedAddQty(1);
-      await reload();
+      await syncAfterItemChange();
     } catch (err) {
       setActionError(getApiError(err, "Không thêm được món vào đơn."));
     }
