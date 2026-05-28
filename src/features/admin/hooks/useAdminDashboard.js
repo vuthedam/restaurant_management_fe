@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { fetchAdminList } from "../services/adminApi";
 import { formatCurrency, ORDER_STATUS_LABELS } from "../utils/adminLabels";
-import { mapOrderToCard } from "../utils/adminMappers";
 
 export default function useAdminDashboard() {
   const [loading, setLoading] = useState(true);
@@ -14,14 +13,31 @@ export default function useAdminDashboard() {
     setLoading(true);
     setError(null);
     try {
-      const [ordersData, tablesData, paymentsData] = await Promise.all([
+      const [ordersResult, tablesResult, paymentsResult] = await Promise.allSettled([
         fetchAdminList("/orders"),
         fetchAdminList("/tables"),
         fetchAdminList("/payments"),
       ]);
+
+      const ordersData =
+        ordersResult.status === "fulfilled" ? ordersResult.value : [];
+      const tablesData =
+        tablesResult.status === "fulfilled" ? tablesResult.value : [];
+      const paymentsData =
+        paymentsResult.status === "fulfilled" ? paymentsResult.value : [];
+
       setOrders(Array.isArray(ordersData) ? ordersData : []);
       setTables(Array.isArray(tablesData) ? tablesData : []);
       setPayments(Array.isArray(paymentsData) ? paymentsData : []);
+
+      // Chỉ báo lỗi khi tất cả endpoint đều fail; nếu fail 1 phần vẫn render dashboard.
+      if (
+        ordersResult.status === "rejected" &&
+        tablesResult.status === "rejected" &&
+        paymentsResult.status === "rejected"
+      ) {
+        throw ordersResult.reason || tablesResult.reason || paymentsResult.reason;
+      }
     } catch (err) {
       setError(
         err.response?.data?.message ||
@@ -38,7 +54,9 @@ export default function useAdminDashboard() {
 
   const paidToday = payments.filter((p) => p.status === "paid");
   const revenue = paidToday.reduce((sum, p) => sum + (p.amount || 0), 0);
-  const activeTables = tables.filter((t) => t.status === "occupied").length;
+  const activeTables = tables.filter(
+    (t) => t.status === "occupied" || t.status === "waiting_payment",
+  ).length;
   const totalTables = tables.filter((t) => t.status !== "inactive").length;
   const occupancy =
     totalTables > 0 ? Math.round((activeTables / totalTables) * 100) : 0;
@@ -54,11 +72,6 @@ export default function useAdminDashboard() {
       status: ORDER_STATUS_LABELS[o.status] || o.status,
     }));
 
-  const orderCards = orders
-    .filter((o) => !["completed", "cancelled"].includes(o.status))
-    .slice(0, 6)
-    .map(mapOrderToCard);
-
   return {
     loading,
     error,
@@ -71,6 +84,5 @@ export default function useAdminDashboard() {
         totalTables > 0 ? `${activeTables} / ${totalTables} bàn` : "Chưa có bàn",
     },
     recentOrders,
-    orderCards,
   };
 }
