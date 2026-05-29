@@ -64,8 +64,20 @@ export default function useAdminDashboard() {
     load();
   }, [load]);
 
-  const paidToday = payments.filter((p) => p.status === "paid");
-  const revenue = paidToday.reduce((sum, p) => sum + (p.amount || 0), 0);
+  const paidPayments = payments.filter((p) => p.status === "paid");
+  const revenueRecords =
+    paidPayments.length > 0
+      ? paidPayments
+      : orders
+          .filter((o) => o.status === "completed")
+          .map((o) => ({
+            status: "paid",
+            amount: o.finalAmount ?? o.subtotal ?? 0,
+            paidAt: o.updatedAt || o.createdAt,
+            createdAt: o.createdAt,
+          }));
+
+  const revenue = revenueRecords.reduce((sum, p) => sum + Number(p.amount || 0), 0);
   const activeTables = tables.filter(
     (t) => t.status === "occupied" || t.status === "waiting_payment",
   ).length;
@@ -93,8 +105,7 @@ export default function useAdminDashboard() {
     const nextDay = new Date(day);
     nextDay.setDate(day.getDate() + 1);
 
-    const value = payments
-      .filter((p) => p.status === "paid")
+    const value = revenueRecords
       .filter((p) => {
         const paidAt = p.paidAt || p.createdAt;
         if (!paidAt) return false;
