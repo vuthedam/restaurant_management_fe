@@ -109,6 +109,10 @@ export default function PaymentModal({
           <p className="text-sm text-gray-500">
             Chọn phương thức thanh toán cho bàn này.
           </p>
+          <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2">
+            Chỉ tính tiền các món đã lên bàn (trạng thái &quot;Đã lên món&quot;).
+            Món đang chờ hoặc đang nấu sẽ không được tính vào hóa đơn.
+          </p>
 
           <div className="grid grid-cols-2 gap-3">
             {METHODS.map((m) => (
@@ -165,6 +169,12 @@ export default function PaymentModal({
       {/* Bước: Hiển thị QR chuyển khoản */}
       {step === "qr" && payment && (
         <div className="space-y-5 text-center">
+          {payment.unservedItemCount > 0 ? (
+            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 text-left">
+              Còn {payment.unservedItemCount} món chưa lên bàn — không tính trong
+              hóa đơn này.
+            </p>
+          ) : null}
           <div className="bg-gray-50 rounded-xl p-4 border">
             <p className="text-xs text-gray-500 mb-1">Số tiền cần thanh toán</p>
             <p className="text-3xl font-bold text-orange-600">{amountLabel}</p>
@@ -234,6 +244,12 @@ export default function PaymentModal({
       {/* Bước: Xác nhận tiền mặt */}
       {step === "confirm" && payment && (
         <div className="space-y-5 text-center">
+          {payment.unservedItemCount > 0 ? (
+            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 text-left">
+              Còn {payment.unservedItemCount} món chưa lên bàn — không tính trong
+              hóa đơn này.
+            </p>
+          ) : null}
           <div className="bg-gray-50 rounded-xl p-6 border">
             <span className="material-symbols-outlined text-5xl text-green-600">
               payments
