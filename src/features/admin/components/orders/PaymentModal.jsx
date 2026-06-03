@@ -45,6 +45,15 @@ export default function PaymentModal({
   const [payment, setPayment] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = () => {
+    if (!payment?.tableSessionId) return;
+    const reviewUrl = `${window.location.origin}/review?session=${payment.tableSessionId}`;
+    navigator.clipboard.writeText(reviewUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const reset = () => {
     setMethod("banking");
@@ -294,22 +303,65 @@ export default function PaymentModal({
 
       {/* Bước: Hoàn tất */}
       {step === "done" && (
-        <div className="text-center space-y-4 py-4">
-          <span className="material-symbols-outlined text-6xl text-green-500">
-            check_circle
-          </span>
-          <h3 className="text-xl font-bold text-gray-900">
-            Thanh toán thành công!
-          </h3>
-          <p className="text-sm text-gray-500">
-            Bàn đã được reset và sẵn sàng phục vụ khách mới.
-          </p>
+        <div className="text-center space-y-5 py-2">
+          <div className="flex flex-col items-center">
+            <span className="material-symbols-outlined text-5xl text-green-500">
+              check_circle
+            </span>
+            <h3 className="text-lg font-bold text-gray-900 mt-2">
+              Thanh toán thành công!
+            </h3>
+            <p className="text-xs text-gray-500">
+              Bàn đã được reset và sẵn sàng phục vụ khách mới.
+            </p>
+          </div>
+
+          {payment?.tableSessionId && (
+            <div className="bg-orange-50/50 border border-orange-100 rounded-2xl p-4 mt-2 space-y-4">
+              <p className="text-xs font-bold text-orange-950 uppercase tracking-wider">
+                Gửi mã đánh giá cho khách hàng
+              </p>
+              
+              <div className="flex justify-center">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(
+                    `${window.location.origin}/review?session=${payment.tableSessionId}`
+                  )}`}
+                  alt="QR đánh giá"
+                  className="w-36 h-36 rounded-xl border bg-white p-1.5 shadow-sm"
+                />
+              </div>
+              <p className="text-xs text-gray-500">
+                Cho khách quét mã này để đánh giá chất lượng món ăn, phục vụ và không gian.
+              </p>
+
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  readOnly
+                  value={`${window.location.origin}/review?session=${payment.tableSessionId}`}
+                  className="flex-1 text-xs bg-white border rounded-lg px-2.5 py-1.5 text-gray-600 focus:outline-none select-all truncate"
+                />
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className="px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1 shrink-0"
+                >
+                  <span className="material-symbols-outlined text-sm">
+                    {copied ? "done" : "content_copy"}
+                  </span>
+                  {copied ? "Đã chép" : "Sao chép"}
+                </button>
+              </div>
+            </div>
+          )}
+
           <button
             type="button"
             onClick={handleClose}
-            className="w-full py-3 rounded-lg bg-gray-900 text-white font-bold hover:bg-gray-700 transition"
+            className="w-full py-3 rounded-xl bg-gray-900 text-white font-bold hover:bg-gray-700 transition text-sm"
           >
-            Đóng
+            Hoàn tất và đóng
           </button>
         </div>
       )}
