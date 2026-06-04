@@ -7,10 +7,17 @@ import { formatDateTime } from "../utils/adminLabels";
 
 function Stars({ rating }) {
   return (
-    <span className="text-amber-500 font-bold text-sm tracking-wide" title={`${rating}/5`}>
+    <span
+      className="text-amber-500 font-bold text-sm tracking-wide"
+      title={`${rating}/5`}
+    >
       {"★".repeat(Math.round(rating))}
-      <span className="text-gray-200">{"★".repeat(5 - Math.round(rating))}</span>
-      <span className="text-xs text-gray-500 ml-1">({Number(rating).toFixed(1)})</span>
+      <span className="text-gray-200">
+        {"★".repeat(5 - Math.round(rating))}
+      </span>
+      <span className="text-xs text-gray-500 ml-1">
+        ({Number(rating).toFixed(1)})
+      </span>
     </span>
   );
 }
@@ -26,7 +33,10 @@ export default function Reviews() {
   const [deletingId, setDeletingId] = useState(null);
 
   const handleDelete = async (id, name) => {
-    if (!window.confirm(`Bạn có chắc chắn muốn xóa đánh giá của khách "${name}"?`)) return;
+    if (
+      !window.confirm(`Bạn có chắc chắn muốn xóa đánh giá của khách "${name}"?`)
+    )
+      return;
     setActionError(null);
     setDeletingId(id);
     try {
@@ -43,15 +53,17 @@ export default function Reviews() {
     return reviews.map((item) => {
       const session = item.table_session_id || item.tableSessionId;
       const tableObj = session?.tableId;
-      
+
       return {
         id: item._id,
         customerName: session?.customerName || "Khách vãng lai",
         tableName: tableObj?.name || tableObj?.code || "—",
         tableId: tableObj?._id || tableObj || "",
         foodRating: item.food_rating || item.foodRating || item.rating || 0,
-        serviceRating: item.service_rating || item.serviceRating || item.rating || 0,
-        ambianceRating: item.ambiance_rating || item.ambianceRating || item.rating || 0,
+        serviceRating:
+          item.service_rating || item.serviceRating || item.rating || 0,
+        ambianceRating:
+          item.ambiance_rating || item.ambianceRating || item.rating || 0,
         rating: item.rating || 0,
         comment: item.comment || "—",
         rawDate: item.createdAt,
@@ -69,7 +81,9 @@ export default function Reviews() {
     }
 
     if (selectedTableId) {
-      result = result.filter((r) => String(r.tableId) === String(selectedTableId));
+      result = result.filter(
+        (r) => String(r.tableId) === String(selectedTableId),
+      );
     }
 
     return result;
@@ -78,7 +92,9 @@ export default function Reviews() {
   return (
     <AdminLayout title="Quản lý đánh giá của khách hàng">
       {loading ? <PageLoading /> : null}
-      {!loading && error ? <PageError message={error} onRetry={reload} /> : null}
+      {!loading && error ? (
+        <PageError message={error} onRetry={reload} />
+      ) : null}
 
       {!loading && !error && (
         <div className="space-y-6">
@@ -150,51 +166,76 @@ export default function Reviews() {
                 <tbody className="divide-y divide-gray-100 text-sm text-gray-700">
                   {filteredReviews.length > 0 ? (
                     filteredReviews.map((row) => (
-                      <tr key={row.id} className="hover:bg-gray-50/50 transition-all">
-                        <td className="px-6 py-4 font-semibold text-gray-900">{row.customerName}</td>
+                      <tr
+                        key={row.id}
+                        className="hover:bg-gray-50/50 transition-all"
+                      >
+                        <td className="px-6 py-4 font-semibold text-gray-900">
+                          {row.customerName}
+                        </td>
                         <td className="px-6 py-4">
                           <span className="px-2.5 py-1 bg-orange-50 text-orange-700 border border-orange-100 rounded-lg text-xs font-bold">
                             {row.tableName}
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="font-semibold text-gray-800">{row.foodRating} ★</span>
+                          <span className="font-semibold text-gray-800">
+                            {row.foodRating} ★
+                          </span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="font-semibold text-gray-800">{row.serviceRating} ★</span>
+                          <span className="font-semibold text-gray-800">
+                            {row.serviceRating} ★
+                          </span>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="font-semibold text-gray-800">{row.ambianceRating} ★</span>
+                          <span className="font-semibold text-gray-800">
+                            {row.ambianceRating} ★
+                          </span>
                         </td>
                         <td className="px-6 py-4">
                           <Stars rating={row.rating} />
                         </td>
-                        <td className="px-6 py-4 max-w-[200px] truncate" title={row.comment}>
+                        <td
+                          className="px-6 py-4 max-w-[200px] truncate"
+                          title={row.comment}
+                        >
                           {row.comment}
                         </td>
-                        <td className="px-6 py-4 text-xs text-gray-500">{row.dateLabel}</td>
+                        <td className="px-6 py-4 text-xs text-gray-500">
+                          {row.dateLabel}
+                        </td>
                         <td className="px-6 py-4 text-right space-x-2 shrink-0">
                           <button
                             onClick={() => setSelectedReview(row)}
                             className="p-1 text-blue-600 hover:bg-blue-50 rounded-lg transition-all cursor-pointer"
                             title="Xem chi tiết"
                           >
-                            <span className="material-symbols-outlined text-lg">visibility</span>
+                            <span className="material-symbols-outlined text-lg">
+                              visibility
+                            </span>
                           </button>
                           <button
-                            onClick={() => handleDelete(row.id, row.customerName)}
+                            onClick={() =>
+                              handleDelete(row.id, row.customerName)
+                            }
                             disabled={deletingId === row.id}
                             className="p-1 text-red-600 hover:bg-red-50 rounded-lg transition-all disabled:opacity-50 cursor-pointer"
                             title="Xóa đánh giá"
                           >
-                            <span className="material-symbols-outlined text-lg">delete</span>
+                            <span className="material-symbols-outlined text-lg">
+                              delete
+                            </span>
                           </button>
                         </td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="9" className="text-center py-12 text-gray-500">
+                      <td
+                        colSpan="9"
+                        className="text-center py-12 text-gray-500"
+                      >
                         Không tìm thấy đánh giá nào.
                       </td>
                     </tr>
@@ -209,7 +250,7 @@ export default function Reviews() {
       {/* Review Detail Modal */}
       {selectedReview && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
-          <div className="relative w-full max-w-lg bg-white border rounded-3xl shadow-2xl overflow-hidden p-6 sm:p-8 animate-scale-up">
+          <div className="relative w-full bg-white border rounded-3xl shadow-2xl overflow-hidden p-6 sm:p-8 animate-scale-up">
             <button
               onClick={() => setSelectedReview(null)}
               className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all cursor-pointer"
@@ -219,42 +260,67 @@ export default function Reviews() {
 
             <div className="space-y-6">
               <div className="border-b pb-4">
-                <h3 className="text-xl font-bold text-gray-900 font-display">Chi tiết đánh giá</h3>
+                <h3 className="text-xl font-bold text-gray-900 font-display">
+                  Chi tiết đánh giá
+                </h3>
                 <p className="text-xs text-gray-500 mt-1">
-                  Được gửi bởi khách: <strong>{selectedReview.customerName}</strong> tại <strong>{selectedReview.tableName}</strong>
+                  Được gửi bởi khách:{" "}
+                  <strong>{selectedReview.customerName}</strong> tại{" "}
+                  <strong>{selectedReview.tableName}</strong>
                 </p>
               </div>
 
               {/* Ratings List */}
               <div className="grid grid-cols-3 gap-3">
                 <div className="p-3 bg-gray-50 border rounded-xl text-center space-y-1">
-                  <p className="text-xs text-gray-500 font-bold uppercase">Món ăn</p>
-                  <p className="text-xl font-bold text-amber-600">{selectedReview.foodRating} <span className="text-xs">★</span></p>
+                  <p className="text-xs text-gray-500 font-bold uppercase">
+                    Món ăn
+                  </p>
+                  <p className="text-xl font-bold text-amber-600">
+                    {selectedReview.foodRating}{" "}
+                    <span className="text-xs">★</span>
+                  </p>
                 </div>
                 <div className="p-3 bg-gray-50 border rounded-xl text-center space-y-1">
-                  <p className="text-xs text-gray-500 font-bold uppercase">Phục vụ</p>
-                  <p className="text-xl font-bold text-amber-600">{selectedReview.serviceRating} <span className="text-xs">★</span></p>
+                  <p className="text-xs text-gray-500 font-bold uppercase">
+                    Phục vụ
+                  </p>
+                  <p className="text-xl font-bold text-amber-600">
+                    {selectedReview.serviceRating}{" "}
+                    <span className="text-xs">★</span>
+                  </p>
                 </div>
                 <div className="p-3 bg-gray-50 border rounded-xl text-center space-y-1">
-                  <p className="text-xs text-gray-500 font-bold uppercase">Không gian</p>
-                  <p className="text-xl font-bold text-amber-600">{selectedReview.ambianceRating} <span className="text-xs">★</span></p>
+                  <p className="text-xs text-gray-500 font-bold uppercase">
+                    Không gian
+                  </p>
+                  <p className="text-xl font-bold text-amber-600">
+                    {selectedReview.ambianceRating}{" "}
+                    <span className="text-xs">★</span>
+                  </p>
                 </div>
               </div>
 
               {/* Average rating banner */}
               <div className="bg-orange-50 border border-orange-100 rounded-2xl p-4 flex justify-between items-center">
                 <div>
-                  <p className="text-xs font-bold text-orange-800 uppercase tracking-wider">Điểm đánh giá trung bình</p>
+                  <p className="text-xs font-bold text-orange-800 uppercase tracking-wider">
+                    Điểm đánh giá trung bình
+                  </p>
                   <div className="mt-1">
                     <Stars rating={selectedReview.rating} />
                   </div>
                 </div>
-                <span className="text-3xl font-extrabold text-orange-600">{Number(selectedReview.rating).toFixed(1)}</span>
+                <span className="text-3xl font-extrabold text-orange-600">
+                  {Number(selectedReview.rating).toFixed(1)}
+                </span>
               </div>
 
               {/* Comments block */}
               <div className="space-y-1">
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Lời bình luận từ khách hàng</p>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                  Lời bình luận từ khách hàng
+                </p>
                 <div className="p-4 bg-gray-50 rounded-2xl text-sm text-gray-700 italic border min-h-[80px]">
                   &ldquo;{selectedReview.comment}&rdquo;
                 </div>
