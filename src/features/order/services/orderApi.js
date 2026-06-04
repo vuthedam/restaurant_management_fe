@@ -30,6 +30,11 @@ export async function cancelGuestPendingOrderItem(itemId) {
   return data?.data;
 }
 
+export async function submitGuestReview(payload) {
+  const { data } = await api.post("/public/reviews", payload);
+  return data?.data;
+}
+
 export function getOrderApiError(err, fallback = "Đã xảy ra lỗi.") {
   return err?.response?.data?.message || err?.message || fallback;
 }

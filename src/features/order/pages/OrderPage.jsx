@@ -14,6 +14,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import SiteHeader from "../../landing/components/homepages/SiteHeader";
 import OrderMenuCard from "../components/OrderMenuCard";
 import OrderCart from "../components/OrderCart";
+import ReviewFormModal from "../components/ReviewFormModal";
 import useCart from "../hooks/useCart";
 import { useAuth } from "../../../contexts/AuthContext";
 import {
@@ -37,6 +38,7 @@ export default function OrderPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(null);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   const cart = useCart();
 
@@ -169,20 +171,32 @@ export default function OrderPage() {
         </div>
 
         {table ? (
-          <div className="mb-6 flex flex-wrap gap-4 items-center justify-between p-4 bg-orange-50 border border-orange-200 rounded-xl shadow-sm">
+          <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between p-4 bg-orange-50 border border-orange-200 rounded-xl shadow-sm">
             <div>
               <p className="text-xs text-orange-600 font-bold uppercase tracking-wider">Bàn của bạn</p>
               <h2 className="text-xl font-bold text-orange-950">Bàn {table.code || table.name}</h2>
             </div>
-            <div className="flex gap-6">
-              <div>
-                <p className="text-xs text-orange-600 font-bold uppercase tracking-wider">Sức chứa tối đa</p>
-                <p className="font-bold text-orange-900">{table.capacity || 0} người</p>
+            <div className="flex flex-wrap items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="flex gap-6">
+                <div>
+                  <p className="text-xs text-orange-600 font-bold uppercase tracking-wider">Sức chứa tối đa</p>
+                  <p className="font-bold text-orange-900">{table.capacity || 0} người</p>
+                </div>
+                <div>
+                  <p className="text-xs text-orange-600 font-bold uppercase tracking-wider">Số khách đang ngồi</p>
+                  <p className="font-bold text-orange-900">{table.activeGuestCount || 0} người</p>
+                </div>
               </div>
-              <div>
-                <p className="text-xs text-orange-600 font-bold uppercase tracking-wider">Số khách đang ngồi</p>
-                <p className="font-bold text-orange-900">{table.activeGuestCount || 0} người</p>
-              </div>
+              {table.activeSession && (
+                <button
+                  type="button"
+                  onClick={() => setIsReviewOpen(true)}
+                  className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl text-xs font-bold transition-all shadow-md hover:shadow-orange-500/20 flex items-center gap-1.5 cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-sm">rate_review</span>
+                  Đánh giá dịch vụ
+                </button>
+              )}
             </div>
           </div>
         ) : null}
@@ -356,6 +370,16 @@ export default function OrderPage() {
                       );
                     })}
                   </ul>
+                  <div className="pt-4 border-t border-gray-100">
+                    <button
+                      type="button"
+                      onClick={() => setIsReviewOpen(true)}
+                      className="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl text-xs font-bold transition-all shadow-md hover:shadow-orange-500/20 flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      <span className="material-symbols-outlined text-sm">rate_review</span>
+                      Gửi phản hồi & Đánh giá dịch vụ
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -368,6 +392,13 @@ export default function OrderPage() {
           </Link>
         </p>
       </main>
+
+      <ReviewFormModal
+        isOpen={isReviewOpen}
+        onClose={() => setIsReviewOpen(false)}
+        tableSessionId={table?.activeSession?._id}
+        orderId={table?.activeOrders?.[0]?._id}
+      />
     </div>
   );
 }
