@@ -15,8 +15,10 @@ import SiteHeader from "../../landing/components/homepages/SiteHeader";
 import OrderMenuCard from "../components/OrderMenuCard";
 import OrderCart from "../components/OrderCart";
 import ReviewFormModal from "../components/ReviewFormModal";
+import SupportModal from "../components/SupportModal";
 import useCart from "../hooks/useCart";
 import { useAuth } from "../../../contexts/AuthContext";
+import { socket } from "../../../services/socket";
 import {
   fetchPublicMenu,
   fetchTableByQr,
@@ -39,8 +41,65 @@ export default function OrderPage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(null);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [isSupportOpen, setIsSupportOpen] = useState(false);
+  const [activeCall, setActiveCall] = useState(null);
 
   const cart = useCart();
+
+  // Load active support call when table loads
+  useEffect(() => {
+    if (table?.activeServiceCall) {
+      setActiveCall(table.activeServiceCall);
+    } else {
+      setActiveCall(null);
+    }
+  }, [table]);
+
+  // Realtime update active support request from Socket.IO
+  useEffect(() => {
+    if (!table?._id) return;
+
+    const handleNewCall = (newCall) => {
+      const targetTableId = newCall.tableId?._id || newCall.tableId;
+      if (targetTableId === table._id) {
+        setActiveCall(newCall);
+      }
+    };
+
+    const handleHandling = (updatedCall) => {
+      const targetTableId = updatedCall.tableId?._id || updatedCall.tableId;
+      if (targetTableId === table._id) {
+        setActiveCall(updatedCall);
+      }
+    };
+
+    const handleCompleted = (completedCall) => {
+      const targetTableId = completedCall.tableId?._id || completedCall.tableId;
+      if (targetTableId === table._id) {
+        setActiveCall((prev) => {
+          if (prev?._id === completedCall._id) {
+            return { ...completedCall, status: "completed" };
+          }
+          return prev;
+        });
+
+        // Hide completed request after 5 seconds so they can submit again
+        setTimeout(() => {
+          setActiveCall((prev) => (prev?.status === "completed" ? null : prev));
+        }, 5000);
+      }
+    };
+
+    socket.on("new_service_call", handleNewCall);
+    socket.on("service_call_handling", handleHandling);
+    socket.on("service_call_completed", handleCompleted);
+
+    return () => {
+      socket.off("new_service_call", handleNewCall);
+      socket.off("service_call_handling", handleHandling);
+      socket.off("service_call_completed", handleCompleted);
+    };
+  }, [table?._id]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -176,7 +235,7 @@ export default function OrderPage() {
               <p className="text-xs text-orange-600 font-bold uppercase tracking-wider">Bàn của bạn</p>
               <h2 className="text-xl font-bold text-orange-950">Bàn {table.code || table.name}</h2>
             </div>
-            <div className="flex flex-wrap items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
+            <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
               <div className="flex gap-6">
                 <div>
                   <p className="text-xs text-orange-600 font-bold uppercase tracking-wider">Sức chứa tối đa</p>
@@ -187,19 +246,76 @@ export default function OrderPage() {
                   <p className="font-bold text-orange-900">{table.activeGuestCount || 0} người</p>
                 </div>
               </div>
-              {table.activeSession && (
+              <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
-                  onClick={() => setIsReviewOpen(true)}
-                  className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl text-xs font-bold transition-all shadow-md hover:shadow-orange-500/20 flex items-center gap-1.5 cursor-pointer"
+                  onClick={() => setIsSupportOpen(true)}
+                  className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-xs font-bold transition-all shadow-md hover:shadow-orange-500/20 flex items-center gap-1.5 cursor-pointer"
                 >
-                  <span className="material-symbols-outlined text-sm">rate_review</span>
-                  Đánh giá dịch vụ
+                  <span className="material-symbols-outlined text-sm">support_agent</span>
+                  Yêu cầu hỗ trợ
                 </button>
-              )}
+                {table.activeSession && (
+                  <button
+                    type="button"
+                    onClick={() => setIsReviewOpen(true)}
+                    className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl text-xs font-bold transition-all shadow-md hover:shadow-orange-500/20 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined text-sm">rate_review</span>
+                    Đánh giá dịch vụ
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         ) : null}
+
+        {/* Support Request Status Banner */}
+        {activeCall && (
+          <div className={`mb-6 p-4 rounded-2xl border flex items-center justify-between animate-fade-in shadow-md ${
+            activeCall.status === "pending"
+              ? "bg-amber-50 border-amber-200 text-amber-900"
+              : activeCall.status === "handling"
+                ? "bg-sky-50 border-sky-200 text-sky-900"
+                : "bg-green-50 border-green-200 text-green-900 animate-pulse"
+          }`}>
+            <div className="flex items-center gap-3">
+              <span className={`material-symbols-outlined text-2xl ${
+                activeCall.status === "pending"
+                  ? "text-amber-600 animate-bounce"
+                  : activeCall.status === "handling"
+                    ? "text-sky-600 animate-spin"
+                    : "text-green-600 font-bold"
+              }`}
+              style={{
+                animationDuration: activeCall.status === "handling" ? "3s" : undefined
+              }}>
+                {activeCall.status === "pending"
+                  ? "hourglass_empty"
+                  : activeCall.status === "handling"
+                    ? "support_agent"
+                    : "check_circle"}
+              </span>
+              <div>
+                <p className="font-bold text-sm">
+                  {activeCall.status === "pending" && "Yêu cầu đã được gửi tới nhân viên."}
+                  {activeCall.status === "handling" && "Yêu cầu của bạn đang được nhân viên hỗ trợ."}
+                  {activeCall.status === "completed" && "Yêu cầu của bạn đã được hỗ trợ."}
+                </p>
+                <p className="text-xs opacity-80 mt-0.5">
+                  Chi tiết: {activeCall.note || "Đang chờ hỗ trợ"} 
+                  {activeCall.status === "handling" && activeCall.handledBy && ` | Phục vụ bởi: ${activeCall.handledBy.fullName}`}
+                </p>
+              </div>
+            </div>
+            {activeCall.status !== "completed" && (
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/60 border border-current/10">
+                <span className={`h-1.5 w-1.5 rounded-full bg-current mr-1.5 ${activeCall.status === "pending" ? "animate-ping" : "animate-pulse"}`}></span>
+                {activeCall.status === "pending" ? "Đang chờ" : "Đang xử lý"}
+              </span>
+            )}
+          </div>
+        )}
 
         {error ? (
           <div className="mb-6 rounded-xl border border-error/30 bg-error-container/30 px-4 py-3 text-sm text-error">
@@ -398,6 +514,16 @@ export default function OrderPage() {
         onClose={() => setIsReviewOpen(false)}
         tableSessionId={table?.activeSession?._id}
         orderId={table?.activeOrders?.[0]?._id}
+      />
+
+      <SupportModal
+        isOpen={isSupportOpen}
+        onClose={() => setIsSupportOpen(false)}
+        tableId={table?._id}
+        tableSessionId={table?.activeSession?._id}
+        onSuccess={(newCall) => {
+          setActiveCall(newCall);
+        }}
       />
     </div>
   );

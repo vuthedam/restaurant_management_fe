@@ -27,5 +27,5 @@ export default function useAdminList(path) {
     load();
   }, [load]);
 
-  return { items, loading, error, reload: load };
+  return { items, setItems, loading, error, reload: load };
 }
