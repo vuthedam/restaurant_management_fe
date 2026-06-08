@@ -37,9 +37,9 @@ export default function OrderEditItemsModal({
       <div className="space-y-6">
         {/* Danh sách món hiện tại */}
         <div>
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">Danh sách món hiện tại</h4>
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Danh sách món hiện tại</h4>
           {orderItems.length === 0 ? (
-            <p className="text-sm text-gray-500 bg-gray-50 rounded-lg p-3 text-center">
+            <p className="text-sm text-slate-500 bg-slate-50 border border-slate-100 rounded-xl p-4 text-center">
               Chưa có món ăn nào trong đơn.
             </p>
           ) : (
@@ -47,11 +47,11 @@ export default function OrderEditItemsModal({
               {orderItems.map((item) => (
                 <li
                   key={item._id}
-                  className="flex items-center justify-between gap-4 p-2 bg-gray-50 rounded-lg border border-gray-200"
+                  className="flex items-center justify-between gap-4 p-3 bg-slate-50 border border-slate-200/60 rounded-xl hover:shadow-xs transition-all"
                 >
                   <div className="min-w-0">
-                    <p className="font-semibold text-sm text-gray-900 truncate">{item.name}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className="font-semibold text-sm text-slate-900 truncate">{item.name}</p>
+                    <p className="text-xs text-slate-500">
                       {fmt(item.price)} × {item.quantity}
                     </p>
                   </div>
@@ -59,22 +59,22 @@ export default function OrderEditItemsModal({
                     <button
                       type="button"
                       onClick={() => onUpdateQty(item, -1)}
-                      className="w-7 h-7 rounded bg-white border flex items-center justify-center font-bold text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      className="w-8 h-8 rounded-xl bg-white border border-slate-200 flex items-center justify-center font-bold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
                     >
                       -
                     </button>
-                    <span className="w-8 text-center text-sm font-bold">{item.quantity}</span>
+                    <span className="w-8 text-center text-sm font-bold text-slate-800">{item.quantity}</span>
                     <button
                       type="button"
                       onClick={() => onUpdateQty(item, 1)}
-                      className="w-7 h-7 rounded bg-white border flex items-center justify-center font-bold text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      className="w-8 h-8 rounded-xl bg-white border border-slate-200 flex items-center justify-center font-bold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer"
                     >
                       +
                     </button>
                     <button
                       type="button"
                       onClick={() => onDelete(item)}
-                      className="p-1 rounded text-red-600 hover:bg-red-50 ml-2 cursor-pointer"
+                      className="p-1.5 rounded-xl text-red-500 hover:bg-red-50 ml-2 cursor-pointer transition-all"
                       title="Xóa món"
                     >
                       <span className="material-symbols-outlined text-lg font-bold">delete</span>
@@ -87,14 +87,14 @@ export default function OrderEditItemsModal({
         </div>
 
         {/* Thêm món mới */}
-        <div className="border-t pt-4">
-          <h4 className="text-sm font-semibold text-gray-700 mb-3">Thêm món mới</h4>
+        <div className="border-t border-slate-100 pt-4">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Thêm món mới</h4>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="sm:col-span-2">
               <select
                 value={selectedMenuId}
                 onChange={(e) => onMenuChange(e.target.value)}
-                className="w-full border rounded-lg px-3 py-2 bg-white text-sm"
+                className="w-full border border-slate-200 rounded-xl px-4 py-2.5 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
               >
                 <option value="">-- Chọn món để thêm --</option>
                 {availableMenu.map((m) => (
@@ -111,13 +111,13 @@ export default function OrderEditItemsModal({
                 max="100"
                 value={selectedQty}
                 onChange={(e) => onQtyChange(Math.max(1, parseInt(e.target.value) || 1))}
-                className="w-16 border rounded-lg px-2 text-center text-sm"
+                className="w-16 border border-slate-200 rounded-xl px-2 py-2.5 text-center text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all bg-white"
               />
               <button
                 type="button"
                 onClick={onAdd}
                 disabled={!selectedMenuId}
-                className="flex-1 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 disabled:opacity-50 cursor-pointer"
+                className="flex-1 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1 disabled:opacity-50 cursor-pointer shadow-sm"
               >
                 <span className="material-symbols-outlined text-sm font-bold">add</span>
                 Thêm
@@ -127,16 +127,16 @@ export default function OrderEditItemsModal({
         </div>
 
         {error && (
-          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 font-medium">
             {error}
           </p>
         )}
 
-        <div className="flex justify-end border-t pt-4">
+        <div className="flex justify-end border-t border-slate-100 pt-4">
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2 rounded-lg border font-medium hover:bg-gray-50 cursor-pointer"
+            className="px-5 py-2 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition-all cursor-pointer"
           >
             Đóng
           </button>

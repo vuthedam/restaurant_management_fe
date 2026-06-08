@@ -43,16 +43,16 @@ export default function ReservationConfirmModal({
   return (
     <AdminModal open={open} title="Xác nhận đặt bàn & Gán bàn" onClose={onClose}>
       <div className="space-y-4">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-slate-600">
           Vui lòng chọn một bàn phù hợp để xác nhận yêu cầu đặt bàn này.
         </p>
 
         <label className="block">
-          <span className="text-sm font-medium text-gray-700">Chọn bàn *</span>
+          <span className="text-sm font-medium text-slate-700">Chọn bàn *</span>
           <select
             value={selectedTableId}
             onChange={(e) => onTableChange(e.target.value)}
-            className="mt-1 w-full border rounded-lg px-3 py-2 bg-white"
+            className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-2.5 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
             required
           >
             <option value="">-- Chọn bàn cho khách --</option>
@@ -68,7 +68,7 @@ export default function ReservationConfirmModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-lg border font-medium hover:bg-gray-50 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition-all cursor-pointer"
           >
             Huỷ
           </button>
@@ -76,7 +76,7 @@ export default function ReservationConfirmModal({
             type="button"
             disabled={!selectedTableId || busy}
             onClick={onConfirm}
-            className="px-5 py-2 rounded-lg bg-green-600 text-white font-semibold disabled:opacity-60 hover:bg-green-700 shadow-md cursor-pointer"
+            className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold disabled:opacity-60 transition-all shadow-sm cursor-pointer"
           >
             {busy ? "Đang lưu..." : "Xác nhận & Gán bàn"}
           </button>

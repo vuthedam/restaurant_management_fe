@@ -52,18 +52,18 @@ export default function MenuItemFormModal({ open, onClose, categories = [], onSu
     <AdminModal open={open} title="Thêm món mới" onClose={handleClose}>
       <form onSubmit={handleSubmit} className="space-y-4">
         {error ? (
-          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 font-medium">
             {error}
           </p>
         ) : null}
 
         <label className="block">
-          <span className="text-sm font-medium text-gray-700">Danh mục *</span>
+          <span className="text-sm font-medium text-slate-700">Danh mục *</span>
           <select
             required
             value={form.categoryId}
             onChange={(e) => setField("categoryId", e.target.value)}
-            className="mt-1 w-full border rounded-lg px-3 py-2"
+            className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-2.5 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
           >
             <option value="">Chọn danh mục</option>
             {categories.map((c) => (
@@ -75,45 +75,45 @@ export default function MenuItemFormModal({ open, onClose, categories = [], onSu
         </label>
 
         <label className="block">
-          <span className="text-sm font-medium text-gray-700">Tên món *</span>
+          <span className="text-sm font-medium text-slate-700">Tên món *</span>
           <input
             required
             value={form.name}
             onChange={(e) => setField("name", e.target.value)}
-            className="mt-1 w-full border rounded-lg px-3 py-2"
+            className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-2.5 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
           />
         </label>
 
         <label className="block">
-          <span className="text-sm font-medium text-gray-700">Giá (VND) *</span>
+          <span className="text-sm font-medium text-slate-700">Giá (VND) *</span>
           <input
             required
             type="number"
             min={0}
             value={form.price}
             onChange={(e) => setField("price", e.target.value)}
-            className="mt-1 w-full border rounded-lg px-3 py-2"
+            className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-2.5 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
           />
         </label>
 
         <label className="block">
-          <span className="text-sm font-medium text-gray-700">URL ảnh</span>
+          <span className="text-sm font-medium text-slate-700">URL ảnh</span>
           <input
             type="url"
             value={form.image}
             onChange={(e) => setField("image", e.target.value)}
-            className="mt-1 w-full border rounded-lg px-3 py-2"
+            className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-2.5 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
             placeholder="https://..."
           />
         </label>
 
         <label className="block">
-          <span className="text-sm font-medium text-gray-700">Mô tả</span>
+          <span className="text-sm font-medium text-slate-700">Mô tả</span>
           <textarea
             rows={3}
             value={form.description}
             onChange={(e) => setField("description", e.target.value)}
-            className="mt-1 w-full border rounded-lg px-3 py-2"
+            className="mt-1 w-full border border-slate-200 rounded-xl px-4 py-2.5 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
           />
         </label>
 
@@ -121,14 +121,14 @@ export default function MenuItemFormModal({ open, onClose, categories = [], onSu
           <button
             type="button"
             onClick={handleClose}
-            className="px-4 py-2 rounded-lg border font-medium"
+            className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition-all cursor-pointer"
           >
             Huỷ
           </button>
           <button
             type="submit"
             disabled={submitting}
-            className="px-5 py-2 rounded-lg bg-orange-600 text-white font-semibold disabled:opacity-60"
+            className="px-5 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold transition-all disabled:opacity-60 shadow-sm"
           >
             {submitting ? "Đang lưu..." : "Thêm món"}
           </button>

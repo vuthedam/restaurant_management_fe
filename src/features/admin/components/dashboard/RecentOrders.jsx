@@ -9,7 +9,7 @@ export default function RecentOrders({ orders = [] }) {
       key: "status",
       label: "Trạng thái",
       render: (row) => (
-        <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold text-orange-700">
+        <span className="rounded-full bg-orange-50 text-orange-600 border border-orange-100/50 px-3 py-1 text-xs font-semibold">
           {row.status}
         </span>
       ),
@@ -17,9 +17,9 @@ export default function RecentOrders({ orders = [] }) {
   ];
 
   return (
-    <div className="bg-white border rounded-xl overflow-hidden shadow-sm">
-      <div className="p-4 border-b">
-        <h3 className="text-lg font-bold">Đơn hàng gần đây</h3>
+    <div className="bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
+      <div className="p-5 border-b border-slate-100 bg-slate-50/50">
+        <h3 className="text-base font-bold text-slate-900">Đơn hàng gần đây</h3>
       </div>
       <div className="p-2">
         <AdminTable

@@ -10,7 +10,7 @@ export default function AdminLayout({
   fullWidth = false,
 }) {
   return (
-    <div className="bg-gray-100 min-h-screen flex">
+    <div className="bg-slate-50 min-h-screen flex text-slate-800 font-body">
       <Sidebar />
 
       <main className="flex-1 lg:ml-64 flex flex-col min-h-screen">

@@ -24,27 +24,44 @@ const ReservationRow = ({
           ? "Hoàn thành"
           : null;
 
+  const getBadgeClasses = (st) => {
+    switch (st) {
+      case "pending":
+        return "bg-amber-50 text-amber-600 border border-amber-100/50";
+      case "confirmed":
+        return "bg-blue-50 text-blue-600 border border-blue-100/50";
+      case "checked_in":
+      case "completed":
+        return "bg-emerald-50 text-emerald-600 border border-emerald-100/50";
+      case "cancelled":
+      case "no_show":
+        return "bg-red-50 text-red-600 border border-red-100/50";
+      default:
+        return "bg-slate-50 text-slate-600 border border-slate-200/50";
+    }
+  };
+
   return (
-    <tr className="hover:bg-orange-50 transition-colors">
-      <td className="px-4 py-4 font-semibold">{name}</td>
-      <td className="px-4 py-4">{guests} khách</td>
-      <td className="px-4 py-4">{table}</td>
-      <td className="px-4 py-4">{time}</td>
-      <td className="px-4 py-4">
-        <span className="px-3 py-1 rounded-full text-xs bg-orange-500 text-white">
+    <tr className="hover:bg-slate-50 transition-colors text-slate-700">
+      <td className="px-6 py-4 font-semibold text-slate-800">{name}</td>
+      <td className="px-6 py-4">{guests} khách</td>
+      <td className="px-6 py-4">{table}</td>
+      <td className="px-6 py-4">{time}</td>
+      <td className="px-6 py-4">
+        <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${getBadgeClasses(rawStatus)}`}>
           {status}
         </span>
       </td>
-      <td className="px-4 py-4 text-right whitespace-nowrap">
+      <td className="px-6 py-4 text-right whitespace-nowrap">
         {canAdvance && getNextReservationStatus(rawStatus) ? (
           <button
             type="button"
             disabled={busy}
             title={nextLabel}
             onClick={() => onAdvance?.(id, getNextReservationStatus(rawStatus))}
-            className="mr-2 p-1 rounded hover:bg-green-100 text-green-700 disabled:opacity-50"
+            className="mr-1.5 p-1.5 rounded-xl hover:bg-emerald-50 text-emerald-600 disabled:opacity-50 transition-all cursor-pointer"
           >
-            <span className="material-symbols-outlined">check_circle</span>
+            <span className="material-symbols-outlined text-lg">check_circle</span>
           </button>
         ) : null}
         {rawStatus === "confirmed" ? (
@@ -53,9 +70,9 @@ const ReservationRow = ({
             disabled={busy}
             title="Khách không đến (No-Show)"
             onClick={() => onNoShow?.(id)}
-            className="mr-2 p-1 rounded hover:bg-yellow-100 text-yellow-600 disabled:opacity-50"
+            className="mr-1.5 p-1.5 rounded-xl hover:bg-amber-50 text-amber-600 disabled:opacity-50 transition-all cursor-pointer"
           >
-            <span className="material-symbols-outlined">person_off</span>
+            <span className="material-symbols-outlined text-lg">person_off</span>
           </button>
         ) : null}
         {canCancel ? (
@@ -64,9 +81,9 @@ const ReservationRow = ({
             disabled={busy}
             title="Huỷ đặt bàn"
             onClick={() => onCancel?.(id)}
-            className="p-1 rounded hover:bg-red-100 text-red-600 disabled:opacity-50"
+            className="p-1.5 rounded-xl hover:bg-red-50 text-red-500 disabled:opacity-50 transition-all cursor-pointer"
           >
-            <span className="material-symbols-outlined">cancel</span>
+            <span className="material-symbols-outlined text-lg">cancel</span>
           </button>
         ) : null}
       </td>

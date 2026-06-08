@@ -115,10 +115,10 @@ export default function PaymentModal({
       {/* Bước: Chọn phương thức */}
       {step === "select" && (
         <div className="space-y-6">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-slate-500">
             Chọn phương thức thanh toán cho bàn này.
           </p>
-          <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2">
+          <p className="text-xs text-amber-700 bg-amber-50/50 border border-amber-100/50 rounded-xl px-4 py-2.5 font-medium">
             Chỉ tính tiền các món đã lên bàn (trạng thái &quot;Đã lên món&quot;).
             Món đang chờ hoặc đang nấu sẽ không được tính vào hóa đơn.
           </p>
@@ -129,19 +129,19 @@ export default function PaymentModal({
                 key={m.value}
                 type="button"
                 onClick={() => setMethod(m.value)}
-                className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition ${
+                className={`flex flex-col items-center gap-3 p-5 rounded-2xl border transition-all duration-200 cursor-pointer ${
                   method === m.value
-                    ? "border-orange-500 bg-orange-50"
-                    : "border-gray-200 hover:border-gray-300"
+                    ? "border-orange-500 bg-orange-50/40 text-orange-600"
+                    : "border-slate-200 hover:border-slate-300 hover:bg-slate-50/50 text-slate-500"
                 }`}
               >
                 <span
-                  className={`material-symbols-outlined text-3xl ${method === m.value ? "text-orange-600" : "text-gray-500"}`}
+                  className={`material-symbols-outlined text-3xl ${method === m.value ? "text-orange-500" : "text-slate-400"}`}
                 >
                   {m.icon}
                 </span>
                 <span
-                  className={`text-sm font-bold ${method === m.value ? "text-orange-700" : "text-gray-700"}`}
+                  className={`text-sm font-semibold ${method === m.value ? "text-orange-600 font-bold" : "text-slate-600"}`}
                 >
                   {m.label}
                 </span>
@@ -150,7 +150,7 @@ export default function PaymentModal({
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 font-medium">
               {error}
             </p>
           )}
@@ -159,7 +159,7 @@ export default function PaymentModal({
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 py-2.5 rounded-lg border font-medium hover:bg-gray-50"
+              className="flex-1 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition-all"
             >
               Hủy
             </button>
@@ -167,7 +167,7 @@ export default function PaymentModal({
               type="button"
               onClick={handleCreatePayment}
               disabled={loading}
-              className="flex-1 py-2.5 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-bold transition disabled:opacity-60"
+              className="flex-1 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold transition-all disabled:opacity-60"
             >
               {loading ? "Đang tạo..." : "Tiếp tục"}
             </button>
@@ -179,15 +179,15 @@ export default function PaymentModal({
       {step === "qr" && payment && (
         <div className="space-y-5 text-center">
           {payment.unservedItemCount > 0 ? (
-            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 text-left">
+            <p className="text-xs text-amber-700 bg-amber-50/50 border border-amber-100/50 rounded-xl px-4 py-2.5 text-left font-medium">
               Còn {payment.unservedItemCount} món chưa lên bàn — không tính trong
               hóa đơn này.
             </p>
           ) : null}
-          <div className="bg-gray-50 rounded-xl p-4 border">
-            <p className="text-xs text-gray-500 mb-1">Số tiền cần thanh toán</p>
-            <p className="text-3xl font-bold text-orange-600">{amountLabel}</p>
-            <p className="text-xs text-gray-400 mt-1">
+          <div className="bg-slate-50 border border-slate-100 rounded-xl p-4">
+            <p className="text-xs text-slate-500 mb-1">Số tiền cần thanh toán</p>
+            <p className="text-3xl font-bold text-orange-500">{amountLabel}</p>
+            <p className="text-xs text-slate-400 mt-1">
               Mã: {payment.paymentCode}
             </p>
           </div>
@@ -196,14 +196,14 @@ export default function PaymentModal({
             <img
               src={buildVietQR(payment.amount, qrDescription)}
               alt="QR thanh toán"
-              className="w-56 h-56 rounded-xl border shadow-sm"
+              className="w-56 h-56 rounded-2xl border border-slate-200/60 p-2 shadow-xs bg-white"
               onError={(e) => {
                 e.target.style.display = "none";
               }}
             />
           </div>
 
-          <div className="text-left bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm space-y-1">
+          <div className="text-left bg-blue-50/30 border border-blue-100/50 rounded-xl p-4 text-sm text-slate-700 space-y-1.5">
             <p>
               <span className="font-semibold">Ngân hàng:</span>{" "}
               {BANK_INFO.bankId}
@@ -222,7 +222,7 @@ export default function PaymentModal({
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 font-medium">
               {error}
             </p>
           )}
@@ -231,7 +231,7 @@ export default function PaymentModal({
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 py-2.5 rounded-lg border font-medium hover:bg-gray-50"
+              className="flex-1 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition-all"
             >
               Hủy
             </button>
@@ -239,7 +239,7 @@ export default function PaymentModal({
               type="button"
               onClick={handleConfirm}
               disabled={loading}
-              className="flex-1 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white font-bold transition disabled:opacity-60 flex items-center justify-center gap-2"
+              className="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold transition-all disabled:opacity-60 flex items-center justify-center gap-2 shadow-sm hover:shadow"
             >
               <span className="material-symbols-outlined text-base">
                 check_circle
@@ -254,26 +254,26 @@ export default function PaymentModal({
       {step === "confirm" && payment && (
         <div className="space-y-5 text-center">
           {payment.unservedItemCount > 0 ? (
-            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 text-left">
+            <p className="text-xs text-amber-700 bg-amber-50/50 border border-amber-100/50 rounded-xl px-4 py-2.5 text-left font-medium">
               Còn {payment.unservedItemCount} món chưa lên bàn — không tính trong
               hóa đơn này.
             </p>
           ) : null}
-          <div className="bg-gray-50 rounded-xl p-6 border">
-            <span className="material-symbols-outlined text-5xl text-green-600">
+          <div className="bg-slate-50 border border-slate-100 rounded-xl p-6">
+            <span className="material-symbols-outlined text-5xl text-emerald-500">
               payments
             </span>
-            <p className="text-xs text-gray-500 mt-3 mb-1">
+            <p className="text-xs text-slate-500 mt-3 mb-1">
               Số tiền khách cần trả
             </p>
-            <p className="text-4xl font-bold text-gray-900">{amountLabel}</p>
-            <p className="text-xs text-gray-400 mt-2">
+            <p className="text-4xl font-bold text-slate-900">{amountLabel}</p>
+            <p className="text-xs text-slate-400 mt-2">
               Mã: {payment.paymentCode}
             </p>
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 font-medium">
               {error}
             </p>
           )}
@@ -282,7 +282,7 @@ export default function PaymentModal({
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 py-2.5 rounded-lg border font-medium hover:bg-gray-50"
+              className="flex-1 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition-all"
             >
               Hủy
             </button>
@@ -290,7 +290,7 @@ export default function PaymentModal({
               type="button"
               onClick={handleConfirm}
               disabled={loading}
-              className="flex-1 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white font-bold transition disabled:opacity-60 flex items-center justify-center gap-2"
+              className="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold transition-all disabled:opacity-60 flex items-center justify-center gap-2 shadow-sm hover:shadow"
             >
               <span className="material-symbols-outlined text-base">
                 check_circle
@@ -305,19 +305,19 @@ export default function PaymentModal({
       {step === "done" && (
         <div className="text-center space-y-5 py-2">
           <div className="flex flex-col items-center">
-            <span className="material-symbols-outlined text-5xl text-green-500">
+            <span className="material-symbols-outlined text-5xl text-emerald-500">
               check_circle
             </span>
-            <h3 className="text-lg font-bold text-gray-900 mt-2">
+            <h3 className="text-lg font-bold text-slate-900 mt-2">
               Thanh toán thành công!
             </h3>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-slate-500">
               Bàn đã được reset và sẵn sàng phục vụ khách mới.
             </p>
           </div>
 
           {payment?.tableSessionId && (
-            <div className="bg-orange-50/50 border border-orange-100 rounded-2xl p-4 mt-2 space-y-4">
+            <div className="bg-orange-50/40 border border-orange-100/50 rounded-xl p-4 mt-2 space-y-4">
               <p className="text-xs font-bold text-orange-950 uppercase tracking-wider">
                 Gửi mã đánh giá cho khách hàng
               </p>
@@ -328,10 +328,10 @@ export default function PaymentModal({
                     `${window.location.origin}/review?session=${payment.tableSessionId}`
                   )}`}
                   alt="QR đánh giá"
-                  className="w-36 h-36 rounded-xl border bg-white p-1.5 shadow-sm"
+                  className="w-36 h-36 rounded-xl border border-slate-200 bg-white p-1.5 shadow-xs"
                 />
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-slate-500">
                 Cho khách quét mã này để đánh giá chất lượng món ăn, phục vụ và không gian.
               </p>
 
@@ -340,12 +340,12 @@ export default function PaymentModal({
                   type="text"
                   readOnly
                   value={`${window.location.origin}/review?session=${payment.tableSessionId}`}
-                  className="flex-1 text-xs bg-white border rounded-lg px-2.5 py-1.5 text-gray-600 focus:outline-none select-all truncate"
+                  className="flex-1 text-xs bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all select-all truncate"
                 />
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1 shrink-0"
+                  className="px-3 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1 shrink-0 shadow-sm"
                 >
                   <span className="material-symbols-outlined text-sm">
                     {copied ? "done" : "content_copy"}
@@ -359,7 +359,7 @@ export default function PaymentModal({
           <button
             type="button"
             onClick={handleClose}
-            className="w-full py-3 rounded-xl bg-gray-900 text-white font-bold hover:bg-gray-700 transition text-sm"
+            className="w-full py-3 rounded-xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-all text-sm shadow-sm hover:shadow"
           >
             Hoàn tất và đóng
           </button>

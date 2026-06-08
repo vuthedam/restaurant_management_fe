@@ -20,44 +20,44 @@ export default function OrderTable({
   orderStatusBadges,
 }) {
   return (
-    <div className="hidden lg:block bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm backdrop-blur-md">
+    <div className="hidden lg:block bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-gray-50/70 border-b border-gray-100">
-              <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[18%]">
+            <tr className="bg-slate-50 border-b border-slate-100 text-slate-600">
+              <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[18%]">
                 Mã đơn / Thời gian
               </th>
-              <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[12%]">
+              <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[12%]">
                 Bàn
               </th>
-              <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[42%]">
+              <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[42%]">
                 Chi tiết gọi món & Tiến trình
               </th>
-              <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[13%]">
+              <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[13%]">
                 Tổng tiền
               </th>
-              <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[15%]">
+              <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[15%]">
                 Trạng thái & Thao tác
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-slate-100 text-slate-600">
             {orders.map((order) => {
               const overallBadge = orderStatusBadges[order.rawStatus] || {
                 label: order.rawStatus,
-                classes: "bg-gray-50 text-gray-800",
+                classes: "bg-slate-50 text-slate-800",
               };
 
               return (
-                <tr key={order.id} className="hover:bg-orange-50/10 transition-colors">
+                <tr key={order.id} className="hover:bg-slate-50/50 transition-colors">
                   {/* 1. Mã đơn & Thời gian */}
                   <td className="px-6 py-5 align-top">
                     <div className="space-y-1">
-                      <span className="font-mono text-sm font-bold text-gray-900 select-all">
+                      <span className="font-mono text-sm font-bold text-slate-900 select-all">
                         {order.time}
                       </span>
-                      <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                      <div className="flex items-center gap-1.5 text-xs text-slate-500">
                         <span className="material-symbols-outlined text-sm">schedule</span>
                         <span>{order.timeAgo}</span>
                       </div>
@@ -66,7 +66,7 @@ export default function OrderTable({
 
                   {/* 2. Bàn */}
                   <td className="px-6 py-5 align-top">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-50 border border-orange-200/50 text-orange-950 font-black text-sm">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-50 border border-orange-100/50 text-orange-600 font-semibold text-xs rounded-xl">
                       <span className="material-symbols-outlined text-base">table_restaurant</span>
                       <span>{order.table}</span>
                     </div>
@@ -82,18 +82,18 @@ export default function OrderTable({
                         return (
                           <li
                             key={idx}
-                            className="flex flex-col gap-1 pb-3 border-b border-dashed border-gray-100 last:border-b-0 last:pb-0"
+                            className="flex flex-col gap-1 pb-3 border-b border-dashed border-slate-200/60 last:border-b-0 last:pb-0"
                           >
                             <div className="flex items-start justify-between gap-4">
                               <div className="flex items-center gap-2 min-w-0">
-                                <span className="w-6 h-6 shrink-0 rounded bg-gray-100 flex items-center justify-center text-xs font-black text-gray-700">
+                                <span className="w-6 h-6 shrink-0 rounded-xl bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-700">
                                   {item.qty}
                                 </span>
                                 <span
                                   className={`text-sm font-bold truncate ${
                                     item.status === "cancelled"
-                                      ? "line-through text-gray-400 font-normal"
-                                      : "text-gray-900"
+                                      ? "line-through text-slate-400 font-normal"
+                                      : "text-slate-800"
                                   }`}
                                 >
                                   {item.name}
@@ -104,8 +104,8 @@ export default function OrderTable({
                                 <span
                                   className={`text-sm font-semibold shrink-0 ${
                                     item.status === "cancelled"
-                                      ? "line-through text-gray-400 font-normal"
-                                      : "text-gray-600"
+                                      ? "line-through text-slate-400 font-normal"
+                                      : "text-slate-600"
                                   }`}
                                 >
                                   {item.lineTotal}
@@ -118,7 +118,7 @@ export default function OrderTable({
                               <div className="flex items-center justify-between gap-2 pl-8 mt-1">
                                 {itemBadge && (
                                   <span
-                                    className={`px-2 py-0.5 rounded-md text-[10px] font-bold border ${itemBadge.classes}`}
+                                    className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border ${itemBadge.classes}`}
                                   >
                                     {itemBadge.label}
                                   </span>
@@ -130,10 +130,10 @@ export default function OrderTable({
                                       <button
                                         type="button"
                                         onClick={() => onUpdateItemStatus(item.id, "confirmed")}
-                                        className="px-2 py-1 rounded bg-green-50 hover:bg-green-150 text-green-700 border border-green-200 transition text-[10px] font-bold flex items-center gap-0.5 cursor-pointer hover:scale-105"
+                                        className="px-2.5 py-1 rounded-xl bg-emerald-50 hover:bg-emerald-100/60 text-emerald-600 border border-emerald-100/50 transition-all text-[10px] font-semibold flex items-center gap-0.5 cursor-pointer"
                                         title="Xác nhận duyệt món"
                                       >
-                                        <span className="material-symbols-outlined text-xs font-black">
+                                        <span className="material-symbols-outlined text-xs font-bold">
                                           check
                                         </span>
                                         Duyệt món
@@ -145,7 +145,7 @@ export default function OrderTable({
                                             onUpdateItemStatus(item.id, "cancelled");
                                           }
                                         }}
-                                        className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 transition flex items-center justify-center cursor-pointer hover:scale-105"
+                                        className="p-1 rounded-xl bg-red-50 hover:bg-red-100/60 text-red-500 border border-red-100/50 transition-all flex items-center justify-center cursor-pointer"
                                         title="Hủy món ăn"
                                       >
                                         <span className="material-symbols-outlined text-xs font-bold">
@@ -160,7 +160,7 @@ export default function OrderTable({
                                       <button
                                         type="button"
                                         onClick={() => onUpdateItemStatus(item.id, "preparing")}
-                                        className="px-2.5 py-1 rounded bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200 transition text-[10px] font-bold flex items-center gap-0.5 cursor-pointer hover:scale-105"
+                                        className="px-2.5 py-1 rounded-xl bg-orange-50 hover:bg-orange-100/60 text-orange-600 border border-orange-100/50 transition-all text-[10px] font-semibold flex items-center gap-0.5 cursor-pointer"
                                         title="Chuyển sang trạng thái Đang Nấu"
                                       >
                                         <span className="material-symbols-outlined text-xs">
@@ -175,7 +175,7 @@ export default function OrderTable({
                                             onUpdateItemStatus(item.id, "cancelled");
                                           }
                                         }}
-                                        className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 transition flex items-center justify-center cursor-pointer hover:scale-105"
+                                        className="p-1 rounded-xl bg-red-50 hover:bg-red-100/60 text-red-500 border border-red-100/50 transition-all flex items-center justify-center cursor-pointer"
                                         title="Hủy món ăn"
                                       >
                                         <span className="material-symbols-outlined text-xs font-bold">
@@ -190,7 +190,7 @@ export default function OrderTable({
                                       <button
                                         type="button"
                                         onClick={() => onUpdateItemStatus(item.id, "served")}
-                                        className="px-2.5 py-1 rounded bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition text-[10px] font-bold flex items-center gap-0.5 cursor-pointer hover:scale-105"
+                                        className="px-2.5 py-1 rounded-xl bg-blue-50 hover:bg-blue-100/60 text-blue-600 border border-blue-100/50 transition-all text-[10px] font-semibold flex items-center gap-0.5 cursor-pointer"
                                         title="Xác nhận đã phục vụ lên bàn"
                                       >
                                         <span className="material-symbols-outlined text-xs">
@@ -205,7 +205,7 @@ export default function OrderTable({
                                             onUpdateItemStatus(item.id, "cancelled");
                                           }
                                         }}
-                                        className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 transition flex items-center justify-center cursor-pointer hover:scale-105"
+                                        className="p-1 rounded-xl bg-red-50 hover:bg-red-100/60 text-red-500 border border-red-100/50 transition-all flex items-center justify-center cursor-pointer"
                                         title="Hủy món ăn"
                                       >
                                         <span className="material-symbols-outlined text-xs font-bold">
@@ -225,7 +225,7 @@ export default function OrderTable({
 
                   {/* 4. Tổng tiền */}
                   <td className="px-6 py-5 align-top">
-                    <div className="font-extrabold text-base text-gray-900 tracking-tight">
+                    <div className="font-extrabold text-base text-slate-900 tracking-tight">
                       {order.orderTotal || "—"}
                     </div>
                   </td>
@@ -234,7 +234,7 @@ export default function OrderTable({
                   <td className="px-6 py-5 align-top">
                     <div className="flex flex-col gap-3">
                       <span
-                        className={`inline-flex self-start px-2.5 py-1 rounded-lg text-xs border ${overallBadge.classes}`}
+                        className={`inline-flex self-start px-2.5 py-1 rounded-full text-xs font-semibold border ${overallBadge.classes}`}
                       >
                         {overallBadge.label}
                       </span>
@@ -246,7 +246,7 @@ export default function OrderTable({
                             onClick={() => onAdvance(order)}
                             disabled={updatingId === order.id || order.disabled}
                             title={order.advanceHint || ""}
-                            className={`w-full py-2 px-3 rounded-lg text-xs font-bold text-white transition flex items-center justify-center gap-1 shadow-sm hover:shadow ${order.buttonColor} hover:brightness-95 disabled:opacity-50 disabled:cursor-not-allowed ${
+                            className={`w-full py-2 px-3 rounded-xl text-xs font-bold text-white transition-all flex items-center justify-center gap-1 shadow-sm hover:shadow ${order.buttonColor} hover:brightness-95 disabled:opacity-50 disabled:cursor-not-allowed ${
                               order.disabled ? "" : "cursor-pointer"
                             }`}
                           >
@@ -262,7 +262,7 @@ export default function OrderTable({
                           </p>
                         ) : null}
                         {!order.nextStatus ? (
-                          <div className="w-full text-center py-2 bg-gray-100 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                          <div className="w-full text-center py-2 bg-slate-100 text-slate-500 rounded-xl text-[10px] font-bold uppercase tracking-wider">
                             {order.action}
                           </div>
                         ) : null}
@@ -270,7 +270,7 @@ export default function OrderTable({
                         <button
                           type="button"
                           onClick={() => onEditItems(order)}
-                          className="w-full py-2 px-3 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold transition text-xs flex items-center justify-center gap-1 cursor-pointer"
+                          className="w-full py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold transition-all text-xs flex items-center justify-center gap-1 cursor-pointer"
                         >
                           <span className="material-symbols-outlined text-sm font-bold">
                             edit_note

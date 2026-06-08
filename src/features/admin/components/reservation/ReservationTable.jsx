@@ -3,7 +3,7 @@ import ReservationRow from "./ReservationRow";
 const ReservationTable = ({ rows = [], onAdvance, onCancel, onNoShow, busyId }) => {
   if (!rows.length) {
     return (
-      <div className="flex-1 flex items-center justify-center p-12 text-gray-500">
+      <div className="flex-1 flex items-center justify-center p-12 text-slate-500 font-medium bg-white">
         Chưa có đặt bàn nào.
       </div>
     );
@@ -12,17 +12,17 @@ const ReservationTable = ({ rows = [], onAdvance, onCancel, onNoShow, busyId }) 
   return (
     <div className="overflow-x-auto flex-1">
       <table className="w-full text-left min-w-[800px]">
-        <thead className="bg-gray-100">
+        <thead className="bg-slate-50 border-b border-slate-100 text-slate-600 text-xs font-semibold uppercase tracking-wider">
           <tr>
-            <th className="px-4 py-3">Tên khách</th>
-            <th className="px-4 py-3">Số khách</th>
-            <th className="px-4 py-3">Bàn</th>
-            <th className="px-4 py-3">Giờ đặt</th>
-            <th className="px-4 py-3">Trạng thái</th>
-            <th className="px-4 py-3 text-right">Thao tác</th>
+            <th className="px-6 py-4">Tên khách</th>
+            <th className="px-6 py-4">Số khách</th>
+            <th className="px-6 py-4">Bàn</th>
+            <th className="px-6 py-4">Giờ đặt</th>
+            <th className="px-6 py-4">Trạng thái</th>
+            <th className="px-6 py-4 text-right">Thao tác</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-slate-100">
           {rows.map((item) => (
             <ReservationRow
               key={item.id}

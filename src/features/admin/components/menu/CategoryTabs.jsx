@@ -4,7 +4,7 @@ const CategoryTabs = ({ tabs = [], activeTab = "all", onTabChange }) => {
   }
 
   return (
-    <div className="flex gap-4 border-b overflow-x-auto">
+    <div className="flex gap-6 border-b border-slate-200/60 overflow-x-auto scrollbar-none pb-0.5">
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -12,8 +12,8 @@ const CategoryTabs = ({ tabs = [], activeTab = "all", onTabChange }) => {
           onClick={() => onTabChange?.(tab.id)}
           className={
             activeTab === tab.id
-              ? "border-b-2 border-orange-500 text-orange-500 font-bold pb-2 whitespace-nowrap"
-              : "text-gray-500 pb-2 whitespace-nowrap hover:text-orange-500"
+              ? "border-b-2 border-orange-500 text-orange-500 font-semibold pb-3 px-1 whitespace-nowrap transition-all"
+              : "text-slate-500 pb-3 px-1 whitespace-nowrap hover:text-orange-500 transition-all font-medium"
           }
         >
           {tab.label}

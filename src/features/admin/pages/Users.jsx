@@ -62,10 +62,10 @@ export default function Users() {
       label: "Trạng thái",
       render: (row) => (
         <span
-          className={`rounded-full px-3 py-1 text-xs font-semibold ${
+          className={`rounded-full px-3 py-0.5 text-xs font-semibold border ${
             row.status === "Hoạt động"
-              ? "bg-green-100 text-green-700"
-              : "bg-gray-100 text-gray-600"
+              ? "bg-emerald-50 text-emerald-700 border-emerald-100"
+              : "bg-slate-50 text-slate-600 border-slate-200/60"
           }`}
         >
           {row.status}
@@ -82,7 +82,7 @@ export default function Users() {
           <button
             type="button"
             onClick={() => navigate(`/admin/users/${row.id}`)}
-            className="rounded-lg border border-orange-200 px-3 py-1 text-sm font-semibold text-orange-700 hover:bg-orange-50"
+            className="rounded-xl border border-orange-200 px-3.5 py-1.5 text-sm font-semibold text-orange-600 hover:bg-orange-50/50 hover:border-orange-300 transition-all duration-200 active:scale-[0.98]"
           >
             Xem
           </button>
@@ -90,7 +90,7 @@ export default function Users() {
             type="button"
             disabled={busyId === row.id}
             onClick={() => handleToggleActive(row)}
-            className="rounded-lg bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700 hover:bg-gray-200 disabled:opacity-60"
+            className="rounded-xl bg-slate-100 px-3.5 py-1.5 text-sm font-semibold text-slate-700 hover:bg-slate-200 transition-all duration-200 active:scale-[0.98] disabled:opacity-50"
           >
             {row.isActive ? "Khóa" : "Mở khóa"}
           </button>

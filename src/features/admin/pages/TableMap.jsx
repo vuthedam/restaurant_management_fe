@@ -36,7 +36,7 @@ export default function TableMap() {
             <QuickSummary table={selectedTable} allTables={tables} reloadTables={reload} />
           </div>
 
-          <div className="flex-1 bg-white border rounded-2xl p-6 shadow-sm min-h-[400px]">
+          <div className="flex-1 bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm min-h-[400px]">
             <FloorHeader tables={tables} />
             <TableGrid
               tables={tables}

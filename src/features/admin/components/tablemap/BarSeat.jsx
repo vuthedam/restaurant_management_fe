@@ -8,18 +8,18 @@ const seats = [
 ];
 
 const colors = {
-  available: "border-green-500 text-green-600",
-  occupied: "border-red-500 text-red-500",
-  reserved: "border-orange-400 text-orange-500",
+  available: "border-emerald-500 text-emerald-600 bg-emerald-50/40",
+  occupied: "border-red-500 text-red-500 bg-red-50/40",
+  reserved: "border-orange-500 text-orange-500 bg-orange-50/40",
 };
 
 const BarSeat = () => {
   return (
-    <div className="mt-8 border-t pt-6 grid grid-cols-6 gap-2">
+    <div className="mt-8 border-t border-slate-100 pt-6 grid grid-cols-6 gap-2">
       {seats.map((seat) => (
         <div
           key={seat.id}
-          className={`h-12 border-2 rounded flex items-center justify-center font-bold ${colors[seat.status]}`}
+          className={`h-12 border-2 rounded-xl flex items-center justify-center font-semibold text-xs ${colors[seat.status]}`}
         >
           {seat.id}
         </div>

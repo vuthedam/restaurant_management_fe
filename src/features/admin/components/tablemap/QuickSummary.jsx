@@ -87,9 +87,9 @@ const QuickSummary = ({ table, allTables = [], reloadTables }) => {
 
   if (!table) {
     return (
-      <section className="bg-white border rounded-xl p-6 shadow-sm">
-        <h3 className="font-bold text-lg mb-4">Chi tiết bàn</h3>
-        <p className="text-sm text-gray-500">Vui lòng chọn bàn để thao tác.</p>
+      <section className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">
+        <h3 className="font-semibold text-slate-900 text-lg mb-3">Chi tiết bàn</h3>
+        <p className="text-sm text-slate-500">Vui lòng chọn bàn để thao tác.</p>
       </section>
     );
   }
@@ -176,33 +176,33 @@ const QuickSummary = ({ table, allTables = [], reloadTables }) => {
   );
 
   return (
-    <section className="bg-white border rounded-xl p-6 shadow-sm flex flex-col gap-5">
+    <section className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
       {/* Header */}
       <div>
-        <h3 className="font-bold text-xl mb-1 flex items-center justify-between">
+        <h3 className="font-semibold text-xl text-slate-900 mb-1 flex items-center justify-between">
           <span>Chi tiết bàn</span>
-          <span className="text-gray-400 font-normal text-sm">#{table.code || label}</span>
+          <span className="text-slate-400 font-normal text-sm">#{table.code || label}</span>
         </h3>
-        <p className="text-gray-500 text-sm">Quản lý và cập nhật phiên dùng bàn.</p>
+        <p className="text-slate-500 text-sm">Quản lý và cập nhật phiên dùng bàn.</p>
       </div>
 
       <TableInfoCard table={table} />
 
       {/* Feedback */}
       {error && (
-        <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+        <p className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-xl px-3.5 py-2.5 font-medium">
           {error}
         </p>
       )}
       {success && (
-        <p className="text-xs text-green-600 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+        <p className="text-xs text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-xl px-3.5 py-2.5 font-medium">
           {success}
         </p>
       )}
 
       {/* Bàn trống */}
       {table.status === "available" && (
-        <div className="flex flex-col gap-5 border-t pt-4">
+        <div className="flex flex-col gap-5 border-t border-slate-100 pt-4">
           <WalkInForm
             table={table}
             name={walkInName}
@@ -213,23 +213,23 @@ const QuickSummary = ({ table, allTables = [], reloadTables }) => {
             submitting={submitting}
           />
 
-          <div className="flex flex-col gap-2 border-t pt-4">
-            <h4 className="font-bold text-sm text-gray-800 flex items-center gap-1.5 mb-1">
-              <span className="material-symbols-outlined text-base">add_shopping_cart</span>
+          <div className="flex flex-col gap-2 border-t border-slate-100 pt-4">
+            <h4 className="font-semibold text-sm text-slate-800 flex items-center gap-2 mb-1">
+              <span className="material-symbols-outlined text-base text-slate-500">add_shopping_cart</span>
               Đặt món hộ khách ngay
             </h4>
             <a
               href={`/order?table=${table.qrToken}`}
               target="_blank"
               rel="noreferrer"
-              className="w-full border border-orange-200 text-orange-600 hover:bg-orange-50 py-2.5 rounded-lg text-sm font-bold transition flex items-center justify-center gap-1.5"
+              className="w-full border border-orange-200 text-orange-600 hover:bg-orange-50/50 hover:border-orange-300 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98]"
             >
               <span className="material-symbols-outlined text-base">restaurant_menu</span>
               Đặt món cho bàn {label}
             </a>
           </div>
 
-          <div className="border-t pt-4">
+          <div className="border-t border-slate-100 pt-4">
             <CheckInReservationForm
               reservations={reservations}
               selectedId={selectedResId}
@@ -243,9 +243,9 @@ const QuickSummary = ({ table, allTables = [], reloadTables }) => {
 
       {/* Bàn đang có khách */}
       {(table.status === "occupied" || table.status === "waiting_payment") && (
-        <div className="flex flex-col gap-5 border-t pt-4">
+        <div className="flex flex-col gap-5 border-t border-slate-100 pt-4">
           {loadingSession ? (
-            <p className="text-sm text-center text-gray-500 py-4">Đang tải phiên dùng bàn...</p>
+            <p className="text-sm text-center text-slate-500 py-4">Đang tải phiên dùng bàn...</p>
           ) : activeSession ? (
             <ActiveSessionPanel
               session={activeSession}
@@ -270,15 +270,15 @@ const QuickSummary = ({ table, allTables = [], reloadTables }) => {
 
       {/* Bàn đã đặt trước */}
       {table.status === "reserved" && (
-        <div className="flex flex-col gap-4 border-t pt-4">
-          <p className="text-xs text-orange-600 bg-orange-50 border border-orange-100 rounded-lg px-3 py-2 font-medium">
+        <div className="flex flex-col gap-4 border-t border-slate-100 pt-4">
+          <p className="text-xs text-orange-600 bg-orange-50 border border-orange-100 rounded-xl px-3.5 py-2.5 font-medium">
             Bàn đang được đặt chỗ giữ trước. Bạn cần check-in khách khi họ đến đúng giờ.
           </p>
           <button
             type="button"
             onClick={handleReservedCheckIn}
             disabled={submitting}
-            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm font-bold transition disabled:opacity-60"
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-2.5 px-4 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow active:scale-[0.98] disabled:opacity-50"
           >
             Check-in khách đến
           </button>

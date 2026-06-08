@@ -9,25 +9,25 @@
 import { TABLE_STATUS_LABELS } from "../../utils/adminLabels";
 
 const STATUS_COLORS = {
-  available: "bg-green-100 text-green-800 border-green-200",
-  occupied: "bg-red-100 text-red-800 border-red-200",
-  reserved: "bg-orange-100 text-orange-800 border-orange-200",
-  waiting_payment: "bg-purple-100 text-purple-800 border-purple-200",
-  inactive: "bg-gray-100 text-gray-800 border-gray-200",
+  available: "bg-emerald-50 text-emerald-700 border-emerald-200/60",
+  occupied: "bg-red-50 text-red-600 border-red-200/60",
+  reserved: "bg-orange-50 text-orange-700 border-orange-200/60",
+  waiting_payment: "bg-blue-50 text-blue-700 border-blue-200/60",
+  inactive: "bg-slate-50 text-slate-600 border-slate-200/60",
 };
 
 export default function TableInfoCard({ table }) {
   const label = table.code || table.name || "—";
   const statusLabel = TABLE_STATUS_LABELS[table.status] || table.status;
-  const colorClass = STATUS_COLORS[table.status] || "bg-gray-100 text-gray-800 border-gray-200";
+  const colorClass = STATUS_COLORS[table.status] || "bg-slate-50 text-slate-600 border-slate-200/60";
 
   return (
-    <div className="flex flex-col gap-3 p-4 border rounded-xl bg-gray-50">
+    <div className="flex flex-col gap-3 p-4 border border-slate-200/60 rounded-2xl bg-slate-50/30">
       <Row label="Tên bàn" value={table.name || label} />
       <Row label="Sức chứa" value={`${table.capacity || table.seats} chỗ ngồi`} />
       <div className="flex justify-between items-center">
-        <span className="text-sm font-semibold text-gray-700">Trạng thái:</span>
-        <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${colorClass}`}>
+        <span className="text-sm font-medium text-slate-500">Trạng thái:</span>
+        <span className={`px-3 py-0.5 rounded-full text-[11px] font-semibold border ${colorClass}`}>
           {statusLabel}
         </span>
       </div>
@@ -38,8 +38,8 @@ export default function TableInfoCard({ table }) {
 function Row({ label, value }) {
   return (
     <div className="flex justify-between items-center">
-      <span className="text-sm font-semibold text-gray-700">{label}:</span>
-      <span className="text-base font-bold">{value}</span>
+      <span className="text-sm font-medium text-slate-500">{label}:</span>
+      <span className="text-sm font-semibold text-slate-800">{value}</span>
     </div>
   );
 }
