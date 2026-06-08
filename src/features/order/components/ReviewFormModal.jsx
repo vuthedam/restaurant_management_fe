@@ -47,7 +47,7 @@ export default function ReviewFormModal({ isOpen, onClose, tableSessionId, order
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
       <div 
-        className="relative w-full max-w-md overflow-hidden bg-white border border-gray-100 rounded-3xl shadow-2xl transition-all duration-300 transform scale-100"
+        className="relative w-full overflow-hidden bg-white border border-gray-100 rounded-3xl shadow-2xl transition-all duration-300 transform scale-100"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Decorative background gradients */}

@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { submitGuestServiceCall, getOrderApiError } from "../services/orderApi";
 
-export default function SupportModal({ isOpen, onClose, tableId, tableSessionId, onSuccess }) {
+export default function SupportModal({
+  isOpen,
+  onClose,
+  tableId,
+  tableSessionId,
+  onSuccess,
+}) {
   const [selectedOption, setSelectedOption] = useState("");
   const [customNote, setCustomNote] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -11,12 +17,48 @@ export default function SupportModal({ isOpen, onClose, tableId, tableSessionId,
 
   // Quick options mapping
   const OPTIONS = [
-    { id: "payment", label: "Thanh toán", type: "request_payment", defaultNote: "Khách yêu cầu thanh toán", icon: "payments" },
-    { id: "water", label: "Xin thêm nước", type: "need_water", defaultNote: "Khách xin thêm nước", icon: "water_drop" },
-    { id: "napkin", label: "Xin thêm khăn giấy", type: "clean_table", defaultNote: "Khách xin thêm khăn giấy", icon: "dry_cleaning" },
-    { id: "missing", label: "Báo thiếu món", type: "call_staff", defaultNote: "Khách báo thiếu món", icon: "local_dining" },
-    { id: "staff", label: "Gọi nhân viên", type: "call_staff", defaultNote: "Khách cần nhân viên hỗ trợ", icon: "support_agent" },
-    { id: "other", label: "Khác", type: "other", defaultNote: "", icon: "more_horiz" },
+    {
+      id: "payment",
+      label: "Thanh toán",
+      type: "request_payment",
+      defaultNote: "Khách yêu cầu thanh toán",
+      icon: "payments",
+    },
+    {
+      id: "water",
+      label: "Xin thêm nước",
+      type: "need_water",
+      defaultNote: "Khách xin thêm nước",
+      icon: "water_drop",
+    },
+    {
+      id: "napkin",
+      label: "Xin thêm khăn giấy",
+      type: "clean_table",
+      defaultNote: "Khách xin thêm khăn giấy",
+      icon: "dry_cleaning",
+    },
+    {
+      id: "missing",
+      label: "Báo thiếu món",
+      type: "call_staff",
+      defaultNote: "Khách báo thiếu món",
+      icon: "local_dining",
+    },
+    {
+      id: "staff",
+      label: "Gọi nhân viên",
+      type: "call_staff",
+      defaultNote: "Khách cần nhân viên hỗ trợ",
+      icon: "support_agent",
+    },
+    {
+      id: "other",
+      label: "Khác",
+      type: "other",
+      defaultNote: "",
+      icon: "more_horiz",
+    },
   ];
 
   // Cooldown timer effect
@@ -77,7 +119,12 @@ export default function SupportModal({ isOpen, onClose, tableId, tableSessionId,
         onSuccess(data);
       }
     } catch (err) {
-      setError(getOrderApiError(err, "Không gửi được yêu cầu hỗ trợ. Vui lòng thử lại."));
+      setError(
+        getOrderApiError(
+          err,
+          "Không gửi được yêu cầu hỗ trợ. Vui lòng thử lại.",
+        ),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -85,8 +132,8 @@ export default function SupportModal({ isOpen, onClose, tableId, tableSessionId,
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
-      <div 
-        className="relative w-full max-w-md overflow-hidden bg-white border border-gray-100 rounded-3xl shadow-2xl transition-all duration-300 transform scale-100"
+      <div
+        className="relative w-full overflow-hidden bg-white border border-gray-100 rounded-3xl shadow-2xl transition-all duration-300 transform scale-100"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Decorative background gradients */}
@@ -116,7 +163,8 @@ export default function SupportModal({ isOpen, onClose, tableId, tableSessionId,
                   Đã gửi yêu cầu!
                 </h3>
                 <p className="text-sm text-gray-600 max-w-xs mx-auto">
-                  Yêu cầu hỗ trợ đã được gửi tới nhân viên phục vụ. Chúng tôi sẽ có mặt ngay lập tức!
+                  Yêu cầu hỗ trợ đã được gửi tới nhân viên phục vụ. Chúng tôi sẽ
+                  có mặt ngay lập tức!
                 </p>
               </div>
               <button
@@ -161,9 +209,13 @@ export default function SupportModal({ isOpen, onClose, tableId, tableSessionId,
                         : "border-gray-100 bg-gray-50/50 hover:bg-gray-100/70 text-gray-700"
                     }`}
                   >
-                    <span className={`material-symbols-outlined text-2xl ${
-                      selectedOption === opt.id ? "text-orange-600" : "text-gray-500"
-                    }`}>
+                    <span
+                      className={`material-symbols-outlined text-2xl ${
+                        selectedOption === opt.id
+                          ? "text-orange-600"
+                          : "text-gray-500"
+                      }`}
+                    >
                       {opt.icon}
                     </span>
                     <span className="text-xs">{opt.label}</span>
