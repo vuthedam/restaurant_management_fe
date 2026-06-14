@@ -3,6 +3,7 @@ import HomePage from "../features/landing/pages/HomePage";
 import BookingPage from "../features/landing/pages/BookingPage";
 import ContactPage from "../features/landing/pages/ContactPage";
 import OrderPage from "../features/order/pages/OrderPage";
+import GuestTablePage from "../features/order/pages/GuestTablePage";
 import ReviewPage from "../features/order/pages/ReviewPage";
 import LoginPage from "../features/auth/pages/LoginPage";
 import RegisterPage from "../features/auth/pages/RegisterPage";
@@ -33,6 +34,7 @@ const AppRoutes = () => {
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/order" element={<OrderPage />} />
+          <Route path="/table/:qrToken" element={<GuestTablePage />} />
           <Route path="/review/:tableSessionId" element={<ReviewPage />} />
           <Route path="/review" element={<ReviewPage />} />
 

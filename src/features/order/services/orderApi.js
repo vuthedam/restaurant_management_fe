@@ -40,6 +40,11 @@ export async function submitGuestServiceCall(payload) {
   return data?.data;
 }
 
+export async function createGuestTableSession(payload) {
+  const { data } = await api.post("/public/table-sessions", payload);
+  return data?.data;
+}
+
 export function getOrderApiError(err, fallback = "Đã xảy ra lỗi.") {
   return err?.response?.data?.message || err?.message || fallback;
 }
