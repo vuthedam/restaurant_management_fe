@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { 
-  fetchTableByQr, 
-  createGuestTableSession, 
-  getOrderApiError 
+import {
+  fetchTableByQr,
+  createGuestTableSession,
+  getOrderApiError,
 } from "../services/orderApi";
 import SiteHeader from "../../landing/components/homepages/SiteHeader";
-import { 
-  Users, 
-  User, 
-  AlertTriangle, 
-  Loader2, 
-  ArrowRight, 
-  Plus, 
-  Minus 
+import {
+  Users,
+  User,
+  AlertTriangle,
+  Loader2,
+  ArrowRight,
+  Plus,
+  Minus,
 } from "lucide-react";
 
 export default function GuestTablePage() {
@@ -48,7 +48,9 @@ export default function GuestTablePage() {
 
         // Nếu bàn đã có phiên đang hoạt động (active), chuyển trực tiếp đến giao diện gọi món
         if (tableData.activeSession) {
-          navigate(`/order?table=${encodeURIComponent(qrToken)}`, { replace: true });
+          navigate(`/order?table=${encodeURIComponent(qrToken)}`, {
+            replace: true,
+          });
         }
       } catch (err) {
         if (active) {
@@ -99,7 +101,9 @@ export default function GuestTablePage() {
       // Tạo phiên bàn thành công, chuyển hướng đến trang gọi món
       navigate(`/order?table=${encodeURIComponent(qrToken)}`);
     } catch (err) {
-      setError(getOrderApiError(err, "Không thể mở bàn. Vui lòng liên hệ nhân viên."));
+      setError(
+        getOrderApiError(err, "Không thể mở bàn. Vui lòng liên hệ nhân viên."),
+      );
       setSubmitting(false);
     }
   };
@@ -109,8 +113,7 @@ export default function GuestTablePage() {
       <SiteHeader activeLabel="Đặt món tại bàn" />
 
       <main className="flex-1 flex items-center justify-center p-6 pt-24">
-        <div className="w-full max-w-md bg-white border border-slate-200/80 rounded-3xl shadow-xl p-8 relative overflow-hidden">
-          
+        <div className="w-full bg-white border border-slate-200/80 rounded-3xl shadow-xl p-8 relative overflow-hidden">
           {/* Nền trang trí nhẹ nhàng phía trên */}
           <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-amber-500 via-orange-500 to-emerald-500"></div>
 
@@ -118,8 +121,12 @@ export default function GuestTablePage() {
           {loading && (
             <div className="text-center py-12 flex flex-col items-center justify-center">
               <Loader2 className="w-12 h-12 text-emerald-600 animate-spin mb-4" />
-              <h3 className="text-lg font-bold text-slate-700">Đang quét thông tin bàn ăn...</h3>
-              <p className="text-slate-400 text-sm mt-1">Vui lòng chờ trong giây lát</p>
+              <h3 className="text-lg font-bold text-slate-700">
+                Đang quét thông tin bàn ăn...
+              </h3>
+              <p className="text-slate-400 text-sm mt-1">
+                Vui lòng chờ trong giây lát
+              </p>
             </div>
           )}
 
@@ -129,8 +136,12 @@ export default function GuestTablePage() {
               <div className="w-16 h-16 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <AlertTriangle className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-slate-800 mb-2">Đã xảy ra lỗi</h3>
-              <p className="text-slate-500 text-sm mb-6 leading-relaxed">{error}</p>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">
+                Đã xảy ra lỗi
+              </h3>
+              <p className="text-slate-500 text-sm mb-6 leading-relaxed">
+                {error}
+              </p>
               <button
                 onClick={() => window.location.reload()}
                 className="w-full py-3 bg-slate-800 hover:bg-slate-900 text-white font-semibold rounded-xl transition-all shadow-sm hover:shadow"
@@ -151,14 +162,24 @@ export default function GuestTablePage() {
                   {table.name}
                 </h2>
                 <p className="text-slate-500 text-sm mt-1">
-                  Mã bàn: <span className="font-semibold text-slate-700">{table.code}</span> | Sức chứa: <span className="font-semibold text-slate-700">{table.capacity} người</span>
+                  Mã bàn:{" "}
+                  <span className="font-semibold text-slate-700">
+                    {table.code}
+                  </span>{" "}
+                  | Sức chứa:{" "}
+                  <span className="font-semibold text-slate-700">
+                    {table.capacity} người
+                  </span>
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Trường Tên khách hàng */}
                 <div className="space-y-2">
-                  <label htmlFor="customerName" className="block text-sm font-semibold text-slate-700">
+                  <label
+                    htmlFor="customerName"
+                    className="block text-sm font-semibold text-slate-700"
+                  >
                     Tên của bạn <span className="text-rose-500">*</span>
                   </label>
                   <div className="relative">
@@ -191,11 +212,15 @@ export default function GuestTablePage() {
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    
+
                     <div className="flex items-center gap-2">
                       <Users className="w-4 h-4 text-slate-400" />
-                      <span className="font-bold text-slate-800 text-lg">{guestCount}</span>
-                      <span className="text-slate-400 text-xs font-normal">người</span>
+                      <span className="font-bold text-slate-800 text-lg">
+                        {guestCount}
+                      </span>
+                      <span className="text-slate-400 text-xs font-normal">
+                        người
+                      </span>
                     </div>
 
                     <button
@@ -235,7 +260,6 @@ export default function GuestTablePage() {
               </form>
             </div>
           )}
-
         </div>
       </main>
     </div>
