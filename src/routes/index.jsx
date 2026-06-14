@@ -9,6 +9,7 @@ import RegisterPage from "../features/auth/pages/RegisterPage";
 import Dashboard from "../features/admin/pages/Dashboard";
 import Orders from "../features/admin/pages/Orders";
 import Tables from "../features/admin/pages/TableMap";
+import TableQrList from "../features/admin/pages/TableQrList";
 import Menu from "../features/admin/pages/Menu";
 import Reservation from "../features/admin/pages/Reservation";
 import Categories from "../features/admin/pages/Categories";
@@ -43,10 +44,12 @@ const AppRoutes = () => {
             <Route path="/admin/profile" element={<UserProfile />} />
             <Route path="/admin/orders" element={<Orders />} />
             <Route path="/admin/tables" element={<Tables />} />
+            <Route path="/admin/tables/qr" element={<TableQrList />} />
             <Route path="/admin/menu" element={<Menu />} />
             <Route path="/admin/reservations" element={<Reservation />} />
             <Route path="/admin/service-calls" element={<ServiceCalls />} />
             <Route path="/admin/unauthorized" element={<Unauthorized />} />
+
 
             <Route element={<ProtectedRoute adminOnly />}>
               <Route path="/admin/categories" element={<Categories />} />
